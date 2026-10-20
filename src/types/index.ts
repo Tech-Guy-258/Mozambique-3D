@@ -73,6 +73,50 @@ export interface GeoJSONFeatureCollection {
   features: GeoJSONFeature[];
 }
 
+export interface DistrictData {
+  id: string; // e.g. '0704'
+  code: string;
+  provinceId: string; // '07'
+  name: string;
+  headquarters: string;
+  areaKm2: number;
+  population2017: number;
+  density2017: number;
+  administrativePosts: string[];
+  economicHighlights: string[];
+  tourismHighlights: string[];
+  notes?: string;
+  sources: {
+    demographics: string;
+    geography: string;
+    referenceYears: string;
+  };
+}
+
+export interface IndicatorValue {
+  id: string;
+  label: string;
+  value: string | number;
+  formattedValue: string;
+  unit?: string;
+  source: string;
+  referenceYear: string;
+  category: 'demografia' | 'geografia' | 'economia' | 'infraestrutura' | 'turismo';
+  notes?: string;
+}
+
+export interface TourismHeritageItem {
+  id: string;
+  title: string;
+  category: 'Património Natural' | 'Património Histórico & Arquitectónico' | 'Património Cultural Imaterial' | 'Gastronomia';
+  location: string;
+  description: string;
+  source: string;
+  yearReference?: string;
+}
+
+export type ViewMode = 'national' | 'tete-detailed';
+
 export interface Province3DMeshMeta {
   code: string;
   name: string;

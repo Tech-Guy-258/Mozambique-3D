@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { X, Search, MapPin, Users, Globe, Building2, Flame, Mountain, FileText, Check, ArrowRightLeft } from 'lucide-react';
+import { X, Search, MapPin, Users, Globe, Building2, Flame, Mountain, FileText, Check, ArrowRightLeft, Compass } from 'lucide-react';
 import { ProvinceData } from '../types/index.ts';
 
 interface ProvinceDetailDrawerProps {
   province: ProvinceData | null;
   onClose: () => void;
   onOpenCompare: (provinceId: string) => void;
+  onExploreTete?: () => void;
 }
 
 export const ProvinceDetailDrawer: React.FC<ProvinceDetailDrawerProps> = ({
   province,
   onClose,
   onOpenCompare,
+  onExploreTete,
 }) => {
   const [districtSearch, setDistrictSearch] = useState('');
   const [copied, setCopied] = useState(false);
@@ -75,6 +77,20 @@ Fonte: INE Moçambique & MAEFP MOZGIS`;
         <div className="mx-4 mt-3 p-3 bg-blue-950/40 border border-blue-800/60 rounded-lg text-xs text-blue-200">
           <p className="font-semibold text-blue-300 mb-0.5">Sede Provincial da Matola:</p>
           A Província de Maputo envolve territorialmente a Cidade de Maputo e tem como sede provincial o Município da Matola.
+        </div>
+      )}
+      {province.id === '07' && onExploreTete && (
+        <div className="mx-4 mt-3 p-3 bg-gradient-to-r from-orange-950/60 to-amber-950/40 border border-orange-700/60 rounded-xl text-xs flex items-center justify-between gap-2 shadow-md">
+          <div>
+            <p className="font-bold text-orange-300">Exploração 3D de Tete Disponível</p>
+            <p className="text-slate-300 text-[11px] mt-0.5">Vista detalhada com os 14 distritos oficiais do MOZGIS, albufeira e património.</p>
+          </div>
+          <button
+            onClick={onExploreTete}
+            className="px-3 py-1.5 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-lg text-xs whitespace-nowrap shadow transition-colors flex items-center gap-1.5 cursor-pointer"
+          >
+            <Compass className="w-3.5 h-3.5" /> Explorar Tete
+          </button>
         </div>
       )}
 
@@ -347,29 +363,40 @@ Fonte: INE Moçambique & MAEFP MOZGIS`;
       </div>
 
       {/* Action Footer */}
-      <div className="p-4 border-t border-slate-800 bg-slate-950/80 flex items-center gap-2">
-        <button
-          onClick={() => onOpenCompare(province.id)}
-          className="flex-1 py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-sky-400 font-medium text-xs rounded-lg flex items-center justify-center gap-1.5 transition-colors border border-slate-700"
-        >
-          <ArrowRightLeft className="w-3.5 h-3.5" /> Comparar Província
-        </button>
+      <div className="p-4 border-t border-slate-800 bg-slate-950/80 flex flex-col gap-2">
+        {province.id === '07' && onExploreTete && (
+          <button
+            onClick={onExploreTete}
+            className="w-full py-2.5 px-3 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-lg transition-all border border-orange-400/40 cursor-pointer"
+          >
+            <Compass className="w-4 h-4 text-amber-200" />
+            <span>Explorar Província de Tete em 3D</span>
+          </button>
+        )}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => onOpenCompare(province.id)}
+            className="flex-1 py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-sky-400 font-medium text-xs rounded-lg flex items-center justify-center gap-1.5 transition-colors border border-slate-700"
+          >
+            <ArrowRightLeft className="w-3.5 h-3.5" /> Comparar Província
+          </button>
 
-        <button
-          onClick={handleCopySummary}
-          className="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-lg flex items-center justify-center gap-1.5 transition-colors border border-slate-700"
-          title="Copiar resumo textual"
-        >
-          {copied ? (
-            <>
-              <Check className="w-3.5 h-3.5 text-emerald-400" /> Copiado!
-            </>
-          ) : (
-            <>
-              <FileText className="w-3.5 h-3.5" /> Copiar Ficha
-            </>
-          )}
-        </button>
+          <button
+            onClick={handleCopySummary}
+            className="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs rounded-lg flex items-center justify-center gap-1.5 transition-colors border border-slate-700"
+            title="Copiar resumo textual"
+          >
+            {copied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-400" /> Copiado!
+              </>
+            ) : (
+              <>
+                <FileText className="w-3.5 h-3.5" /> Copiar Ficha
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
