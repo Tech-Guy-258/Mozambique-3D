@@ -1,0 +1,6 @@
+{
+  "name": "Mozambique 3D Explorer",
+  "description": "Explorador geoespacial 3D interactivo com fronteiras reais do MOZGIS e dados estatísticos oficiais do INE Moçambique.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
