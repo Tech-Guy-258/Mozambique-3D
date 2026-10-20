@@ -128,3 +128,9 @@ export interface Province3DMeshMeta {
     maxZ: number;
   };
 }
+
+export interface PanAction {
+  id: number;
+  type: 'up' | 'down' | 'left' | 'right' | 'in' | 'out' | 'recenter';
+}
+

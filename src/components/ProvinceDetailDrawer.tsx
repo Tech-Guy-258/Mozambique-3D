@@ -1,19 +1,35 @@
 import React, { useState } from 'react';
-import { X, Search, MapPin, Users, Globe, Building2, Flame, Mountain, FileText, Check, ArrowRightLeft, Compass } from 'lucide-react';
+import {
+  X,
+  Search,
+  MapPin,
+  Users,
+  Globe,
+  Building2,
+  Flame,
+  Mountain,
+  FileText,
+  Check,
+  ArrowRightLeft,
+  ChevronRight,
+  ChevronLeft,
+} from 'lucide-react';
 import { ProvinceData } from '../types/index.ts';
 
 interface ProvinceDetailDrawerProps {
   province: ProvinceData | null;
   onClose: () => void;
   onOpenCompare: (provinceId: string) => void;
-  onExploreTete?: () => void;
+  isCollapsed?: boolean;
+  onToggleCollapse?: () => void;
 }
 
 export const ProvinceDetailDrawer: React.FC<ProvinceDetailDrawerProps> = ({
   province,
   onClose,
   onOpenCompare,
-  onExploreTete,
+  isCollapsed = false,
+  onToggleCollapse,
 }) => {
   const [districtSearch, setDistrictSearch] = useState('');
   const [copied, setCopied] = useState(false);
@@ -40,10 +56,27 @@ Fonte: INE Moçambique & MAEFP MOZGIS`;
     setTimeout(() => setCopied(false), 2000);
   };
 
+  if (isCollapsed) {
+    return (
+      <button
+        onClick={onToggleCollapse}
+        className="fixed top-24 right-3 sm:right-5 z-40 bg-slate-900/95 border border-slate-700/80 rounded-2xl shadow-2xl px-3.5 py-2.5 backdrop-blur-md flex items-center gap-2.5 text-xs font-bold text-sky-400 hover:text-white cursor-pointer hover:border-sky-500/60 transition-all group"
+        title="Expandir Dossier da Província"
+      >
+        <ChevronLeft className="w-4 h-4 text-sky-400 group-hover:-translate-x-0.5 transition-transform" />
+        <span
+          className="w-2.5 h-2.5 rounded-full inline-block"
+          style={{ backgroundColor: province.color }}
+        />
+        <span>Dossier: {province.name}</span>
+      </button>
+    );
+  }
+
   return (
     <div className="fixed inset-y-0 right-0 z-40 w-full sm:w-[480px] max-w-full bg-slate-900/95 backdrop-blur-md border-l border-slate-700/80 shadow-2xl flex flex-col text-slate-100 transition-transform duration-300">
       {/* Header */}
-      <div className="p-5 border-b border-slate-800 flex items-start justify-between bg-slate-950/60">
+      <div className="p-4 sm:p-5 border-b border-slate-800 flex items-start justify-between bg-slate-950/60">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span
@@ -57,13 +90,24 @@ Fonte: INE Moçambique & MAEFP MOZGIS`;
           <h2 className="text-2xl font-bold text-white tracking-tight">{province.name}</h2>
           <p className="text-xs text-slate-400 mt-0.5">{province.officialName}</p>
         </div>
-        <button
-          onClick={onClose}
-          className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
-          title="Fechar painel"
-        >
-          <X className="w-5 h-5" />
-        </button>
+        <div className="flex items-center gap-1">
+          {onToggleCollapse && (
+            <button
+              onClick={onToggleCollapse}
+              className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+              title="Recolher dossier (Ver mapa completo)"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          )}
+          <button
+            onClick={onClose}
+            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+            title="Fechar dossier"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       {/* Special distinction notice for Maputo */}
@@ -77,20 +121,6 @@ Fonte: INE Moçambique & MAEFP MOZGIS`;
         <div className="mx-4 mt-3 p-3 bg-blue-950/40 border border-blue-800/60 rounded-lg text-xs text-blue-200">
           <p className="font-semibold text-blue-300 mb-0.5">Sede Provincial da Matola:</p>
           A Província de Maputo envolve territorialmente a Cidade de Maputo e tem como sede provincial o Município da Matola.
-        </div>
-      )}
-      {province.id === '07' && onExploreTete && (
-        <div className="mx-4 mt-3 p-3 bg-gradient-to-r from-orange-950/60 to-amber-950/40 border border-orange-700/60 rounded-xl text-xs flex items-center justify-between gap-2 shadow-md">
-          <div>
-            <p className="font-bold text-orange-300">Exploração 3D de Tete Disponível</p>
-            <p className="text-slate-300 text-[11px] mt-0.5">Vista detalhada com os 14 distritos oficiais do MOZGIS, albufeira e património.</p>
-          </div>
-          <button
-            onClick={onExploreTete}
-            className="px-3 py-1.5 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-lg text-xs whitespace-nowrap shadow transition-colors flex items-center gap-1.5 cursor-pointer"
-          >
-            <Compass className="w-3.5 h-3.5" /> Explorar Tete
-          </button>
         </div>
       )}
 
@@ -364,15 +394,6 @@ Fonte: INE Moçambique & MAEFP MOZGIS`;
 
       {/* Action Footer */}
       <div className="p-4 border-t border-slate-800 bg-slate-950/80 flex flex-col gap-2">
-        {province.id === '07' && onExploreTete && (
-          <button
-            onClick={onExploreTete}
-            className="w-full py-2.5 px-3 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-lg transition-all border border-orange-400/40 cursor-pointer"
-          >
-            <Compass className="w-4 h-4 text-amber-200" />
-            <span>Explorar Província de Tete em 3D</span>
-          </button>
-        )}
         <div className="flex items-center gap-2">
           <button
             onClick={() => onOpenCompare(province.id)}

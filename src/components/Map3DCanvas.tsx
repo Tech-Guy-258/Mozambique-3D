@@ -15,6 +15,11 @@ import { TETE_DISTRICTS_DATA } from '../data/teteData.ts';
 import { convertGeometryToShapes, computeFeatureCentroidAndBounds } from '../utils/geoTo3d.ts';
 import { getThematicColor, getProvinceExtrusionHeight } from '../utils/thematicColor.ts';
 
+export interface PanAction {
+  id: number;
+  type: 'up' | 'down' | 'left' | 'right' | 'in' | 'out' | 'recenter';
+}
+
 interface Map3DCanvasProps {
   geoJson: GeoJSONFeatureCollection;
   selectedProvinceId: string | null;
@@ -34,6 +39,8 @@ interface Map3DCanvasProps {
   onSelectDistrict?: (id: string | null) => void;
   onHoverDistrict?: (id: string | null, mouseEvent?: { x: number; y: number }) => void;
   onReturnToNational?: () => void;
+  panAction?: PanAction | null;
+  isDrawerOpen?: boolean;
 }
 
 interface ProvinceMeshGroup {
@@ -43,6 +50,7 @@ interface ProvinceMeshGroup {
   meshes: THREE.Mesh[];
   edgeLines: THREE.LineSegments[];
   centroid: [number, number, number];
+  bounds: { minX: number; maxX: number; minZ: number; maxZ: number };
   baseElevation: number;
   targetLift: number;
   currentLift: number;
@@ -57,6 +65,7 @@ interface DistrictMeshGroup {
   meshes: THREE.Mesh[];
   edgeLines: THREE.LineSegments[];
   centroid: [number, number, number];
+  bounds: { minX: number; maxX: number; minZ: number; maxZ: number };
   targetLift: number;
   currentLift: number;
   labelSprite?: THREE.Sprite;
@@ -97,6 +106,8 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
   onSelectDistrict,
   onHoverDistrict,
   onReturnToNational,
+  panAction = null,
+  isDrawerOpen = false,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
 
@@ -112,6 +123,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     viewMode,
     selectedDistrictId,
     hoveredDistrictId,
+    isDrawerOpen,
     onSelectProvince,
     onHoverProvince,
     onSelectDistrict,
@@ -132,6 +144,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     stateRef.current.viewMode = viewMode;
     stateRef.current.selectedDistrictId = selectedDistrictId;
     stateRef.current.hoveredDistrictId = hoveredDistrictId;
+    stateRef.current.isDrawerOpen = isDrawerOpen;
     stateRef.current.onSelectProvince = onSelectProvince;
     stateRef.current.onHoverProvince = onHoverProvince;
     stateRef.current.onSelectDistrict = onSelectDistrict;
@@ -149,6 +162,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     viewMode,
     selectedDistrictId,
     hoveredDistrictId,
+    isDrawerOpen,
     onSelectProvince,
     onHoverProvince,
     onSelectDistrict,
@@ -181,7 +195,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return undefined;
 
-    // Background rounded pill
     ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
     ctx.lineWidth = 4;
@@ -201,13 +214,11 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     ctx.fill();
     ctx.stroke();
 
-    // Province Name
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 36px "Inter", "Segoe UI", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(name.toUpperCase(), 256, 68);
 
-    // Capital
     ctx.fillStyle = '#38bdf8';
     ctx.font = '500 26px "Inter", "Segoe UI", sans-serif';
     ctx.fillText(`Cap: ${capital}`, 256, 110);
@@ -284,9 +295,8 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     const ctx = sceneContextRef.current;
     if (!ctx) return;
 
-    const { scene, provinceGroups, interactiveMeshes } = ctx;
+    const { scene, provinceGroups } = ctx;
 
-    // Clear previous province groups
     provinceGroups.forEach((pg) => {
       scene.remove(pg.group);
       pg.meshes.forEach((m) => {
@@ -309,7 +319,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     const currentMetric = stateRef.current.thematicMetric;
     const is3D = stateRef.current.is3DExtruded;
 
-    // Build each province geometry
     geoJson.features.forEach((feature) => {
       const code = String(feature.properties.CodProv || feature.id || '01');
       const provName = feature.properties.Provincia || 'Província';
@@ -321,7 +330,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       const provinceGroup = new THREE.Group();
       provinceGroup.name = `province_group_${code}`;
 
-      const { centroid } = computeFeatureCentroidAndBounds(feature);
+      const { centroid, bounds } = computeFeatureCentroidAndBounds(feature);
       const extrudeHeight = getProvinceExtrusionHeight(code, currentMetric, is3D);
       const baseColor = getThematicColor(code, currentMetric);
 
@@ -342,7 +351,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
         geom.computeVertexNormals();
 
-        // Material with PBR shading
         const material = new THREE.MeshPhysicalMaterial({
           color: new THREE.Color(baseColor),
           roughness: 0.35,
@@ -366,7 +374,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
           index,
         };
 
-        // Sharp Cartographic Borders
         const edgesGeom = new THREE.EdgesGeometry(geom, 26);
         const lineMat = new THREE.LineBasicMaterial({
           color: new THREE.Color('#ffffff'),
@@ -385,7 +392,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         edgeLines.push(edgeLine);
       });
 
-      // 3D Province Floating Label
       const capital = provData ? provData.capital : 'Capital';
       const labelSprite = createLabelSprite(provName, capital);
       if (labelSprite) {
@@ -403,6 +409,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         meshes,
         edgeLines,
         centroid,
+        bounds,
         baseElevation: 0,
         targetLift: 0,
         currentLift: 0,
@@ -421,7 +428,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
 
     const { teteDistrictsRootGroup, districtGroups } = ctx;
 
-    // Clear previous district meshes
     districtGroups.forEach((dg) => {
       teteDistrictsRootGroup.remove(dg.group);
       dg.meshes.forEach((m) => {
@@ -454,7 +460,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       const districtGroup = new THREE.Group();
       districtGroup.name = `district_group_${code}`;
 
-      const { centroid } = computeFeatureCentroidAndBounds(feature);
+      const { centroid, bounds } = computeFeatureCentroidAndBounds(feature);
       const baseColor = DISTRICT_COLORS[code] || '#ea580c';
 
       const meshes: THREE.Mesh[] = [];
@@ -515,7 +521,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         edgeLines.push(edgeLine);
       });
 
-      // 3D District Label
       const infoText = distData ? `${new Intl.NumberFormat('pt-MZ').format(distData.population2017)} hab.` : distName;
       const labelSprite = createDistrictLabelSprite(distName, infoText);
       if (labelSprite) {
@@ -533,6 +538,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         meshes,
         edgeLines,
         centroid,
+        bounds,
         targetLift: 0,
         currentLift: 0,
         labelSprite,
@@ -542,7 +548,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     updateInteractiveMeshList();
   };
 
-  // Syncs interactiveMeshes with current active mode
+  // Sync interactiveMeshes with current viewMode
   const updateInteractiveMeshList = () => {
     const ctx = sceneContextRef.current;
     if (!ctx) return;
@@ -627,17 +633,14 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     const width = container.clientWidth || window.innerWidth;
     const height = container.clientHeight || window.innerHeight;
 
-    // Scene
     const scene = new THREE.Scene();
     scene.background = new THREE.Color('#0f172a');
     scene.fog = new THREE.FogExp2(0x0f172a, 0.012);
 
-    // Camera
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 500);
     camera.position.set(0, 32, 28);
     camera.lookAt(0, 0, 0);
 
-    // WebGL Renderer
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       powerPreference: 'high-performance',
@@ -652,21 +655,21 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
 
     container.appendChild(renderer.domElement);
 
-    // Studio Environment map via PMREMGenerator & RoomEnvironment
     const pmremGenerator = new THREE.PMREMGenerator(renderer);
     scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
     pmremGenerator.dispose();
 
-    // OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
+    controls.enablePan = true;
+    controls.screenSpacePanning = true;
+    controls.panSpeed = 1.25;
     controls.maxPolarAngle = Math.PI / 2.05;
-    controls.minDistance = 4;
-    controls.maxDistance = 90;
+    controls.minDistance = 3.5;
+    controls.maxDistance = 95;
     controls.target.set(0, 0, 0);
 
-    // Lighting Rig
     const keyLight = new THREE.DirectionalLight('#fffbeb', 2.4);
     keyLight.position.set(18, 35, 20);
     keyLight.castShadow = true;
@@ -689,7 +692,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     const ambientLight = new THREE.AmbientLight('#ffffff', 0.5);
     scene.add(ambientLight);
 
-    // Ocean base platform & Bathymetric grid
     const oceanGeom = new THREE.PlaneGeometry(90, 90, 40, 40);
     const oceanMat = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color('#0c4a6e'),
@@ -711,7 +713,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     (gridHelper.material as THREE.Material).opacity = 0.22;
     scene.add(gridHelper);
 
-    // Neighboring continent subtle base outline
     const continentBorderGeom = new THREE.RingGeometry(24, 25, 64);
     const continentBorderMat = new THREE.MeshBasicMaterial({
       color: 0x334155,
@@ -728,7 +729,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     const districtGroups = new Map<string, DistrictMeshGroup>();
     const interactiveMeshes: THREE.Mesh[] = [];
 
-    // Root group for Tete districts
     const teteDistrictsRootGroup = new THREE.Group();
     teteDistrictsRootGroup.name = 'tete_districts_root';
     teteDistrictsRootGroup.visible = false;
@@ -859,6 +859,37 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     domElement.addEventListener('touchmove', onPointerMove, { passive: true });
     domElement.addEventListener('touchend', onPointerUp, { passive: true });
 
+    // Keyboard Pan & Zoom Support
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (['INPUT', 'SELECT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) {
+        return;
+      }
+      const ctx = sceneContextRef.current;
+      if (!ctx) return;
+      const { camera, controls } = ctx;
+      const step = 2.8;
+
+      if (e.key === 'ArrowUp') {
+        controls.target.z -= step;
+        camera.position.z -= step;
+      } else if (e.key === 'ArrowDown') {
+        controls.target.z += step;
+        camera.position.z += step;
+      } else if (e.key === 'ArrowLeft') {
+        controls.target.x -= step;
+        camera.position.x -= step;
+      } else if (e.key === 'ArrowRight') {
+        controls.target.x += step;
+        camera.position.x += step;
+      } else if (e.key === '+' || e.key === '=') {
+        camera.position.lerp(controls.target, 0.2);
+      } else if (e.key === '-' || e.key === '_') {
+        const dir = camera.position.clone().sub(controls.target).normalize();
+        camera.position.addScaledVector(dir, 3.5);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
     const handleResize = () => {
       if (!container) return;
       const newW = container.clientWidth;
@@ -900,7 +931,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       const isTeteDetailed = stateRef.current.viewMode === 'tete-detailed';
 
       if (!isTeteDetailed) {
-        // Normal national mode elevation and highlights
         const currentSelected = stateRef.current.selectedProvinceId;
         const currentHovered = stateRef.current.hoveredProvinceId;
 
@@ -941,7 +971,6 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
           });
         });
       } else {
-        // Tete detailed mode: animate district meshes
         const currentSelectedDist = stateRef.current.selectedDistrictId;
         const currentHoveredDist = stateRef.current.hoveredDistrictId;
 
@@ -991,6 +1020,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('keydown', handleKeyDown);
       domElement.removeEventListener('mousedown', onPointerDown);
       domElement.removeEventListener('mousemove', onPointerMove);
       domElement.removeEventListener('mouseup', onPointerUp);
@@ -1006,7 +1036,120 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     };
   }, [geoJson]);
 
+  // Helper to compute camera target and position keeping the feature 100% visible and unobstructed by info drawers
+  const computeUnobstructedTarget = (
+    bounds: { minX: number; maxX: number; minZ: number; maxZ: number },
+    centroid: [number, number, number],
+    panelWidthPx = 480,
+    isDetailed = false
+  ) => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    const centerX = (bounds.minX + bounds.maxX) / 2;
+    const centerZ = (bounds.minZ + bounds.maxZ) / 2;
+    const spanX = Math.max(bounds.maxX - bounds.minX, 0.4);
+    const spanZ = Math.max(bounds.maxZ - bounds.minZ, 0.4);
+
+    const isDrawerOpen = stateRef.current.isDrawerOpen;
+    let offsetFraction = 0;
+    let effectiveW = w;
+    let effectiveH = Math.max(h - 140, 200);
+
+    if (isDrawerOpen && w >= 640) {
+      const actualPanelW = Math.min(panelWidthPx, w * 0.48);
+      effectiveW = w - actualPanelW;
+      // Object centers in unobstructed left-center area [0, effectiveW].
+      // Distance from screen center to unobstructed center is actualPanelW / 2.
+      // Offset fraction towards the left:
+      offsetFraction = (actualPanelW / 2) / w;
+    } else if (isDrawerOpen && w < 640) {
+      effectiveH = Math.max(h * 0.48, 180);
+    }
+
+    const fovRad = (45 * Math.PI) / 180;
+    const tanHalfFov = Math.tan(fovRad / 2);
+    const pitchRad = (52 * Math.PI) / 180;
+
+    // Generous margin so the entire boundary and 3D elevation fit comfortably
+    const margin = 1.35;
+
+    const reqDistX = (spanX * margin) / (2 * tanHalfFov * (effectiveW / h));
+    const depthProj = spanZ * Math.sin(pitchRad) + 1.2 * Math.cos(pitchRad);
+    const reqDistZ = (depthProj * margin) / (2 * tanHalfFov * (effectiveH / h));
+
+    const minD = isDetailed ? 4.2 : 11.5;
+    const dist = Math.max(reqDistX, reqDistZ, minD);
+
+    const frustumWidth = 2 * dist * tanHalfFov * (w / h);
+    const xOffsetWorld = offsetFraction * frustumWidth;
+
+    return {
+      pos: new THREE.Vector3(
+        centerX + xOffsetWorld,
+        0.4 + dist * Math.cos(pitchRad),
+        centerZ + dist * Math.sin(pitchRad)
+      ),
+      look: new THREE.Vector3(centerX + xOffsetWorld, 0.4, centerZ),
+    };
+  };
+
+  // Handle Pan and Zoom Actions via D-Pad and Keyboard (smooth screen-space movement)
+  useEffect(() => {
+    if (!panAction) return;
+    const ctx = sceneContextRef.current;
+    if (!ctx) return;
+    const { camera, controls } = ctx;
+
+    // Cancel automatic transition so user pan takes instant effect
+    ctx.cameraTransitionTarget = null;
+
+    // Camera basis vectors projected onto the horizontal ground plane
+    const cameraRight = new THREE.Vector3();
+    camera.matrix.extractBasis(cameraRight, new THREE.Vector3(), new THREE.Vector3());
+    cameraRight.y = 0;
+    cameraRight.normalize();
+
+    const cameraForward = new THREE.Vector3();
+    camera.getWorldDirection(cameraForward);
+    cameraForward.y = 0;
+    cameraForward.normalize();
+
+    const dist = camera.position.distanceTo(controls.target);
+    const step = Math.max(1.2, dist * 0.12);
+
+    const moveVec = new THREE.Vector3();
+    if (panAction.type === 'up') {
+      moveVec.addScaledVector(cameraForward, step);
+    } else if (panAction.type === 'down') {
+      moveVec.addScaledVector(cameraForward, -step);
+    } else if (panAction.type === 'left') {
+      moveVec.addScaledVector(cameraRight, -step);
+    } else if (panAction.type === 'right') {
+      moveVec.addScaledVector(cameraRight, step);
+    } else if (panAction.type === 'in') {
+      const dir = camera.position.clone().sub(controls.target);
+      if (dir.length() > controls.minDistance + 0.8) {
+        camera.position.addScaledVector(dir.normalize(), -Math.max(1.5, dist * 0.18));
+      }
+    } else if (panAction.type === 'out') {
+      const dir = camera.position.clone().sub(controls.target);
+      if (dir.length() < controls.maxDistance - 1) {
+        camera.position.addScaledVector(dir.normalize(), Math.max(1.5, dist * 0.18));
+      }
+    } else if (panAction.type === 'recenter') {
+      stateRef.current.onResetCameraPreset?.();
+    }
+
+    if (moveVec.lengthSq() > 0) {
+      camera.position.add(moveVec);
+      controls.target.add(moveVec);
+    }
+    controls.update();
+  }, [panAction]);
+
   // Handle ViewMode switches (National vs Tete Detailed)
+  // Ensures Tete and all its 14 districts are 100% visible and NOT obstructed by the right panel
   useEffect(() => {
     const ctx = sceneContextRef.current;
     if (!ctx) return;
@@ -1015,16 +1158,13 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     const isTeteDetailed = viewMode === 'tete-detailed';
 
     if (isTeteDetailed) {
-      // Show Tete's 14 district meshes
       teteDistrictsRootGroup.visible = true;
 
-      // Hide province '07' (Tete) mesh so districts replace it cleanly
       const tetePg = provinceGroups.get('07');
       if (tetePg) {
         tetePg.group.visible = false;
       }
 
-      // Dim neighboring provinces to provide realistic geographic context
       provinceGroups.forEach((pg, code) => {
         if (code !== '07') {
           pg.group.visible = true;
@@ -1043,23 +1183,24 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         }
       });
 
-      // Show district labels if enabled
       districtGroups.forEach((dg) => {
         if (dg.labelSprite) {
           dg.labelSprite.visible = showLabels;
         }
       });
 
-      // Fly camera close into Tete
-      ctx.cameraTransitionTarget = {
-        pos: new THREE.Vector3(-4.6, 9.5, 1.8),
-        look: new THREE.Vector3(-4.6, 0.4, -6.8),
+      // Frame Tete province with all 14 districts completely visible in the unobstructed viewport
+      const teteBounds = {
+        minX: -10.03,
+        maxX: 1.26,
+        minZ: -9.9,
+        maxZ: -1.76,
       };
+      const teteCentroid: [number, number, number] = [-4.38, 0.4, -5.83];
+      ctx.cameraTransitionTarget = computeUnobstructedTarget(teteBounds, teteCentroid, 500, false);
     } else {
-      // National overview mode
       teteDistrictsRootGroup.visible = false;
 
-      // Restore all province meshes with full opacity
       provinceGroups.forEach((pg) => {
         pg.group.visible = true;
         pg.meshes.forEach((mesh) => {
@@ -1081,27 +1222,29 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
   }, [viewMode, showLabels]);
 
   // Focus on district when selected in detailed mode
+  // Shifts camera target to keep the district 100% visible to the left of the right panel
   useEffect(() => {
     const ctx = sceneContextRef.current;
     if (!ctx || viewMode !== 'tete-detailed') return;
 
     if (selectedDistrictId) {
       const dg = ctx.districtGroups.get(selectedDistrictId);
-      if (dg) {
-        const [dx, dy, dz] = dg.centroid;
-        ctx.cameraTransitionTarget = {
-          pos: new THREE.Vector3(dx, 5.5, dz + 4.2),
-          look: new THREE.Vector3(dx, dy, dz),
-        };
+      if (dg && dg.bounds) {
+        ctx.cameraTransitionTarget = computeUnobstructedTarget(dg.bounds, dg.centroid, 500, true);
+        return;
       }
-    } else {
-      // Center back on Tete province
-      ctx.cameraTransitionTarget = {
-        pos: new THREE.Vector3(-4.6, 9.5, 1.8),
-        look: new THREE.Vector3(-4.6, 0.4, -6.8),
-      };
     }
-  }, [selectedDistrictId, viewMode]);
+
+    // When no district selected in tete-detailed, re-frame entire Tete province
+    const teteBounds = {
+      minX: -10.03,
+      maxX: 1.26,
+      minZ: -9.9,
+      maxZ: -1.76,
+    };
+    const teteCentroid: [number, number, number] = [-4.38, 0.4, -5.83];
+    ctx.cameraTransitionTarget = computeUnobstructedTarget(teteBounds, teteCentroid, 500, false);
+  }, [selectedDistrictId, viewMode, isDrawerOpen]);
 
   // Geometry rebuild on thematic metric / extrusion changes (national mode)
   useEffect(() => {
@@ -1114,18 +1257,15 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
   }, [lightingTheme]);
 
   // Camera presets navigation (in national mode)
+  // Shifts camera target when a province is selected so it is NEVER covered by the right drawer!
   useEffect(() => {
     const ctx = sceneContextRef.current;
     if (!ctx || viewMode === 'tete-detailed') return;
 
     if (selectedProvinceId) {
       const pg = ctx.provinceGroups.get(selectedProvinceId);
-      if (pg) {
-        const [cx, cy, cz] = pg.centroid;
-        ctx.cameraTransitionTarget = {
-          pos: new THREE.Vector3(cx, 12, cz + 10),
-          look: new THREE.Vector3(cx, cy, cz),
-        };
+      if (pg && pg.bounds) {
+        ctx.cameraTransitionTarget = computeUnobstructedTarget(pg.bounds, pg.centroid, 480, false);
         return;
       }
     }
@@ -1156,7 +1296,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         look: new THREE.Vector3(-2, 0, 13),
       };
     }
-  }, [selectedProvinceId, cameraPreset, viewMode]);
+  }, [selectedProvinceId, cameraPreset, viewMode, isDrawerOpen]);
 
   return (
     <div

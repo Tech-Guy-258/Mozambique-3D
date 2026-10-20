@@ -26,7 +26,6 @@ interface TopHeaderProps {
   onExportCSV: () => void;
   viewMode?: ViewMode;
   onReturnToNational?: () => void;
-  onExploreTete?: () => void;
 }
 
 export const TopHeader: React.FC<TopHeaderProps> = ({
@@ -40,7 +39,6 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   onExportCSV,
   viewMode = 'national',
   onReturnToNational,
-  onExploreTete,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -152,18 +150,6 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Mapa Nacional</span>
-          </button>
-        )}
-
-        {/* Explore Tete quick shortcut button when in National view */}
-        {!isTeteDetailed && onExploreTete && (
-          <button
-            onClick={onExploreTete}
-            className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white border border-orange-400/40 rounded-xl p-2 sm:px-3 sm:py-2 text-xs font-bold backdrop-blur-md shadow-lg flex items-center gap-1.5 transition-all cursor-pointer"
-            title="Explorar a Província de Tete e seus 14 distritos em 3D"
-          >
-            <Compass className="w-4 h-4 text-amber-200" />
-            <span className="hidden sm:inline">Explorar Tete</span>
           </button>
         )}
 

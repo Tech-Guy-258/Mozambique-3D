@@ -7,6 +7,7 @@ import { TeteDetailedPanel } from './components/TeteDetailedPanel.tsx';
 import { ComparisonDrawer } from './components/ComparisonDrawer.tsx';
 import { SourcesModal } from './components/SourcesModal.tsx';
 import { Tooltip } from './components/Tooltip.tsx';
+import { NavigationControls } from './components/NavigationControls.tsx';
 import { DEFAULT_MOZGIS_GEOJSON } from './data/mozgisGeoJson.ts';
 import { PROVINCES_DATA } from './data/provincesData.ts';
 import {
@@ -15,6 +16,7 @@ import {
   CameraPreset,
   GeoJSONFeatureCollection,
   ViewMode,
+  PanAction,
 } from './types/index.ts';
 import { downloadGeoJSON, downloadCSV } from './utils/exporter.ts';
 import { syncLiveMozgisData } from './utils/mozgisSync.ts';
@@ -35,6 +37,10 @@ export default function App() {
   // Tete district interaction state
   const [selectedDistrictId, setSelectedDistrictId] = useState<string | null>(null);
   const [hoveredDistrictId, setHoveredDistrictId] = useState<string | null>(null);
+
+  // Pan, Zoom & Drawer collapse state
+  const [panAction, setPanAction] = useState<PanAction | null>(null);
+  const [isDrawerCollapsed, setIsDrawerCollapsed] = useState<boolean>(false);
 
   // Visualization settings
   const [thematicMetric, setThematicMetric] = useState<ThematicMetric>('standard');
@@ -91,7 +97,7 @@ export default function App() {
     [viewMode]
   );
 
-  // Enter Tete Detailed View Mode
+  // Enter Tete Detailed View Mode (automatically triggered when clicking Tete)
   const handleExploreTete = useCallback(() => {
     setViewMode('tete-detailed');
     setSelectedProvinceId(null);
@@ -99,6 +105,7 @@ export default function App() {
     setHoveredProvinceId(null);
     setHoveredDistrictId(null);
     setTooltipPos(null);
+    setIsDrawerCollapsed(false);
     showToast('success', 'Tete 3D Explorer aberto automaticamente (14 distritos oficiais do MOZGIS).');
   }, []);
 
@@ -109,6 +116,9 @@ export default function App() {
         handleExploreTete();
       } else {
         setSelectedProvinceId(id);
+        if (id) {
+          setIsDrawerCollapsed(false);
+        }
       }
     },
     [handleExploreTete]
@@ -117,6 +127,9 @@ export default function App() {
   // Select District Handler
   const handleSelectDistrict = useCallback((id: string | null) => {
     setSelectedDistrictId(id);
+    if (id) {
+      setIsDrawerCollapsed(false);
+    }
   }, []);
 
   // Return to National Map Mode
@@ -127,6 +140,19 @@ export default function App() {
     setTooltipPos(null);
     setCameraPreset('default');
   };
+
+  // Pan & Zoom Handlers for Navigation Controls
+  const handlePan = useCallback((direction: 'up' | 'down' | 'left' | 'right') => {
+    setPanAction({ id: Date.now(), type: direction });
+  }, []);
+
+  const handleZoom = useCallback((direction: 'in' | 'out') => {
+    setPanAction({ id: Date.now(), type: direction });
+  }, []);
+
+  const handleRecenter = useCallback(() => {
+    setPanAction({ id: Date.now(), type: 'recenter' });
+  }, []);
 
   // Open Compare for a specific province
   const handleOpenCompare = (provinceId?: string) => {
@@ -164,14 +190,21 @@ export default function App() {
   const handleResetCamera = () => {
     if (viewMode === 'tete-detailed') {
       setSelectedDistrictId(null);
+      setPanAction({ id: Date.now(), type: 'recenter' });
     } else {
       setSelectedProvinceId(null);
       setCameraPreset('default');
+      setPanAction({ id: Date.now(), type: 'recenter' });
     }
   };
 
   const selectedProvinceData =
     selectedProvinceId && viewMode === 'national' ? PROVINCES_DATA[selectedProvinceId] ?? null : null;
+
+  const isDrawerOpen = Boolean(
+    (selectedProvinceData && !isDrawerCollapsed) ||
+    (viewMode === 'tete-detailed' && !isDrawerCollapsed)
+  );
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-slate-950 font-sans select-none">
@@ -194,6 +227,8 @@ export default function App() {
         onSelectDistrict={handleSelectDistrict}
         onHoverDistrict={handleHoverDistrict}
         onReturnToNational={handleReturnToNational}
+        panAction={panAction}
+        isDrawerOpen={isDrawerOpen}
       />
 
       {/* Top Header & Search Bar */}
@@ -217,7 +252,14 @@ export default function App() {
         onExportCSV={downloadCSV}
         viewMode={viewMode}
         onReturnToNational={handleReturnToNational}
-        onExploreTete={handleExploreTete}
+      />
+
+      {/* On-Screen Navigation Controls (Pan D-Pad, Recenter & Zoom) */}
+      <NavigationControls
+        onPan={handlePan}
+        onZoom={handleZoom}
+        onRecenter={handleRecenter}
+        isDetailedView={viewMode === 'tete-detailed'}
       />
 
       {/* Hover Tooltip (supports both provincial and district hover states) */}
@@ -248,7 +290,8 @@ export default function App() {
         province={selectedProvinceData}
         onClose={() => setSelectedProvinceId(null)}
         onOpenCompare={(id) => handleOpenCompare(id)}
-        onExploreTete={handleExploreTete}
+        isCollapsed={isDrawerCollapsed}
+        onToggleCollapse={() => setIsDrawerCollapsed((prev) => !prev)}
       />
 
       {/* Tete Province Detailed Explorer Panel (active in tete-detailed mode) */}
@@ -257,6 +300,8 @@ export default function App() {
           selectedDistrictId={selectedDistrictId}
           onSelectDistrict={handleSelectDistrict}
           onReturnToNational={handleReturnToNational}
+          isCollapsed={isDrawerCollapsed}
+          onToggleCollapse={() => setIsDrawerCollapsed((prev) => !prev)}
         />
       )}
 
@@ -292,7 +337,7 @@ export default function App() {
           <span>{toastMessage.text}</span>
           <button
             onClick={() => setToastMessage(null)}
-            className="ml-2 text-slate-400 hover:text-white p-0.5"
+            className="ml-2 text-slate-400 hover:text-white p-0.5 cursor-pointer"
           >
             <X className="w-3.5 h-3.5" />
           </button>

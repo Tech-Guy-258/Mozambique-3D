@@ -16,6 +16,8 @@ import {
   Shield,
   Utensils,
   Share2,
+  ChevronRight,
+  ChevronLeft,
 } from 'lucide-react';
 import {
   TETE_PROVINCE_INDICATORS,
@@ -30,12 +32,16 @@ interface TeteDetailedPanelProps {
   selectedDistrictId: string | null;
   onSelectDistrict: (districtId: string | null) => void;
   onReturnToNational: () => void;
+  isCollapsed?: boolean;
+  onToggleCollapse?: () => void;
 }
 
 export const TeteDetailedPanel: React.FC<TeteDetailedPanelProps> = ({
   selectedDistrictId,
   onSelectDistrict,
   onReturnToNational,
+  isCollapsed = false,
+  onToggleCollapse,
 }) => {
   const [activeTab, setActiveTab] = useState<'distritos' | 'economia' | 'turismo' | 'infraestruturas' | 'indicadores'>('distritos');
   const [districtSearch, setDistrictSearch] = useState('');
@@ -64,6 +70,20 @@ Fontes: INE Moçambique, MOZGIS MAEFP e Visit Mozambique (INATUR).`;
     setTimeout(() => setCopied(false), 2000);
   };
 
+  if (isCollapsed) {
+    return (
+      <button
+        onClick={onToggleCollapse}
+        className="fixed top-24 right-3 sm:right-5 z-40 bg-slate-900/95 border border-slate-700/80 rounded-2xl shadow-2xl px-3.5 py-2.5 backdrop-blur-md flex items-center gap-2.5 text-xs font-bold text-orange-400 hover:text-white cursor-pointer hover:border-orange-500/60 transition-all group"
+        title="Expandir Painel de Tete"
+      >
+        <ChevronLeft className="w-4 h-4 text-orange-400 group-hover:-translate-x-0.5 transition-transform" />
+        <span className="w-2.5 h-2.5 rounded-full bg-orange-500 inline-block" />
+        <span>Painel Tete {selectedDistrict ? `• ${selectedDistrict.name}` : '(14 Distritos)'}</span>
+      </button>
+    );
+  }
+
   return (
     <div className="fixed inset-y-0 right-0 z-40 w-full sm:w-[500px] max-w-full bg-slate-900/95 backdrop-blur-md border-l border-slate-700/80 shadow-2xl flex flex-col text-slate-100 transition-transform duration-300">
       {/* Top Header */}
@@ -71,7 +91,7 @@ Fontes: INE Moçambique, MOZGIS MAEFP e Visit Mozambique (INATUR).`;
         <div className="flex items-center justify-between gap-2 mb-2">
           <button
             onClick={onReturnToNational}
-            className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-slate-700 transition-colors shadow-sm"
+            className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-slate-700 transition-colors shadow-sm cursor-pointer"
             title="Voltar à vista geral de Moçambique"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -81,14 +101,23 @@ Fontes: INE Moçambique, MOZGIS MAEFP e Visit Mozambique (INATUR).`;
           <div className="flex items-center gap-1.5">
             <button
               onClick={handleShareOrCopy}
-              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors border border-slate-800"
+              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors border border-slate-800 cursor-pointer"
               title="Copiar síntese de Tete"
             >
               {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
             </button>
+            {onToggleCollapse && (
+              <button
+                onClick={onToggleCollapse}
+                className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors border border-slate-800 cursor-pointer"
+                title="Recolher painel (Ver mapa livre)"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            )}
             <button
               onClick={onReturnToNational}
-              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors border border-slate-800"
+              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors border border-slate-800 cursor-pointer"
               title="Fechar vista detalhada"
             >
               <X className="w-4 h-4" />
