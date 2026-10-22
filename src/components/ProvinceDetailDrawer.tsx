@@ -13,6 +13,7 @@ import {
   ArrowRightLeft,
   ChevronRight,
   ChevronLeft,
+  Compass,
 } from 'lucide-react';
 import { ProvinceData } from '../types/index.ts';
 
@@ -22,6 +23,7 @@ interface ProvinceDetailDrawerProps {
   onOpenCompare: (provinceId: string) => void;
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
+  onExploreProvince?: (provinceId: string) => void;
 }
 
 export const ProvinceDetailDrawer: React.FC<ProvinceDetailDrawerProps> = ({
@@ -30,6 +32,7 @@ export const ProvinceDetailDrawer: React.FC<ProvinceDetailDrawerProps> = ({
   onOpenCompare,
   isCollapsed = false,
   onToggleCollapse,
+  onExploreProvince,
 }) => {
   const [districtSearch, setDistrictSearch] = useState('');
   const [copied, setCopied] = useState(false);
@@ -109,6 +112,18 @@ Fonte: INE Moçambique & MAEFP MOZGIS`;
           </button>
         </div>
       </div>
+
+      {onExploreProvince && (
+        <div className="px-4 pt-3 pb-1">
+          <button
+            onClick={() => onExploreProvince(province.id)}
+            className="w-full py-2.5 px-4 bg-gradient-to-r from-sky-600 via-indigo-600 to-sky-700 hover:from-sky-500 hover:to-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border border-sky-400/40"
+          >
+            <Compass className="w-4 h-4 text-sky-200" />
+            <span>Explorar {province.name} em 3D ({province.districtsCount} Distritos)</span>
+          </button>
+        </div>
+      )}
 
       {/* Special distinction notice for Maputo */}
       {province.id === '01' && (

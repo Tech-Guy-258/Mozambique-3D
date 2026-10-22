@@ -10,8 +10,8 @@ import {
   ViewMode,
 } from '../types/index.ts';
 import { PROVINCES_DATA } from '../data/provincesData.ts';
-import { TETE_DISTRICTS_GEOJSON } from '../data/teteDistrictsGeoJson.ts';
-import { TETE_DISTRICTS_DATA } from '../data/teteData.ts';
+import { MOZAMBIQUE_DISTRICTS_GEOJSON } from '../data/allDistrictsGeoJson.ts';
+import { ALL_DISTRICTS_DATA } from '../data/allDistrictsData.ts';
 import { convertGeometryToShapes, computeFeatureCentroidAndBounds } from '../utils/geoTo3d.ts';
 import { getThematicColor, getProvinceExtrusionHeight } from '../utils/thematicColor.ts';
 
@@ -32,8 +32,9 @@ interface Map3DCanvasProps {
   showLabels: boolean;
   cameraPreset: CameraPreset;
   onResetCameraPreset?: () => void;
-  // Tete Detailed View props
+  // Provincial Detailed View props
   viewMode?: ViewMode;
+  detailedProvinceId?: string | null;
   selectedDistrictId?: string | null;
   hoveredDistrictId?: string | null;
   onSelectDistrict?: (id: string | null) => void;
@@ -88,6 +89,19 @@ const DISTRICT_COLORS: Record<string, string> = {
   '0715': '#7c3aed', // Chifunde
 };
 
+const VIBRANT_DISTRICT_PALETTE = [
+  '#f97316', '#3b82f6', '#10b981', '#8b5cf6', '#ec4899',
+  '#eab308', '#06b6d4', '#ef4444', '#14b8a6', '#6366f1',
+  '#f43f5e', '#84cc16', '#a855f7', '#0284c7', '#d97706',
+  '#059669', '#7c3aed', '#db2777', '#ca8a04', '#0891b2',
+  '#dc2626', '#0d9488', '#4f46e5', '#e11d48'
+];
+
+function getDistrictColor(code: string, index: number): string {
+  if (DISTRICT_COLORS[code]) return DISTRICT_COLORS[code];
+  return VIBRANT_DISTRICT_PALETTE[index % VIBRANT_DISTRICT_PALETTE.length];
+}
+
 export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
   geoJson,
   selectedProvinceId,
@@ -101,6 +115,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
   cameraPreset,
   onResetCameraPreset,
   viewMode = 'national',
+  detailedProvinceId = null,
   selectedDistrictId = null,
   hoveredDistrictId = null,
   onSelectDistrict,
@@ -121,6 +136,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     showLabels,
     cameraPreset,
     viewMode,
+    detailedProvinceId,
     selectedDistrictId,
     hoveredDistrictId,
     isDrawerOpen,
@@ -142,6 +158,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     stateRef.current.showLabels = showLabels;
     stateRef.current.cameraPreset = cameraPreset;
     stateRef.current.viewMode = viewMode;
+    stateRef.current.detailedProvinceId = detailedProvinceId;
     stateRef.current.selectedDistrictId = selectedDistrictId;
     stateRef.current.hoveredDistrictId = hoveredDistrictId;
     stateRef.current.isDrawerOpen = isDrawerOpen;
@@ -160,6 +177,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     showLabels,
     cameraPreset,
     viewMode,
+    detailedProvinceId,
     selectedDistrictId,
     hoveredDistrictId,
     isDrawerOpen,
@@ -421,7 +439,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     updateInteractiveMeshList();
   };
 
-  // Build/update Tete districts 3D geometries
+  // Build/update provincial districts 3D geometries for any selected province
   const updateDistrictMeshes = () => {
     const ctx = sceneContextRef.current;
     if (!ctx) return;
@@ -448,11 +466,21 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     districtGroups.clear();
 
     const districtExtrudeHeight = 0.55;
+    const isDetailed =
+      stateRef.current.viewMode === 'province-detailed' ||
+      stateRef.current.viewMode === 'tete-detailed';
+    const targetProvId =
+      stateRef.current.detailedProvinceId ||
+      (stateRef.current.viewMode === 'tete-detailed' ? '07' : stateRef.current.selectedProvinceId || '07');
 
-    TETE_DISTRICTS_GEOJSON.features.forEach((feature) => {
-      const code = String(feature.properties.CodDist || feature.id || '');
-      const distName = feature.properties.Distrito || 'Distrito';
-      const distData = TETE_DISTRICTS_DATA[code];
+    const featuresToRender = MOZAMBIQUE_DISTRICTS_GEOJSON.features.filter(
+      (feature) => String(feature.properties.CodProv || feature.properties.provinceCode) === targetProvId
+    );
+
+    featuresToRender.forEach((feature, index) => {
+      const code = String(feature.properties.CodDist || feature.properties.code || feature.id || '');
+      const distName = feature.properties.Distrito || feature.properties.name || 'Distrito';
+      const distData = ALL_DISTRICTS_DATA[code];
 
       const shapes = convertGeometryToShapes(feature.geometry);
       if (shapes.length === 0) return;
@@ -461,12 +489,12 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       districtGroup.name = `district_group_${code}`;
 
       const { centroid, bounds } = computeFeatureCentroidAndBounds(feature);
-      const baseColor = DISTRICT_COLORS[code] || '#ea580c';
+      const baseColor = getDistrictColor(code, index);
 
       const meshes: THREE.Mesh[] = [];
       const edgeLines: THREE.LineSegments[] = [];
 
-      shapes.forEach((shape, index) => {
+      shapes.forEach((shape, sIdx) => {
         const extrudeSettings: THREE.ExtrudeGeometryOptions = {
           steps: 1,
           depth: districtExtrudeHeight,
@@ -500,7 +528,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
           districtCode: code,
           districtName: distName,
           baseColor: baseColor,
-          index,
+          index: sIdx,
         };
 
         const edgesGeom = new THREE.EdgesGeometry(geom, 26);
@@ -525,7 +553,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       const labelSprite = createDistrictLabelSprite(distName, infoText);
       if (labelSprite) {
         labelSprite.position.set(centroid[0], districtExtrudeHeight + 0.65, centroid[2]);
-        labelSprite.visible = stateRef.current.showLabels && stateRef.current.viewMode === 'tete-detailed';
+        labelSprite.visible = stateRef.current.showLabels && isDetailed;
         districtGroup.add(labelSprite);
       }
 
@@ -554,8 +582,11 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     if (!ctx) return;
 
     ctx.interactiveMeshes.length = 0;
+    const isDetailed =
+      stateRef.current.viewMode === 'province-detailed' ||
+      stateRef.current.viewMode === 'tete-detailed';
 
-    if (stateRef.current.viewMode === 'tete-detailed') {
+    if (isDetailed) {
       ctx.districtGroups.forEach((dg) => {
         dg.meshes.forEach((m) => ctx.interactiveMeshes.push(m));
       });
@@ -799,7 +830,10 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
           }
         } else {
           renderer.domElement.style.cursor = 'default';
-          if (stateRef.current.viewMode === 'tete-detailed') {
+          const isDetailed =
+            stateRef.current.viewMode === 'province-detailed' ||
+            stateRef.current.viewMode === 'tete-detailed';
+          if (isDetailed) {
             stateRef.current.onHoverDistrict?.(null);
           } else {
             stateRef.current.onHoverProvince(null);
@@ -842,7 +876,10 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
             stateRef.current.onSelectProvince(code);
           }
         } else {
-          if (stateRef.current.viewMode === 'tete-detailed') {
+          const isDetailed =
+            stateRef.current.viewMode === 'province-detailed' ||
+            stateRef.current.viewMode === 'tete-detailed';
+          if (isDetailed) {
             stateRef.current.onSelectDistrict?.(null);
           } else {
             stateRef.current.onSelectProvince(null);
@@ -928,9 +965,11 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
 
       controls.update();
 
-      const isTeteDetailed = stateRef.current.viewMode === 'tete-detailed';
+      const isDetailed =
+        stateRef.current.viewMode === 'province-detailed' ||
+        stateRef.current.viewMode === 'tete-detailed';
 
-      if (!isTeteDetailed) {
+      if (!isDetailed) {
         const currentSelected = stateRef.current.selectedProvinceId;
         const currentHovered = stateRef.current.hoveredProvinceId;
 
@@ -1148,25 +1187,29 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     controls.update();
   }, [panAction]);
 
-  // Handle ViewMode switches (National vs Tete Detailed)
-  // Ensures Tete and all its 14 districts are 100% visible and NOT obstructed by the right panel
+  // Handle ViewMode switches (National vs Provincial Detailed)
+  // Ensures the province and all its districts are 100% visible and NOT obstructed by the right panel
   useEffect(() => {
     const ctx = sceneContextRef.current;
     if (!ctx) return;
 
     const { provinceGroups, teteDistrictsRootGroup, districtGroups } = ctx;
-    const isTeteDetailed = viewMode === 'tete-detailed';
+    const isDetailed = viewMode === 'province-detailed' || viewMode === 'tete-detailed';
+    const targetProvId =
+      detailedProvinceId ||
+      (viewMode === 'tete-detailed' ? '07' : selectedProvinceId || '07');
 
-    if (isTeteDetailed) {
+    if (isDetailed) {
+      // Rebuild 3D district geometries for the target province
+      updateDistrictMeshes();
       teteDistrictsRootGroup.visible = true;
 
-      const tetePg = provinceGroups.get('07');
-      if (tetePg) {
-        tetePg.group.visible = false;
-      }
-
+      // Hide the selected province's national mesh so only its 3D districts are shown
       provinceGroups.forEach((pg, code) => {
-        if (code !== '07') {
+        if (code === targetProvId) {
+          pg.group.visible = false;
+        } else {
+          // Other provinces provide geographic context around the focused province
           pg.group.visible = true;
           pg.meshes.forEach((mesh) => {
             const mat = mesh.material as THREE.MeshPhysicalMaterial;
@@ -1189,15 +1232,37 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         }
       });
 
-      // Frame Tete province with all 14 districts completely visible in the unobstructed viewport
-      const teteBounds = {
-        minX: -10.03,
-        maxX: 1.26,
-        minZ: -9.9,
-        maxZ: -1.76,
-      };
-      const teteCentroid: [number, number, number] = [-4.38, 0.4, -5.83];
-      ctx.cameraTransitionTarget = computeUnobstructedTarget(teteBounds, teteCentroid, 500, false);
+      // Calculate the comprehensive bounding box and centroid of this province's districts
+      let pMinX = Infinity;
+      let pMaxX = -Infinity;
+      let pMinZ = Infinity;
+      let pMaxZ = -Infinity;
+
+      districtGroups.forEach((dg) => {
+        pMinX = Math.min(pMinX, dg.bounds.minX);
+        pMaxX = Math.max(pMaxX, dg.bounds.maxX);
+        pMinZ = Math.min(pMinZ, dg.bounds.minZ);
+        pMaxZ = Math.max(pMaxZ, dg.bounds.maxZ);
+      });
+
+      if (!isFinite(pMinX)) {
+        const pg = provinceGroups.get(targetProvId);
+        if (pg) {
+          pMinX = pg.bounds.minX;
+          pMaxX = pg.bounds.maxX;
+          pMinZ = pg.bounds.minZ;
+          pMaxZ = pg.bounds.maxZ;
+        }
+      }
+
+      const provBounds = { minX: pMinX, maxX: pMaxX, minZ: pMinZ, maxZ: pMaxZ };
+      const provCentroid: [number, number, number] = [
+        (pMinX + pMaxX) / 2,
+        0.4,
+        (pMinZ + pMaxZ) / 2,
+      ];
+
+      ctx.cameraTransitionTarget = computeUnobstructedTarget(provBounds, provCentroid, 500, false);
     } else {
       teteDistrictsRootGroup.visible = false;
 
@@ -1219,13 +1284,14 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     }
 
     updateInteractiveMeshList();
-  }, [viewMode, showLabels]);
+  }, [viewMode, detailedProvinceId, showLabels]);
 
   // Focus on district when selected in detailed mode
   // Shifts camera target to keep the district 100% visible to the left of the right panel
   useEffect(() => {
     const ctx = sceneContextRef.current;
-    if (!ctx || viewMode !== 'tete-detailed') return;
+    const isDetailed = viewMode === 'province-detailed' || viewMode === 'tete-detailed';
+    if (!ctx || !isDetailed) return;
 
     if (selectedDistrictId) {
       const dg = ctx.districtGroups.get(selectedDistrictId);
@@ -1235,16 +1301,42 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       }
     }
 
-    // When no district selected in tete-detailed, re-frame entire Tete province
-    const teteBounds = {
-      minX: -10.03,
-      maxX: 1.26,
-      minZ: -9.9,
-      maxZ: -1.76,
-    };
-    const teteCentroid: [number, number, number] = [-4.38, 0.4, -5.83];
-    ctx.cameraTransitionTarget = computeUnobstructedTarget(teteBounds, teteCentroid, 500, false);
-  }, [selectedDistrictId, viewMode, isDrawerOpen]);
+    // When no district selected in detailed mode, re-frame entire province
+    const targetProvId =
+      detailedProvinceId ||
+      (viewMode === 'tete-detailed' ? '07' : selectedProvinceId || '07');
+
+    let pMinX = Infinity;
+    let pMaxX = -Infinity;
+    let pMinZ = Infinity;
+    let pMaxZ = -Infinity;
+
+    ctx.districtGroups.forEach((dg) => {
+      pMinX = Math.min(pMinX, dg.bounds.minX);
+      pMaxX = Math.max(pMaxX, dg.bounds.maxX);
+      pMinZ = Math.min(pMinZ, dg.bounds.minZ);
+      pMaxZ = Math.max(pMaxZ, dg.bounds.maxZ);
+    });
+
+    if (!isFinite(pMinX)) {
+      const pg = ctx.provinceGroups.get(targetProvId);
+      if (pg) {
+        pMinX = pg.bounds.minX;
+        pMaxX = pg.bounds.maxX;
+        pMinZ = pg.bounds.minZ;
+        pMaxZ = pg.bounds.maxZ;
+      }
+    }
+
+    const provBounds = { minX: pMinX, maxX: pMaxX, minZ: pMinZ, maxZ: pMaxZ };
+    const provCentroid: [number, number, number] = [
+      (pMinX + pMaxX) / 2,
+      0.4,
+      (pMinZ + pMaxZ) / 2,
+    ];
+
+    ctx.cameraTransitionTarget = computeUnobstructedTarget(provBounds, provCentroid, 500, false);
+  }, [selectedDistrictId, viewMode, detailedProvinceId, isDrawerOpen]);
 
   // Geometry rebuild on thematic metric / extrusion changes (national mode)
   useEffect(() => {

@@ -1,0 +1,920 @@
+[
+  {
+    "code": "0101",
+    "provCode": "01",
+    "prov": "Cidade de Maputo",
+    "dist": "Cidade de Maputo"
+  },
+  {
+    "code": "0201",
+    "provCode": "02",
+    "prov": "Maputo Província",
+    "dist": "Matutuíne"
+  },
+  {
+    "code": "0202",
+    "provCode": "02",
+    "prov": "Maputo Província",
+    "dist": "Namaacha"
+  },
+  {
+    "code": "0203",
+    "provCode": "02",
+    "prov": "Maputo Província",
+    "dist": "Boane"
+  },
+  {
+    "code": "0204",
+    "provCode": "02",
+    "prov": "Maputo Província",
+    "dist": "Cidade da Matola"
+  },
+  {
+    "code": "0205",
+    "provCode": "02",
+    "prov": "Maputo Província",
+    "dist": "Marracuene"
+  },
+  {
+    "code": "0206",
+    "provCode": "02",
+    "prov": "Maputo Província",
+    "dist": "Moamba"
+  },
+  {
+    "code": "0207",
+    "provCode": "02",
+    "prov": "Maputo Província",
+    "dist": "Manhiça"
+  },
+  {
+    "code": "0208",
+    "provCode": "02",
+    "prov": "Maputo Província",
+    "dist": "Magude"
+  },
+  {
+    "code": "0301",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Chongoene\n"
+  },
+  {
+    "code": "0302",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Cidade de Xai-Xai"
+  },
+  {
+    "code": "0303",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Limpopo\n"
+  },
+  {
+    "code": "0304",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Bilene"
+  },
+  {
+    "code": "0305",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Mandlakazi"
+  },
+  {
+    "code": "0306",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Chibuto"
+  },
+  {
+    "code": "0307",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Chókwè"
+  },
+  {
+    "code": "0308",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Guijá"
+  },
+  {
+    "code": "0309",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Chigubo"
+  },
+  {
+    "code": "0310",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Mabalane"
+  },
+  {
+    "code": "0311",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Massingir"
+  },
+  {
+    "code": "0312",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Mapai"
+  },
+  {
+    "code": "0313",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Chicualacuala"
+  },
+  {
+    "code": "0314",
+    "provCode": "03",
+    "prov": "Gaza",
+    "dist": "Massangena"
+  },
+  {
+    "code": "0401",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Zavala"
+  },
+  {
+    "code": "0402",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Inharrime"
+  },
+  {
+    "code": "0403",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Jangamo"
+  },
+  {
+    "code": "0404",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Cidade de Inhambane"
+  },
+  {
+    "code": "0405",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Maxixe"
+  },
+  {
+    "code": "0406",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Homoine"
+  },
+  {
+    "code": "0407",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Panda"
+  },
+  {
+    "code": "0408",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Morrumbene"
+  },
+  {
+    "code": "0409",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Massinga"
+  },
+  {
+    "code": "0410",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Funhalouro"
+  },
+  {
+    "code": "0411",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Vilankulo"
+  },
+  {
+    "code": "0412",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Mabote"
+  },
+  {
+    "code": "0413",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Inhassoro"
+  },
+  {
+    "code": "0414",
+    "provCode": "04",
+    "prov": "Inhambane",
+    "dist": "Govuro"
+  },
+  {
+    "code": "0501",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Machanga"
+  },
+  {
+    "code": "0502",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Búzi"
+  },
+  {
+    "code": "0503",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Chibabava"
+  },
+  {
+    "code": "0504",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Cidade da Beira"
+  },
+  {
+    "code": "0505",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Dondo"
+  },
+  {
+    "code": "0506",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Nhamatanda"
+  },
+  {
+    "code": "0507",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Muanza"
+  },
+  {
+    "code": "0509",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Marromeu"
+  },
+  {
+    "code": "0510",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Cheringoma"
+  },
+  {
+    "code": "0511",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Caia"
+  },
+  {
+    "code": "0512",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Marínguè"
+  },
+  {
+    "code": "0513",
+    "provCode": "05",
+    "prov": "Sofala",
+    "dist": "Chemba"
+  },
+  {
+    "code": "0601",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Machaze"
+  },
+  {
+    "code": "0602",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Mossurizi"
+  },
+  {
+    "code": "0603",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Sussundenga"
+  },
+  {
+    "code": "0604",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Macate"
+  },
+  {
+    "code": "0605",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Gondola"
+  },
+  {
+    "code": "0606",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Cidade de Chimoio"
+  },
+  {
+    "code": "0607",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Vanduzi"
+  },
+  {
+    "code": "0608",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Manica"
+  },
+  {
+    "code": "0609",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Macossa"
+  },
+  {
+    "code": "0610",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Báruè"
+  },
+  {
+    "code": "0611",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Tambara"
+  },
+  {
+    "code": "0612",
+    "provCode": "06",
+    "prov": "Manica",
+    "dist": "Guro"
+  },
+  {
+    "code": "0701",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Mutarara"
+  },
+  {
+    "code": "0702",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Dôa"
+  },
+  {
+    "code": "0703",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Changara"
+  },
+  {
+    "code": "0704",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Moatize"
+  },
+  {
+    "code": "0705",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Cidade de Tete"
+  },
+  {
+    "code": "0707",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Cahora Bassa"
+  },
+  {
+    "code": "0708",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Magoe"
+  },
+  {
+    "code": "0709",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Tsangano"
+  },
+  {
+    "code": "0710",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Chiúta"
+  },
+  {
+    "code": "0711",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Marávia"
+  },
+  {
+    "code": "0712",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Zumbu"
+  },
+  {
+    "code": "0713",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Angónia"
+  },
+  {
+    "code": "0714",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Macanga"
+  },
+  {
+    "code": "0715",
+    "provCode": "07",
+    "prov": "Tete",
+    "dist": "Chifunde"
+  },
+  {
+    "code": "0801",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Chinde"
+  },
+  {
+    "code": "0802",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Luabo"
+  },
+  {
+    "code": "0803",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Inhassunge"
+  },
+  {
+    "code": "0804",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Cidade de Quelimane"
+  },
+  {
+    "code": "0805",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Mopeia"
+  },
+  {
+    "code": "0806",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Namacurra"
+  },
+  {
+    "code": "0807",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Nicoadala"
+  },
+  {
+    "code": "0808",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Maganja da Costa"
+  },
+  {
+    "code": "0809",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Mocubela"
+  },
+  {
+    "code": "0810",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Mocuba"
+  },
+  {
+    "code": "0811",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Derre"
+  },
+  {
+    "code": "0812",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Morrumbala"
+  },
+  {
+    "code": "0813",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Pebane"
+  },
+  {
+    "code": "0814",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Mulevala"
+  },
+  {
+    "code": "0815",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Lugela"
+  },
+  {
+    "code": "0816",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Milange"
+  },
+  {
+    "code": "0817",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Gilé"
+  },
+  {
+    "code": "0818",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Alto Molócuè"
+  },
+  {
+    "code": "0819",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Ile"
+  },
+  {
+    "code": "0820",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Namarroi"
+  },
+  {
+    "code": "0821",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Molumbo"
+  },
+  {
+    "code": "0822",
+    "provCode": "08",
+    "prov": "Zambézia",
+    "dist": "Guruè"
+  },
+  {
+    "code": "0901",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Moma"
+  },
+  {
+    "code": "0902",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Larde"
+  },
+  {
+    "code": "0903",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Angoche"
+  },
+  {
+    "code": "0904",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Mogovolas"
+  },
+  {
+    "code": "0905",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Murrupula"
+  },
+  {
+    "code": "0906",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Liúpo"
+  },
+  {
+    "code": "0907",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Mogincual"
+  },
+  {
+    "code": "0908",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Meconta"
+  },
+  {
+    "code": "0909",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Nampula"
+  },
+  {
+    "code": "0910",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Rapale"
+  },
+  {
+    "code": "0911",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Ribáuè"
+  },
+  {
+    "code": "0912",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Malema"
+  },
+  {
+    "code": "0913",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Ilha de Moçambique"
+  },
+  {
+    "code": "0914",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Mossuril"
+  },
+  {
+    "code": "0915",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Monapo"
+  },
+  {
+    "code": "0916",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Muecate"
+  },
+  {
+    "code": "0917",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Mecuburi"
+  },
+  {
+    "code": "0918",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Lalaua"
+  },
+  {
+    "code": "0919",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Nacala"
+  },
+  {
+    "code": "0920",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Nacala-a-Velha"
+  },
+  {
+    "code": "0921",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Nacarôa"
+  },
+  {
+    "code": "0922",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Memba"
+  },
+  {
+    "code": "0923",
+    "provCode": "09",
+    "prov": "Nampula",
+    "dist": "Eráti"
+  },
+  {
+    "code": "1001",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Mecufi"
+  },
+  {
+    "code": "1002",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Chiúre"
+  },
+  {
+    "code": "1003",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Namuno"
+  },
+  {
+    "code": "1004",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Balama"
+  },
+  {
+    "code": "1005",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Cidade de Pemba"
+  },
+  {
+    "code": "1006",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Pemba"
+  },
+  {
+    "code": "1007",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Ancuabe"
+  },
+  {
+    "code": "1008",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Quissanga"
+  },
+  {
+    "code": "1009",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Ibo"
+  },
+  {
+    "code": "1010",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Meluco"
+  },
+  {
+    "code": "1011",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Montepuez"
+  },
+  {
+    "code": "1012",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Macomia"
+  },
+  {
+    "code": "1013",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Muidumbe"
+  },
+  {
+    "code": "1014",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Mocímboa da Praia"
+  },
+  {
+    "code": "1015",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Mueda"
+  },
+  {
+    "code": "1016",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Palma"
+  },
+  {
+    "code": "1017",
+    "provCode": "10",
+    "prov": "Cabo Delgado",
+    "dist": "Nangade"
+  },
+  {
+    "code": "1101",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Cuamba"
+  },
+  {
+    "code": "1102",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Mecanhelas"
+  },
+  {
+    "code": "1103",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Metarica"
+  },
+  {
+    "code": "1104",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Mandimba"
+  },
+  {
+    "code": "1105",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Nipepe"
+  },
+  {
+    "code": "1106",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Maúa"
+  },
+  {
+    "code": "1107",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Marrupa"
+  },
+  {
+    "code": "1108",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Majune"
+  },
+  {
+    "code": "1109",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Ngauma"
+  },
+  {
+    "code": "1110",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Chimbunila"
+  },
+  {
+    "code": "1111",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Lichinga"
+  },
+  {
+    "code": "1112",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Mecula"
+  },
+  {
+    "code": "1113",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Mavago"
+  },
+  {
+    "code": "1114",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Muembe"
+  },
+  {
+    "code": "1115",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Sanga"
+  },
+  {
+    "code": "1116",
+    "provCode": "11",
+    "prov": "Niassa",
+    "dist": "Lago"
+  }
+]

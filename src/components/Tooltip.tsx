@@ -1,6 +1,5 @@
-import React from 'react';
 import { PROVINCES_DATA } from '../data/provincesData.ts';
-import { TETE_DISTRICTS_DATA } from '../data/teteData.ts';
+import { ALL_DISTRICTS_DATA } from '../data/allDistrictsData.ts';
 import { ThematicMetric } from '../types/index.ts';
 import { getThematicColor } from '../utils/thematicColor.ts';
 
@@ -19,9 +18,9 @@ export const Tooltip: React.FC<TooltipProps> = ({
 }) => {
   if (!position) return null;
 
-  // District Tooltip when inspecting Tete
+  // District Tooltip when inspecting any province
   if (districtId) {
-    const district = TETE_DISTRICTS_DATA[districtId];
+    const district = ALL_DISTRICTS_DATA[districtId];
     if (!district) return null;
 
     return (
@@ -58,7 +57,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
             <div>
               <span className="text-slate-400 text-[11px] block">Densidade</span>
               <span className="font-medium text-orange-400">
-                {district.density2017.toFixed(1).replace('.', ',')} hab/km²
+                {(district.density2017 ?? district.density ?? (district.population2017 / Math.max(1, district.areaKm2))).toFixed(1).replace('.', ',')} hab/km²
               </span>
             </div>
           </div>

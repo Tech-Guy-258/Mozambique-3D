@@ -69,24 +69,27 @@ export interface GeoJSONFeatureCollection {
   type: 'FeatureCollection';
   source?: string;
   sourceUrl?: string;
-  crs?: string;
+  crs?: string | { type: string; properties: { name: string } };
   features: GeoJSONFeature[];
 }
 
 export interface DistrictData {
-  id: string; // e.g. '0704'
+  id?: string; // e.g. '0704'
   code: string;
   provinceId: string; // '07'
+  provinceName?: string;
   name: string;
   headquarters: string;
   areaKm2: number;
   population2017: number;
-  density2017: number;
+  density?: number;
+  density2017?: number;
   administrativePosts: string[];
   economicHighlights: string[];
-  tourismHighlights: string[];
+  tourismHighlights?: string[];
+  tourismAttractions?: string[];
   notes?: string;
-  sources: {
+  sources?: {
     demographics: string;
     geography: string;
     referenceYears: string;
@@ -115,7 +118,7 @@ export interface TourismHeritageItem {
   yearReference?: string;
 }
 
-export type ViewMode = 'national' | 'tete-detailed';
+export type ViewMode = 'national' | 'province-detailed' | 'tete-detailed';
 
 export interface Province3DMeshMeta {
   code: string;

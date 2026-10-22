@@ -25,6 +25,7 @@ interface TopHeaderProps {
   onExportGeoJSON: () => void;
   onExportCSV: () => void;
   viewMode?: ViewMode;
+  detailedProvinceId?: string | null;
   onReturnToNational?: () => void;
 }
 
@@ -38,6 +39,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   onExportGeoJSON,
   onExportCSV,
   viewMode = 'national',
+  detailedProvinceId = null,
   onReturnToNational,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -109,14 +111,26 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
     setIsSearchOpen(false);
   };
 
-  const isTeteDetailed = viewMode === 'tete-detailed';
+  const isDetailed = viewMode === 'province-detailed' || viewMode === 'tete-detailed';
+  const targetProv = detailedProvinceId
+    ? PROVINCES_DATA[detailedProvinceId]
+    : viewMode === 'tete-detailed'
+      ? PROVINCES_DATA['07']
+      : null;
+  const provName = targetProv?.name || 'Província';
 
   return (
     <header className="fixed top-3 inset-x-3 sm:inset-x-5 z-30 pointer-events-none flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
       {/* Brand Badge */}
       <div className="pointer-events-auto bg-slate-900/90 border border-slate-700/80 rounded-2xl shadow-xl p-3 sm:px-4 sm:py-3 backdrop-blur-md flex items-center gap-3">
-        <div className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-md ${isTeteDetailed ? 'bg-gradient-to-br from-orange-500 to-amber-600' : 'bg-gradient-to-br from-emerald-500 via-yellow-500 to-red-600'}`}>
-          {isTeteDetailed ? (
+        <div
+          className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-md ${
+            isDetailed
+              ? 'bg-gradient-to-br from-orange-500 to-sky-600'
+              : 'bg-gradient-to-br from-emerald-500 via-yellow-500 to-red-600'
+          }`}
+        >
+          {isDetailed ? (
             <Compass className="w-5 h-5 text-slate-950 font-bold" />
           ) : (
             <Globe className="w-5 h-5 text-slate-950 font-bold" />
@@ -125,15 +139,21 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-white">
-              {isTeteDetailed ? 'Tete 3D Explorer' : 'Mozambique 3D Explorer'}
+              {isDetailed ? `${provName} 3D Explorer` : 'Mozambique 3D Explorer'}
             </h1>
-            <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-semibold border ${isTeteDetailed ? 'bg-orange-950/80 text-orange-400 border-orange-800' : 'bg-sky-950/80 text-sky-400 border-sky-800/80'}`}>
-              {isTeteDetailed ? 'Distritos MOZGIS Layer 2' : 'MOZGIS WGS84'}
+            <span
+              className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-semibold border ${
+                isDetailed
+                  ? 'bg-sky-950/80 text-sky-400 border-sky-800'
+                  : 'bg-sky-950/80 text-sky-400 border-sky-800/80'
+              }`}
+            >
+              {isDetailed ? 'Distritos MOZGIS Layer 2' : 'MOZGIS WGS84'}
             </span>
           </div>
           <p className="text-[11px] text-slate-400">
-            {isTeteDetailed
-              ? 'Divisão Distrital Verificada, Economia & Património de Tete'
+            {isDetailed
+              ? `Divisão Distrital Verificada, Economia & Património de ${provName}`
               : 'Fronteiras Administrativas MAEFP & Estatísticas INE Moçambique'}
           </p>
         </div>
@@ -141,8 +161,8 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
 
       {/* Center Search & Actions */}
       <div className="pointer-events-auto flex items-center gap-2 self-stretch md:self-auto justify-end">
-        {/* Return to National Map button when in Tete Detailed View */}
-        {isTeteDetailed && onReturnToNational && (
+        {/* Return to National Map button when in Detailed View */}
+        {isDetailed && onReturnToNational && (
           <button
             onClick={onReturnToNational}
             className="bg-sky-600 hover:bg-sky-500 text-white border border-sky-400/50 rounded-xl p-2 sm:px-3 sm:py-2 text-xs font-bold backdrop-blur-md shadow-lg flex items-center gap-1.5 transition-colors cursor-pointer"
@@ -159,7 +179,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
             <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
             <input
               type="text"
-              placeholder={isTeteDetailed ? "Pesquisar distrito de Tete..." : "Pesquisar província ou distrito..."}
+              placeholder={isDetailed ? `Pesquisar distrito de ${provName}...` : 'Pesquisar província ou distrito...'}
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
@@ -193,7 +213,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
         </div>
 
         {/* Action: Compare (visible in national mode) */}
-        {!isTeteDetailed && (
+        {!isDetailed && (
           <button
             onClick={onOpenCompare}
             className="bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 rounded-xl p-2 sm:px-3 sm:py-2 text-xs font-medium text-slate-200 hover:text-white backdrop-blur-md shadow-lg flex items-center gap-1.5 transition-colors cursor-pointer"
