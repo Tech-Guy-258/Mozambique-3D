@@ -11,6 +11,7 @@ import {
   FileSpreadsheet,
   Compass,
   ArrowLeft,
+  Route as RouteIcon,
 } from 'lucide-react';
 import { PROVINCES_DATA, MOZAMBIQUE_NATIONAL_STATS, OFFICIAL_SOURCES } from '../data/provincesData.ts';
 import { ViewMode } from '../types/index.ts';
@@ -27,6 +28,12 @@ interface TopHeaderProps {
   viewMode?: ViewMode;
   detailedProvinceId?: string | null;
   onReturnToNational?: () => void;
+  onSelectViewMode?: (mode: ViewMode) => void;
+  isTransportPanelOpen?: boolean;
+  onToggleTransportPanel?: () => void;
+  activeTransportLayersCount?: number;
+  isPatrioticPanelOpen?: boolean;
+  onTogglePatrioticPanel?: () => void;
 }
 
 export const TopHeader: React.FC<TopHeaderProps> = ({
@@ -41,6 +48,12 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   viewMode = 'national',
   detailedProvinceId = null,
   onReturnToNational,
+  onSelectViewMode,
+  isTransportPanelOpen = false,
+  onToggleTransportPanel,
+  activeTransportLayersCount = 7,
+  isPatrioticPanelOpen = false,
+  onTogglePatrioticPanel,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -112,6 +125,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   };
 
   const isDetailed = viewMode === 'province-detailed' || viewMode === 'tete-detailed';
+  const isGoogleRoads = viewMode === 'google-roads';
   const targetProv = detailedProvinceId
     ? PROVINCES_DATA[detailedProvinceId]
     : viewMode === 'tete-detailed'
@@ -125,43 +139,88 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
       <div className="pointer-events-auto bg-slate-900/90 border border-slate-700/80 rounded-2xl shadow-xl p-3 sm:px-4 sm:py-3 backdrop-blur-md flex items-center gap-3">
         <div
           className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-md ${
-            isDetailed
-              ? 'bg-gradient-to-br from-orange-500 to-sky-600'
-              : 'bg-gradient-to-br from-emerald-500 via-yellow-500 to-red-600'
+            isGoogleRoads
+              ? 'bg-gradient-to-br from-sky-500 via-blue-600 to-indigo-700 text-white'
+              : isDetailed
+                ? 'bg-gradient-to-br from-orange-500 to-sky-600 text-slate-950 font-bold'
+                : 'bg-gradient-to-br from-emerald-500 via-yellow-500 to-red-600 text-slate-950 font-bold'
           }`}
         >
-          {isDetailed ? (
-            <Compass className="w-5 h-5 text-slate-950 font-bold" />
+          {isGoogleRoads ? (
+            <RouteIcon className="w-5 h-5 text-white" />
+          ) : isDetailed ? (
+            <Compass className="w-5 h-5" />
           ) : (
-            <Globe className="w-5 h-5 text-slate-950 font-bold" />
+            <Globe className="w-5 h-5" />
           )}
         </div>
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-white">
-              {isDetailed ? `${provName} 3D Explorer` : 'Mozambique 3D Explorer'}
+              {isGoogleRoads
+                ? 'Moçambique Google Roads'
+                : isDetailed
+                  ? `${provName} 3D Explorer`
+                  : 'Mozambique 3D Explorer'}
             </h1>
             <span
               className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-semibold border ${
-                isDetailed
+                isGoogleRoads
                   ? 'bg-sky-950/80 text-sky-400 border-sky-800'
-                  : 'bg-sky-950/80 text-sky-400 border-sky-800/80'
+                  : isDetailed
+                    ? 'bg-sky-950/80 text-sky-400 border-sky-800'
+                    : 'bg-sky-950/80 text-sky-400 border-sky-800/80'
               }`}
             >
-              {isDetailed ? 'Distritos MOZGIS Layer 2' : 'MOZGIS WGS84'}
+              {isGoogleRoads
+                ? 'Google Maps • Routes API'
+                : isDetailed
+                  ? 'Distritos MOZGIS Layer 2'
+                  : 'MOZGIS WGS84'}
             </span>
           </div>
           <p className="text-[11px] text-slate-400">
-            {isDetailed
-              ? `Divisão Distrital Verificada, Economia & Património de ${provName}`
-              : 'Fronteiras Administrativas MAEFP & Estatísticas INE Moçambique'}
+            {isGoogleRoads
+              ? 'Cartografia Rodoviária Oficial, Pesquisa de Destinos & Rotas'
+              : isDetailed
+                ? `Divisão Distrital Verificada, Economia & Património de ${provName}`
+                : 'Fronteiras Administrativas MAEFP & Estatísticas INE Moçambique'}
           </p>
         </div>
       </div>
 
       {/* Center Search & Actions */}
       <div className="pointer-events-auto flex items-center gap-2 self-stretch md:self-auto justify-end">
-        {/* Return to National Map button when in Detailed View */}
+        {/* Toggle between Google Road Map and 3D Explorer */}
+        {onSelectViewMode && (
+          <button
+            onClick={() => onSelectViewMode(isGoogleRoads ? 'national' : 'google-roads')}
+            className={`border rounded-xl p-2 sm:px-3 sm:py-2 text-xs font-bold backdrop-blur-md shadow-lg flex items-center gap-1.5 transition-all cursor-pointer ${
+              isGoogleRoads
+                ? 'bg-emerald-600 hover:bg-emerald-500 text-white border-emerald-400/50 shadow-emerald-950/30'
+                : 'bg-sky-600 hover:bg-sky-500 text-white border-sky-400/50 shadow-sky-950/30'
+            }`}
+            title={
+              isGoogleRoads
+                ? 'Alternar para o Explorador Territorial 3D'
+                : 'Alternar para o Mapa Rodoviário Oficial Google Maps com cálculo de rotas'
+            }
+          >
+            {isGoogleRoads ? (
+              <>
+                <Globe className="w-4 h-4" />
+                <span>Explorador 3D</span>
+              </>
+            ) : (
+              <>
+                <RouteIcon className="w-4 h-4" />
+                <span>Google Estradas</span>
+              </>
+            )}
+          </button>
+        )}
+
+        {/* Return to National Map button when in Detailed 3D View */}
         {isDetailed && onReturnToNational && (
           <button
             onClick={onReturnToNational}
@@ -212,8 +271,8 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
           )}
         </div>
 
-        {/* Action: Compare (visible in national mode) */}
-        {!isDetailed && (
+        {/* Action: Compare (visible in national 3D mode) */}
+        {!isDetailed && !isGoogleRoads && (
           <button
             onClick={onOpenCompare}
             className="bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 rounded-xl p-2 sm:px-3 sm:py-2 text-xs font-medium text-slate-200 hover:text-white backdrop-blur-md shadow-lg flex items-center gap-1.5 transition-colors cursor-pointer"
@@ -224,19 +283,58 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
           </button>
         )}
 
+        {/* Action: Do Zumbo ao Índico (História & Pátria) */}
+        {onTogglePatrioticPanel && !isGoogleRoads && (
+          <button
+            onClick={onTogglePatrioticPanel}
+            className={`rounded-xl p-2 sm:px-3 sm:py-2 text-xs font-bold border backdrop-blur-md shadow-lg flex items-center gap-1.5 transition-all cursor-pointer ${
+              isPatrioticPanelOpen
+                ? 'bg-gradient-to-r from-emerald-600/30 via-amber-500/30 to-red-600/30 text-amber-300 border-amber-400 shadow-amber-950/40'
+                : 'bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white border-slate-700/80 hover:border-amber-400/60'
+            }`}
+            title="Do Zumbo ao Índico • História do Nascimento e Identidade de Moçambique"
+          >
+            <span className="text-sm leading-none">🇲🇿</span>
+            <span className="hidden sm:inline">Do Zumbo ao Índico</span>
+          </button>
+        )}
+
+        {/* Action: Transport Network */}
+        {onToggleTransportPanel && !isGoogleRoads && (
+          <button
+            onClick={onToggleTransportPanel}
+            className={`rounded-xl p-2 sm:px-3 sm:py-2 text-xs font-medium border backdrop-blur-md shadow-lg flex items-center gap-1.5 transition-all cursor-pointer ${
+              isTransportPanelOpen
+                ? 'bg-amber-500/20 text-amber-300 border-amber-500/60 shadow-amber-950/20'
+                : 'bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white border-slate-700/80'
+            }`}
+            title="Rede de Transportes de Moçambique: Portos Marítimos, Aeroportos e Aeródromos"
+          >
+            <Compass className="w-4 h-4 text-amber-400" />
+            <span className="hidden sm:inline">Transportes</span>
+            {activeTransportLayersCount !== undefined && activeTransportLayersCount > 0 && (
+              <span className="bg-amber-500 text-slate-950 font-bold text-[10px] px-1.5 py-0.2 rounded-full font-mono">
+                {activeTransportLayersCount}
+              </span>
+            )}
+          </button>
+        )}
+
         {/* Action: Sync MOZGIS */}
-        <button
-          onClick={onSyncMozgis}
-          disabled={isSyncingMozgis}
-          className="bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 rounded-xl p-2 sm:px-3 sm:py-2 text-xs font-medium text-slate-200 hover:text-white backdrop-blur-md shadow-lg flex items-center gap-1.5 transition-colors cursor-pointer"
-          title="Sincronizar fronteiras ao vivo com servidor MOZGIS MAEFP"
-        >
-          <RefreshCw className={`w-4 h-4 text-emerald-400 ${isSyncingMozgis ? 'animate-spin' : ''}`} />
-          <span className="hidden lg:inline">MOZGIS</span>
-          {syncStatus === 'success' && (
-            <span className="hidden sm:inline text-[10px] text-emerald-400 font-mono">✓</span>
-          )}
-        </button>
+        {!isGoogleRoads && (
+          <button
+            onClick={onSyncMozgis}
+            disabled={isSyncingMozgis}
+            className="bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 rounded-xl p-2 sm:px-3 sm:py-2 text-xs font-medium text-slate-200 hover:text-white backdrop-blur-md shadow-lg flex items-center gap-1.5 transition-colors cursor-pointer"
+            title="Sincronizar fronteiras ao vivo com servidor MOZGIS MAEFP"
+          >
+            <RefreshCw className={`w-4 h-4 text-emerald-400 ${isSyncingMozgis ? 'animate-spin' : ''}`} />
+            <span className="hidden lg:inline">MOZGIS</span>
+            {syncStatus === 'success' && (
+              <span className="hidden sm:inline text-[10px] text-emerald-400 font-mono">✓</span>
+            )}
+          </button>
+        )}
 
         {/* Action: Export Menu */}
         <div className="relative">

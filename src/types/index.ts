@@ -118,7 +118,7 @@ export interface TourismHeritageItem {
   yearReference?: string;
 }
 
-export type ViewMode = 'national' | 'province-detailed' | 'tete-detailed';
+export type ViewMode = 'national' | 'province-detailed' | 'tete-detailed' | 'google-roads';
 
 export interface Province3DMeshMeta {
   code: string;
@@ -137,3 +137,81 @@ export interface PanAction {
   type: 'up' | 'down' | 'left' | 'right' | 'in' | 'out' | 'recenter';
 }
 
+export type TransportLayerId =
+  | 'primary_roads'
+  | 'secondary_roads'
+  | 'railways'
+  | 'ports'
+  | 'airports'
+  | 'aerodromes';
+
+export interface TransportLayersState {
+  primary_roads: boolean;
+  secondary_roads: boolean;
+  railways: boolean;
+  ports: boolean;
+  airports: boolean;
+  aerodromes: boolean;
+}
+
+export interface TransportRoute {
+  id: string;
+  layer: 'primary_roads' | 'secondary_roads' | 'railways';
+  code: string;
+  name: string;
+  operator: string;
+  extentKm: number;
+  status: string;
+  color: string;
+  dashPattern?: boolean;
+  coordinates: [number, number][];
+  stationsOrHubs: {
+    name: string;
+    coordinates: [number, number];
+    type?: 'hub' | 'bridge' | 'toll' | 'border' | 'station';
+  }[];
+  description: string;
+  strategicImportance: string;
+  surfaceType?: string;
+  laneConfiguration?: string;
+  provincesCrossed?: string[];
+  keyBridges?: string[];
+  tollPlazas?: string[];
+  trafficVolume?: string;
+}
+
+export interface TransportNode {
+  id: string;
+  layer: 'ports' | 'airports' | 'aerodromes';
+  code: string;
+  name: string;
+  category: string;
+  provinceId: string;
+  provinceName: string;
+  coordinates: [number, number];
+  elevationMeters?: number;
+  runwayOrBerths?: string;
+  operator: string;
+  capacityOrTraffic?: string;
+  description: string;
+  highlights: string[];
+}
+
+export interface RouteStepInfo {
+  instruction: string;
+  distanceText?: string;
+  durationText?: string;
+}
+
+export interface CalculatedRouteDetails {
+  originName: string;
+  destinationName: string;
+  distanceKm?: number;
+  distanceText: string;
+  durationMinutes?: number;
+  durationText: string;
+  startAddress?: string;
+  endAddress?: string;
+  steps: RouteStepInfo[];
+  googleMapsUrl?: string;
+}

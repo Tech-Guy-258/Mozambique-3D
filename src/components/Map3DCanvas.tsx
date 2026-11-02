@@ -8,12 +8,27 @@ import {
   LightingTheme,
   CameraPreset,
   ViewMode,
+  TransportLayersState,
+  TransportRoute,
+  TransportNode,
 } from '../types/index.ts';
 import { PROVINCES_DATA } from '../data/provincesData.ts';
 import { MOZAMBIQUE_DISTRICTS_GEOJSON } from '../data/allDistrictsGeoJson.ts';
 import { ALL_DISTRICTS_DATA } from '../data/allDistrictsData.ts';
-import { convertGeometryToShapes, computeFeatureCentroidAndBounds } from '../utils/geoTo3d.ts';
+import {
+  TRANSPORT_NODES,
+  TRANSPORT_LAYERS_CONFIG,
+  DEFAULT_TRANSPORT_LAYERS,
+} from '../data/transportData.ts';
+import {
+  convertGeometryToShapes,
+  computeFeatureCentroidAndBounds,
+  MOZ_CENTER_LON,
+  MOZ_CENTER_LAT,
+  GEO_SCALE,
+} from '../utils/geoTo3d.ts';
 import { getThematicColor, getProvinceExtrusionHeight } from '../utils/thematicColor.ts';
+import { buildPatrioticElements, PatrioticSceneElements } from '../utils/patriotic3d.ts';
 
 export interface PanAction {
   id: number;
@@ -42,6 +57,16 @@ interface Map3DCanvasProps {
   onReturnToNational?: () => void;
   panAction?: PanAction | null;
   isDrawerOpen?: boolean;
+  // Transport Network props
+  transportLayers?: TransportLayersState;
+  selectedTransportItem?: { type: 'route' | 'node'; item: TransportRoute | TransportNode } | null;
+  hoveredTransportItem?: { type: 'route' | 'node'; item: TransportRoute | TransportNode } | null;
+  onSelectTransportItem?: (item: { type: 'route' | 'node'; item: TransportRoute | TransportNode } | null) => void;
+  onHoverTransportItem?: (item: { type: 'route' | 'node'; item: TransportRoute | TransportNode } | null, mouseEvent?: { x: number; y: number }) => void;
+  focusTransportCoords?: [number, number] | null;
+  // Patriotic Landmarks props
+  onSelectPatrioticLandmark?: (landmarkId: string) => void;
+  selectedPatrioticLandmarkId?: string | null;
 }
 
 interface ProvinceMeshGroup {
@@ -102,6 +127,26 @@ function getDistrictColor(code: string, index: number): string {
   return VIBRANT_DISTRICT_PALETTE[index % VIBRANT_DISTRICT_PALETTE.length];
 }
 
+interface TransportMeshEntry {
+  id: string;
+  type: 'route' | 'node';
+  data: TransportRoute | TransportNode;
+  group: THREE.Group;
+  primaryMesh: THREE.Mesh;
+  glowMesh?: THREE.Mesh;
+  bedMesh?: THREE.Mesh;
+  ringMesh?: THREE.Mesh;
+  labelSprite?: THREE.Sprite;
+  shieldSprite?: THREE.Sprite;
+  pulsePoints?: {
+    mesh: THREE.Mesh;
+    curve: THREE.CatmullRomCurve3;
+    progress: number;
+    speed: number;
+  }[];
+  infrastructureMeshes?: THREE.Object3D[];
+}
+
 export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
   geoJson,
   selectedProvinceId,
@@ -123,6 +168,14 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
   onReturnToNational,
   panAction = null,
   isDrawerOpen = false,
+  transportLayers = DEFAULT_TRANSPORT_LAYERS,
+  selectedTransportItem = null,
+  hoveredTransportItem = null,
+  onSelectTransportItem,
+  onHoverTransportItem,
+  focusTransportCoords = null,
+  onSelectPatrioticLandmark,
+  selectedPatrioticLandmarkId = null,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
 
@@ -146,6 +199,14 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     onHoverDistrict,
     onReturnToNational,
     onResetCameraPreset,
+    transportLayers,
+    selectedTransportItem,
+    hoveredTransportItem,
+    onSelectTransportItem,
+    onHoverTransportItem,
+    focusTransportCoords,
+    onSelectPatrioticLandmark,
+    selectedPatrioticLandmarkId,
   });
 
   // Keep stateRef in sync with props without rebuilding scene
@@ -168,6 +229,14 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     stateRef.current.onHoverDistrict = onHoverDistrict;
     stateRef.current.onReturnToNational = onReturnToNational;
     stateRef.current.onResetCameraPreset = onResetCameraPreset;
+    stateRef.current.transportLayers = transportLayers;
+    stateRef.current.selectedTransportItem = selectedTransportItem;
+    stateRef.current.hoveredTransportItem = hoveredTransportItem;
+    stateRef.current.onSelectTransportItem = onSelectTransportItem;
+    stateRef.current.onHoverTransportItem = onHoverTransportItem;
+    stateRef.current.focusTransportCoords = focusTransportCoords;
+    stateRef.current.onSelectPatrioticLandmark = onSelectPatrioticLandmark;
+    stateRef.current.selectedPatrioticLandmarkId = selectedPatrioticLandmarkId;
   }, [
     selectedProvinceId,
     hoveredProvinceId,
@@ -187,6 +256,14 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     onHoverDistrict,
     onReturnToNational,
     onResetCameraPreset,
+    transportLayers,
+    selectedTransportItem,
+    hoveredTransportItem,
+    onSelectTransportItem,
+    onHoverTransportItem,
+    focusTransportCoords,
+    onSelectPatrioticLandmark,
+    selectedPatrioticLandmarkId,
   ]);
 
   const sceneContextRef = useRef<{
@@ -197,6 +274,10 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     provinceGroups: Map<string, ProvinceMeshGroup>;
     districtGroups: Map<string, DistrictMeshGroup>;
     teteDistrictsRootGroup: THREE.Group;
+    transportRootGroup: THREE.Group;
+    transportItems: Map<string, TransportMeshEntry>;
+    transportInteractiveMeshes: THREE.Mesh[];
+    patrioticElements: PatrioticSceneElements;
     interactiveMeshes: THREE.Mesh[];
     keyLight: THREE.DirectionalLight;
     hemiLight: THREE.HemisphereLight;
@@ -576,12 +657,350 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     updateInteractiveMeshList();
   };
 
-  // Sync interactiveMeshes with current viewMode
+  // Helper to project lon/lat to 3D world coords
+  const geoToWorld = (lon: number, lat: number, elev = 0.58): THREE.Vector3 => {
+    return new THREE.Vector3(
+      (lon - MOZ_CENTER_LON) * GEO_SCALE,
+      elev,
+      -(lat - MOZ_CENTER_LAT) * GEO_SCALE
+    );
+  };
+
+  // Helper to generate crisp 2D canvas label sprite for transport hubs
+  const createTransportLabelSprite = (text: string, subText: string, color: string) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 96;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return undefined;
+
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+    const r = 16, x = 8, y = 8, w = 240, h = 80;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 26px "Inter", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(text, 128, 44);
+
+    ctx.fillStyle = color;
+    ctx.font = 'bold 18px "Inter", sans-serif';
+    ctx.fillText(subText, 128, 70);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.minFilter = THREE.LinearFilter;
+
+    const spriteMat = new THREE.SpriteMaterial({
+      map: texture,
+      depthTest: false,
+      transparent: true,
+      opacity: 0.95,
+    });
+
+    const sprite = new THREE.Sprite(spriteMat);
+    sprite.scale.set(1.8, 0.68, 1);
+    return sprite;
+  };
+
+
+
+  // Re-build/update 3D transport network meshes (roads, railways, ports, airports, aerodromes)
+  const updateTransportMeshes = () => {
+    const ctx = sceneContextRef.current;
+    if (!ctx) return;
+
+    const { transportRootGroup, transportItems, transportInteractiveMeshes } = ctx;
+
+    // Clean up previous items
+    transportItems.forEach((item) => {
+      transportRootGroup.remove(item.group);
+      item.group.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.geometry.dispose();
+          if (Array.isArray(child.material)) {
+            child.material.forEach((m) => m.dispose());
+          } else {
+            child.material.dispose();
+          }
+        } else if (child instanceof THREE.Sprite) {
+          child.material.map?.dispose();
+          child.material.dispose();
+        }
+      });
+    });
+    transportItems.clear();
+    transportInteractiveMeshes.length = 0;
+
+    const layers = stateRef.current.transportLayers;
+    const showLabels = stateRef.current.showLabels;
+
+    // Estradas principais (EN), secundárias (R) e rede ferroviária (CFM) removidas do mapa 3D
+    // O cálculo de itinerários e navegação rodoviária oficial opera no modo Google Estradas (Google Maps)
+
+    // 2. Build Nodes (Ports, International Airports, National Airports, Aerodromes)
+    TRANSPORT_NODES.forEach((node) => {
+      if (!layers[node.layer]) return;
+
+      const nodeGroup = new THREE.Group();
+      nodeGroup.name = `node_${node.id}`;
+
+      const worldPos = geoToWorld(node.coordinates[0], node.coordinates[1], 0.60);
+      nodeGroup.position.copy(worldPos);
+
+      let primaryMesh: THREE.Mesh;
+      let ringMesh: THREE.Mesh | undefined;
+      let labelSprite: THREE.Sprite | undefined;
+
+      const conf = TRANSPORT_LAYERS_CONFIG[node.layer];
+      const nodeColor = conf?.color || '#a855f7';
+
+      if (node.layer === 'ports') {
+        // Multi-part procedural Port model
+        // 1. Quay Pier
+        const quayGeom = new THREE.BoxGeometry(0.36, 0.08, 0.2);
+        const quayMat = new THREE.MeshPhysicalMaterial({
+          color: 0x1e293b,
+          roughness: 0.4,
+          metalness: 0.2,
+        });
+        const quayMesh = new THREE.Mesh(quayGeom, quayMat);
+        quayMesh.position.y = 0.04;
+        nodeGroup.add(quayMesh);
+
+        // 2. Crane / Terminal Gantry
+        const craneGeom = new THREE.BoxGeometry(0.12, 0.16, 0.1);
+        const craneMat = new THREE.MeshPhysicalMaterial({
+          color: new THREE.Color(nodeColor),
+          roughness: 0.25,
+          metalness: 0.6,
+          clearcoat: 0.4,
+        });
+        const craneMesh = new THREE.Mesh(craneGeom, craneMat);
+        craneMesh.position.set(-0.06, 0.16, 0);
+        nodeGroup.add(craneMesh);
+
+        // 3. Lighthouse Beacon
+        const beaconGeom = new THREE.CylinderGeometry(0.02, 0.035, 0.26, 8);
+        const beaconMat = new THREE.MeshStandardMaterial({
+          color: 0x0284c7,
+          metalness: 0.5,
+          roughness: 0.2,
+        });
+        const beaconMesh = new THREE.Mesh(beaconGeom, beaconMat);
+        beaconMesh.position.set(0.1, 0.21, 0);
+        nodeGroup.add(beaconMesh);
+
+        const lightGeom = new THREE.SphereGeometry(0.045, 8, 8);
+        const lightMat = new THREE.MeshBasicMaterial({
+          color: new THREE.Color(nodeColor),
+        });
+        const lightMesh = new THREE.Mesh(lightGeom, lightMat);
+        lightMesh.position.set(0.1, 0.35, 0);
+        nodeGroup.add(lightMesh);
+
+        // 4. Water / Radar Ripple Ring
+        const ringGeom = new THREE.RingGeometry(0.18, 0.28, 24);
+        const ringMat = new THREE.MeshBasicMaterial({
+          color: new THREE.Color(nodeColor),
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.45,
+        });
+        ringMesh = new THREE.Mesh(ringGeom, ringMat);
+        ringMesh.rotation.x = -Math.PI / 2;
+        ringMesh.position.y = 0.01;
+        nodeGroup.add(ringMesh);
+
+        // Collision hit mesh
+        const hitGeom = new THREE.CylinderGeometry(0.32, 0.32, 0.5, 12);
+        const hitMat = new THREE.MeshBasicMaterial({ visible: false });
+        primaryMesh = new THREE.Mesh(hitGeom, hitMat);
+        primaryMesh.position.y = 0.25;
+        nodeGroup.add(primaryMesh);
+
+        // Label sprite
+        labelSprite = createTransportLabelSprite(node.name, 'PORTO', nodeColor);
+        if (labelSprite) {
+          labelSprite.position.set(0, 0.62, 0);
+          labelSprite.visible = showLabels;
+          nodeGroup.add(labelSprite);
+        }
+      } else if (node.layer === 'airports') {
+        const isIntl = node.category.toLowerCase().includes('internacional');
+        // Multi-part procedural Airport (International or National)
+        // 1. Asphalt Runway Strip
+        const rwayGeom = new THREE.BoxGeometry(isIntl ? 0.65 : 0.48, 0.03, isIntl ? 0.14 : 0.11);
+        const rwayMat = new THREE.MeshPhysicalMaterial({
+          color: isIntl ? 0x1e293b : 0x334155,
+          roughness: 0.3,
+          metalness: 0.1,
+        });
+        const rwayMesh = new THREE.Mesh(rwayGeom, rwayMat);
+        rwayMesh.rotation.y = isIntl ? 0.35 : -0.25;
+        rwayMesh.position.y = 0.015;
+        nodeGroup.add(rwayMesh);
+
+        // 2. Runway Centerline Marking
+        const lineGeom = new THREE.BoxGeometry(isIntl ? 0.52 : 0.38, 0.035, 0.02);
+        const lineMat = new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+        });
+        const lineMesh = new THREE.Mesh(lineGeom, lineMat);
+        lineMesh.rotation.y = isIntl ? 0.35 : -0.25;
+        lineMesh.position.y = 0.032;
+        nodeGroup.add(lineMesh);
+
+        // 3. Control Tower
+        const towerGeom = new THREE.CylinderGeometry(0.025, 0.045, isIntl ? 0.34 : 0.26, 12);
+        const towerMat = new THREE.MeshPhysicalMaterial({
+          color: 0xf1f5f9,
+          roughness: 0.2,
+          metalness: 0.2,
+        });
+        const towerMesh = new THREE.Mesh(towerGeom, towerMat);
+        towerMesh.position.set(-0.2, 0.17, 0.1);
+        nodeGroup.add(towerMesh);
+
+        const radomeGeom = new THREE.SphereGeometry(isIntl ? 0.065 : 0.05, 12, 12);
+        const radomeMat = new THREE.MeshStandardMaterial({
+          color: new THREE.Color(nodeColor),
+          emissive: new THREE.Color(nodeColor),
+          emissiveIntensity: 0.8,
+        });
+        const radomeMesh = new THREE.Mesh(radomeGeom, radomeMat);
+        radomeMesh.position.set(-0.2, isIntl ? 0.36 : 0.28, 0.1);
+        nodeGroup.add(radomeMesh);
+
+        // 4. Radar Ring
+        const ringGeom = new THREE.TorusGeometry(isIntl ? 0.24 : 0.18, 0.02, 8, 24);
+        const ringMat = new THREE.MeshBasicMaterial({
+          color: new THREE.Color(nodeColor),
+          transparent: true,
+          opacity: 0.65,
+        });
+        ringMesh = new THREE.Mesh(ringGeom, ringMat);
+        ringMesh.rotation.x = -Math.PI / 2;
+        ringMesh.position.y = 0.02;
+        nodeGroup.add(ringMesh);
+
+        const hitGeom = new THREE.CylinderGeometry(0.35, 0.35, 0.55, 12);
+        const hitMat = new THREE.MeshBasicMaterial({ visible: false });
+        primaryMesh = new THREE.Mesh(hitGeom, hitMat);
+        primaryMesh.position.y = 0.28;
+        nodeGroup.add(primaryMesh);
+
+        labelSprite = createTransportLabelSprite(node.code, isIntl ? 'INTL' : 'ADM', nodeColor);
+        if (labelSprite) {
+          labelSprite.position.set(0, 0.62, 0);
+          labelSprite.visible = showLabels;
+          nodeGroup.add(labelSprite);
+        }
+      } else {
+        // Aerodromes & Regional Airstrips (aerodromes)
+        // 1. Dirt / compacted strip
+        const rwayGeom = new THREE.BoxGeometry(0.38, 0.02, 0.09);
+        const rwayMat = new THREE.MeshPhysicalMaterial({
+          color: 0x92400e, // ochre
+          roughness: 0.7,
+        });
+        const rwayMesh = new THREE.Mesh(rwayGeom, rwayMat);
+        rwayMesh.rotation.y = 0.5;
+        rwayMesh.position.y = 0.01;
+        nodeGroup.add(rwayMesh);
+
+        // 2. Windsock / Beacon mast
+        const mastGeom = new THREE.CylinderGeometry(0.012, 0.018, 0.18, 8);
+        const mastMat = new THREE.MeshStandardMaterial({ color: 0xd97706 });
+        const mastMesh = new THREE.Mesh(mastGeom, mastMat);
+        mastMesh.position.set(-0.12, 0.09, 0.06);
+        nodeGroup.add(mastMesh);
+
+        const tipGeom = new THREE.ConeGeometry(0.035, 0.08, 8);
+        const tipMat = new THREE.MeshBasicMaterial({
+          color: new THREE.Color(nodeColor),
+        });
+        const tipMesh = new THREE.Mesh(tipGeom, tipMat);
+        tipMesh.position.set(-0.12, 0.2, 0.06);
+        nodeGroup.add(tipMesh);
+
+        // 3. Ground beacon ring
+        const ringGeom = new THREE.RingGeometry(0.11, 0.16, 16);
+        const ringMat = new THREE.MeshBasicMaterial({
+          color: new THREE.Color(nodeColor),
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.5,
+        });
+        ringMesh = new THREE.Mesh(ringGeom, ringMat);
+        ringMesh.rotation.x = -Math.PI / 2;
+        ringMesh.position.y = 0.015;
+        nodeGroup.add(ringMesh);
+
+        const hitGeom = new THREE.CylinderGeometry(0.24, 0.24, 0.4, 10);
+        const hitMat = new THREE.MeshBasicMaterial({ visible: false });
+        primaryMesh = new THREE.Mesh(hitGeom, hitMat);
+        primaryMesh.position.y = 0.2;
+        nodeGroup.add(primaryMesh);
+
+        labelSprite = createTransportLabelSprite(node.code, 'PISTA', nodeColor);
+        if (labelSprite) {
+          labelSprite.position.set(0, 0.48, 0);
+          labelSprite.visible = showLabels;
+          nodeGroup.add(labelSprite);
+        }
+      }
+
+      primaryMesh.userData = {
+        type: 'transport_node',
+        node,
+      };
+
+      transportRootGroup.add(nodeGroup);
+      transportInteractiveMeshes.push(primaryMesh);
+      transportItems.set(node.id, {
+        id: node.id,
+        type: 'node',
+        data: node,
+        group: nodeGroup,
+        primaryMesh,
+        ringMesh,
+        labelSprite,
+      });
+    });
+
+    updateInteractiveMeshList();
+  };
+
+  // Sync interactiveMeshes with current viewMode and transport layers
   const updateInteractiveMeshList = () => {
     const ctx = sceneContextRef.current;
     if (!ctx) return;
 
     ctx.interactiveMeshes.length = 0;
+
+    // Transport network elements are always interactive
+    ctx.transportInteractiveMeshes.forEach((m) => ctx.interactiveMeshes.push(m));
+
+    // Patriotic landmark markers (Zumbo, Oceano Índico, Rovuma, Maputo)
+    if (ctx.patrioticElements?.interactiveMeshes) {
+      ctx.patrioticElements.interactiveMeshes.forEach((m) => ctx.interactiveMeshes.push(m));
+    }
+
     const isDetailed =
       stateRef.current.viewMode === 'province-detailed' ||
       stateRef.current.viewMode === 'tete-detailed';
@@ -765,6 +1184,15 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     teteDistrictsRootGroup.visible = false;
     scene.add(teteDistrictsRootGroup);
 
+    const transportRootGroup = new THREE.Group();
+    transportRootGroup.name = 'transport_root';
+    scene.add(transportRootGroup);
+    const transportItems = new Map<string, TransportMeshEntry>();
+    const transportInteractiveMeshes: THREE.Mesh[] = [];
+
+    // Patriotic 3D Background Elements (Compass Rose, Zumbo-Indico Arc, Beacons)
+    const patrioticElements = buildPatrioticElements(scene);
+
     sceneContextRef.current = {
       scene,
       camera,
@@ -773,6 +1201,10 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       provinceGroups,
       districtGroups,
       teteDistrictsRootGroup,
+      transportRootGroup,
+      transportItems,
+      transportInteractiveMeshes,
+      patrioticElements,
       interactiveMeshes,
       keyLight,
       hemiLight,
@@ -785,6 +1217,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
 
     updateProvinceMeshes();
     updateDistrictMeshes();
+    updateTransportMeshes();
     updateLightingAndAtmosphere();
 
     // Raycasting for interaction
@@ -821,15 +1254,32 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
           const hitMesh = intersects[0].object as THREE.Mesh;
           renderer.domElement.style.cursor = 'pointer';
 
-          if (hitMesh.userData.type === 'district') {
+          if (hitMesh.userData.type === 'patriotic_landmark') {
+            stateRef.current.onHoverTransportItem?.(null);
+            stateRef.current.onHoverProvince(null);
+            stateRef.current.onHoverDistrict?.(null);
+          } else if (hitMesh.userData.type === 'transport_route') {
+            const route = hitMesh.userData.route as TransportRoute;
+            stateRef.current.onHoverTransportItem?.({ type: 'route', item: route }, { x: clientX, y: clientY });
+            stateRef.current.onHoverProvince(null);
+            stateRef.current.onHoverDistrict?.(null);
+          } else if (hitMesh.userData.type === 'transport_node') {
+            const node = hitMesh.userData.node as TransportNode;
+            stateRef.current.onHoverTransportItem?.({ type: 'node', item: node }, { x: clientX, y: clientY });
+            stateRef.current.onHoverProvince(null);
+            stateRef.current.onHoverDistrict?.(null);
+          } else if (hitMesh.userData.type === 'district') {
+            stateRef.current.onHoverTransportItem?.(null);
             const code = hitMesh.userData.districtCode;
             stateRef.current.onHoverDistrict?.(code, { x: clientX, y: clientY });
           } else {
+            stateRef.current.onHoverTransportItem?.(null);
             const code = hitMesh.userData.provinceCode;
             stateRef.current.onHoverProvince(code, { x: clientX, y: clientY });
           }
         } else {
           renderer.domElement.style.cursor = 'default';
+          stateRef.current.onHoverTransportItem?.(null);
           const isDetailed =
             stateRef.current.viewMode === 'province-detailed' ||
             stateRef.current.viewMode === 'tete-detailed';
@@ -868,7 +1318,16 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
 
         if (intersects.length > 0) {
           const hitMesh = intersects[0].object as THREE.Mesh;
-          if (hitMesh.userData.type === 'district') {
+          if (hitMesh.userData.type === 'patriotic_landmark') {
+            const landmarkId = hitMesh.userData.landmarkId;
+            stateRef.current.onSelectPatrioticLandmark?.(landmarkId);
+          } else if (hitMesh.userData.type === 'transport_route') {
+            const route = hitMesh.userData.route as TransportRoute;
+            stateRef.current.onSelectTransportItem?.({ type: 'route', item: route });
+          } else if (hitMesh.userData.type === 'transport_node') {
+            const node = hitMesh.userData.node as TransportNode;
+            stateRef.current.onSelectTransportItem?.({ type: 'node', item: node });
+          } else if (hitMesh.userData.type === 'district') {
             const code = hitMesh.userData.districtCode;
             stateRef.current.onSelectDistrict?.(code);
           } else {
@@ -884,6 +1343,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
           } else {
             stateRef.current.onSelectProvince(null);
           }
+          stateRef.current.onSelectTransportItem?.(null);
         }
       }
     };
@@ -964,6 +1424,27 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       }
 
       controls.update();
+
+      // Transport network animation & highlight
+      const selTransport = stateRef.current.selectedTransportItem;
+      const hovTransport = stateRef.current.hoveredTransportItem;
+
+      transportItems.forEach((entry) => {
+        const isSelected = selTransport?.item.id === entry.id;
+        const isHovered = hovTransport?.item.id === entry.id;
+
+        // Transport Node (Ports, Airports, Aerodromes)
+        if (entry.ringMesh) {
+          entry.ringMesh.rotation.z += delta * 0.75;
+        }
+        if (isSelected) {
+          entry.group.scale.set(1.3, 1.3, 1.3);
+        } else if (isHovered) {
+          entry.group.scale.set(1.18, 1.18, 1.18);
+        } else {
+          entry.group.scale.set(1, 1, 1);
+        }
+      });
 
       const isDetailed =
         stateRef.current.viewMode === 'province-detailed' ||
@@ -1051,6 +1532,9 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         });
       }
 
+      // Update animated patriotic elements (pulse along Zumbo-Indico and Rovuma-Maputo arcs, pulsing rings)
+      patrioticElements.update(delta, time * 0.001);
+
       renderer.render(scene, camera);
     };
 
@@ -1067,6 +1551,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       domElement.removeEventListener('touchmove', onPointerMove);
       domElement.removeEventListener('touchend', onPointerUp);
 
+      patrioticElements.dispose();
       controls.dispose();
       renderer.dispose();
       if (container.contains(domElement)) {
@@ -1389,6 +1874,27 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       };
     }
   }, [selectedProvinceId, cameraPreset, viewMode, isDrawerOpen]);
+
+  // Rebuild/toggle 3D transport network when layers or label visibility changes
+  useEffect(() => {
+    updateTransportMeshes();
+  }, [transportLayers, showLabels]);
+
+  // Focus on specific transport item coordinates when requested
+  useEffect(() => {
+    if (!focusTransportCoords) return;
+    const ctx = sceneContextRef.current;
+    if (!ctx) return;
+
+    const [lon, lat] = focusTransportCoords;
+    const targetX = (lon - MOZ_CENTER_LON) * GEO_SCALE;
+    const targetZ = -(lat - MOZ_CENTER_LAT) * GEO_SCALE;
+
+    ctx.cameraTransitionTarget = {
+      pos: new THREE.Vector3(targetX, 9.2, targetZ + 6.8),
+      look: new THREE.Vector3(targetX, 0.6, targetZ),
+    };
+  }, [focusTransportCoords]);
 
   return (
     <div

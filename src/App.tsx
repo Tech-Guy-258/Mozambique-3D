@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Map3DCanvas } from './components/Map3DCanvas.tsx';
 import { TopHeader } from './components/TopHeader.tsx';
 import { ControlDock } from './components/ControlDock.tsx';
@@ -8,6 +8,7 @@ import { ComparisonDrawer } from './components/ComparisonDrawer.tsx';
 import { SourcesModal } from './components/SourcesModal.tsx';
 import { Tooltip } from './components/Tooltip.tsx';
 import { NavigationControls } from './components/NavigationControls.tsx';
+import { GoogleRoadsMap } from './components/GoogleRoadsMap.tsx';
 import { DEFAULT_MOZGIS_GEOJSON } from './data/mozgisGeoJson.ts';
 import { PROVINCES_DATA } from './data/provincesData.ts';
 import {
@@ -17,10 +18,17 @@ import {
   GeoJSONFeatureCollection,
   ViewMode,
   PanAction,
+  TransportLayerId,
+  TransportLayersState,
+  TransportRoute,
+  TransportNode,
 } from './types/index.ts';
 import { ProvinceDetailedPanel } from './components/ProvinceDetailedPanel.tsx';
+import { TransportPanel } from './components/TransportPanel.tsx';
 import { downloadGeoJSON, downloadCSV } from './utils/exporter.ts';
 import { syncLiveMozgisData } from './utils/mozgisSync.ts';
+import { DEFAULT_TRANSPORT_LAYERS } from './data/transportData.ts';
+import { PatrioticInfoPanel } from './components/PatrioticInfoPanel.tsx';
 import { CheckCircle2, AlertTriangle, X } from 'lucide-react';
 
 export default function App() {
@@ -62,12 +70,161 @@ export default function App() {
   const [syncStatus, setSyncStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
+  // Transport Network State
+  const [isTransportPanelOpen, setIsTransportPanelOpen] = useState<boolean>(false);
+  const [isTransportCollapsed, setIsTransportCollapsed] = useState<boolean>(false);
+  const [transportLayers, setTransportLayers] = useState<TransportLayersState>(DEFAULT_TRANSPORT_LAYERS);
+  const [selectedTransportItem, setSelectedTransportItem] = useState<{
+    type: 'route' | 'node';
+    item: TransportRoute | TransportNode;
+  } | null>(null);
+  const [hoveredTransportItem, setHoveredTransportItem] = useState<{
+    type: 'route' | 'node';
+    item: TransportRoute | TransportNode;
+  } | null>(null);
+  const [focusTransportCoords, setFocusTransportCoords] = useState<[number, number] | null>(null);
+
+  // Patriotic Landmarks State ("Do Zumbo ao Índico")
+  const [isPatrioticPanelOpen, setIsPatrioticPanelOpen] = useState<boolean>(true);
+  const [isPatrioticCollapsed, setIsPatrioticCollapsed] = useState<boolean>(false);
+  const [selectedPatrioticLandmarkId, setSelectedPatrioticLandmarkId] = useState<string | null>('zumbo');
+
+  const [quotaExceeded, setQuotaExceeded] = useState(false);
+
+  useEffect(() => {
+    const handleQuota = () => {
+      setQuotaExceeded(true);
+      showToast('error', 'Aviso: Quota da API Google Maps atingida ou chave de teste expirada.');
+    };
+    window.addEventListener('gmp-quota-exceeded', handleQuota);
+    return () => window.removeEventListener('gmp-quota-exceeded', handleQuota);
+  }, []);
+
   const showToast = (type: 'success' | 'error', text: string) => {
     setToastMessage({ type, text });
     setTimeout(() => {
       setToastMessage(null);
     }, 4500);
   };
+
+  // Transport Layer Handlers
+  const handleToggleTransportLayer = useCallback((layerId: TransportLayerId) => {
+    setTransportLayers((prev) => ({
+      ...prev,
+      [layerId]: !prev[layerId],
+    }));
+  }, []);
+
+  const handleSetAllTransportLayers = useCallback((enabled: boolean) => {
+    setTransportLayers({
+      primary_roads: false,
+      secondary_roads: false,
+      railways: false,
+      ports: enabled,
+      airports: enabled,
+      aerodromes: enabled,
+    });
+  }, []);
+
+  const handleSetTransportPreset = useCallback(
+    (preset: 'all' | 'maritime' | 'aviation' | 'none') => {
+      switch (preset) {
+        case 'all':
+          setTransportLayers({
+            primary_roads: false,
+            secondary_roads: false,
+            railways: false,
+            ports: true,
+            airports: true,
+            aerodromes: true,
+          });
+          break;
+        case 'maritime':
+          setTransportLayers({
+            primary_roads: false,
+            secondary_roads: false,
+            railways: false,
+            ports: true,
+            airports: false,
+            aerodromes: false,
+          });
+          break;
+        case 'aviation':
+          setTransportLayers({
+            primary_roads: false,
+            secondary_roads: false,
+            railways: false,
+            ports: false,
+            airports: true,
+            aerodromes: true,
+          });
+          break;
+        case 'none':
+          setTransportLayers({
+            primary_roads: false,
+            secondary_roads: false,
+            railways: false,
+            ports: false,
+            airports: false,
+            aerodromes: false,
+          });
+          break;
+      }
+    },
+    []
+  );
+
+  const handleSelectTransportItem = useCallback(
+    (item: { type: 'route' | 'node'; item: TransportRoute | TransportNode } | null) => {
+      setSelectedTransportItem(item);
+      if (item) {
+        setIsTransportPanelOpen(true);
+        setIsTransportCollapsed(false);
+        if (item.type === 'node') {
+          setFocusTransportCoords((item.item as TransportNode).coordinates);
+        } else {
+          const coords = (item.item as TransportRoute).coordinates;
+          const mid = coords[Math.floor(coords.length / 2)];
+          setFocusTransportCoords(mid);
+        }
+      }
+    },
+    []
+  );
+
+  const handleHoverTransportItem = useCallback(
+    (
+      item: { type: 'route' | 'node'; item: TransportRoute | TransportNode } | null,
+      mouseEvent?: { x: number; y: number }
+    ) => {
+      setHoveredTransportItem(item);
+      if (item && mouseEvent) {
+        setTooltipPos({ x: mouseEvent.x, y: mouseEvent.y });
+      } else if (!hoveredProvinceId && !hoveredDistrictId) {
+        setTooltipPos(null);
+      }
+    },
+    [hoveredProvinceId, hoveredDistrictId]
+  );
+
+  const handleFocusTransportItem = useCallback((coordinates: [number, number]) => {
+    setFocusTransportCoords([...coordinates]);
+  }, []);
+
+  const handleFocusPatrioticLandmark = useCallback((coordinates: [number, number], landmarkId?: string) => {
+    setFocusTransportCoords([...coordinates]);
+    if (landmarkId) {
+      setSelectedPatrioticLandmarkId(landmarkId);
+    }
+    setIsPatrioticPanelOpen(true);
+    setIsPatrioticCollapsed(false);
+  }, []);
+
+  const handleSelectPatrioticLandmark = useCallback((landmarkId: string) => {
+    setSelectedPatrioticLandmarkId(landmarkId);
+    setIsPatrioticPanelOpen(true);
+    setIsPatrioticCollapsed(false);
+  }, []);
 
   // Province Hover Handler
   const handleHoverProvince = useCallback(
@@ -76,12 +233,12 @@ export default function App() {
         setHoveredProvinceId(id);
         if (id && mouseEvent) {
           setTooltipPos({ x: mouseEvent.x, y: mouseEvent.y });
-        } else {
+        } else if (!hoveredTransportItem) {
           setTooltipPos(null);
         }
       }
     },
-    [viewMode]
+    [viewMode, hoveredTransportItem]
   );
 
   // District Hover Handler
@@ -91,12 +248,12 @@ export default function App() {
         setHoveredDistrictId(id);
         if (id && mouseEvent) {
           setTooltipPos({ x: mouseEvent.x, y: mouseEvent.y });
-        } else {
+        } else if (!hoveredTransportItem) {
           setTooltipPos(null);
         }
       }
     },
-    [viewMode]
+    [viewMode, hoveredTransportItem]
   );
 
   // Select Province Handler (automatically opens that province's 3D explorer with all districts)
@@ -203,35 +360,12 @@ export default function App() {
 
   const isDrawerOpen = Boolean(
     (selectedProvinceData && !isDrawerCollapsed) ||
-    (isDetailed && !isDrawerCollapsed)
+    (isDetailed && !isDrawerCollapsed) ||
+    (isTransportPanelOpen && !isTransportCollapsed)
   );
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-slate-950 font-sans select-none">
-      {/* 3D WebGL Canvas */}
-      <Map3DCanvas
-        geoJson={geoJson}
-        selectedProvinceId={selectedProvinceId}
-        hoveredProvinceId={hoveredProvinceId}
-        onSelectProvince={handleSelectProvince}
-        onHoverProvince={handleHoverProvince}
-        thematicMetric={thematicMetric}
-        is3DExtruded={is3DExtruded}
-        lightingTheme={lightingTheme}
-        showLabels={showLabels}
-        cameraPreset={cameraPreset}
-        onResetCameraPreset={() => setCameraPreset('default')}
-        viewMode={viewMode}
-        detailedProvinceId={detailedProvinceId}
-        selectedDistrictId={selectedDistrictId}
-        hoveredDistrictId={hoveredDistrictId}
-        onSelectDistrict={handleSelectDistrict}
-        onHoverDistrict={handleHoverDistrict}
-        onReturnToNational={handleReturnToNational}
-        panAction={panAction}
-        isDrawerOpen={isDrawerOpen}
-      />
-
       {/* Top Header & Search Bar */}
       <TopHeader
         onSelectProvince={handleSelectProvince}
@@ -245,71 +379,191 @@ export default function App() {
         viewMode={viewMode}
         detailedProvinceId={detailedProvinceId}
         onReturnToNational={handleReturnToNational}
+        onSelectViewMode={(mode) => setViewMode(mode)}
+        isTransportPanelOpen={isTransportPanelOpen}
+        onToggleTransportPanel={() => {
+          setIsTransportPanelOpen((prev) => {
+            const next = !prev;
+            if (next) setIsPatrioticCollapsed(true);
+            return next;
+          });
+        }}
+        activeTransportLayersCount={[transportLayers.ports, transportLayers.airports, transportLayers.aerodromes].filter(Boolean).length}
+        isPatrioticPanelOpen={isPatrioticPanelOpen}
+        onTogglePatrioticPanel={() => {
+          setIsPatrioticPanelOpen((prev) => {
+            const next = !prev;
+            if (next) {
+              setIsPatrioticCollapsed(false);
+              setIsTransportPanelOpen(false);
+            }
+            return next;
+          });
+        }}
       />
 
-      {/* On-Screen Navigation Controls (Pan D-Pad, Recenter & Zoom) */}
-      <NavigationControls
-        onPan={handlePan}
-        onZoom={handleZoom}
-        onRecenter={handleRecenter}
-        isDetailedView={isDetailed}
-      />
-
-      {/* Hover Tooltip (supports both provincial and district hover states) */}
-      <Tooltip
-        provinceId={hoveredProvinceId}
-        districtId={hoveredDistrictId}
-        position={tooltipPos}
-        thematicMetric={thematicMetric}
-      />
-
-      {/* Consolidated Bottom Dock Controls */}
-      <ControlDock
-        thematicMetric={thematicMetric}
-        onSelectMetric={(metric) => setThematicMetric(metric)}
-        is3DExtruded={is3DExtruded}
-        onToggle3DExtrusion={() => setIs3DExtruded(!is3DExtruded)}
-        lightingTheme={lightingTheme}
-        onSelectLighting={(theme) => setLightingTheme(theme)}
-        showLabels={showLabels}
-        onToggleLabels={() => setShowLabels(!showLabels)}
-        cameraPreset={cameraPreset}
-        onSelectCameraPreset={(preset) => setCameraPreset(preset)}
-        onResetView={handleResetCamera}
-      />
-
-      {/* National Province Dossier Detail Drawer (when a province is selected in national mode) */}
-      {selectedProvinceData && !isDetailed && (
-        <ProvinceDetailDrawer
-          province={selectedProvinceData}
-          onClose={() => setSelectedProvinceId(null)}
-          onOpenCompare={(id) => handleOpenCompare(id)}
-          isCollapsed={isDrawerCollapsed}
-          onToggleCollapse={() => setIsDrawerCollapsed((prev) => !prev)}
-          onExploreProvince={(id) => handleSelectProvince(id)}
-        />
+      {/* Quota Exceeded Banner */}
+      {quotaExceeded && (
+        <div className="fixed top-18 inset-x-4 z-40 max-w-xl mx-auto p-3 rounded-xl bg-amber-950/90 border border-amber-600/80 shadow-2xl backdrop-blur-md text-amber-100 text-xs flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0" />
+            <div>
+              <p className="font-bold">Limite de Demonstração / Quota Google Maps</p>
+              <p className="text-[11px] text-amber-200">
+                A chave de demonstração atingiu o limite de consultas ou requer ativação de faturação no projeto Google Cloud.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setQuotaExceeded(false)}
+            className="p-1 rounded hover:bg-amber-900/60 text-amber-300"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
       )}
 
-      {/* Provincial Detailed Explorer Panel (active in detailed 3D mode for ANY province) */}
-      {isDetailed && (
-        <ProvinceDetailedPanel
-          provinceId={detailedProvinceId || '07'}
-          selectedDistrictId={selectedDistrictId}
-          onSelectDistrict={handleSelectDistrict}
-          onReturnToNational={handleReturnToNational}
-          isCollapsed={isDrawerCollapsed}
-          onToggleCollapse={() => setIsDrawerCollapsed((prev) => !prev)}
-        />
-      )}
+      {/* Google Road Map View */}
+      {viewMode === 'google-roads' ? (
+        <GoogleRoadsMap onReturnTo3D={() => setViewMode('national')} />
+      ) : (
+        <>
+          {/* 3D WebGL Canvas */}
+          <Map3DCanvas
+            geoJson={geoJson}
+            selectedProvinceId={selectedProvinceId}
+            hoveredProvinceId={hoveredProvinceId}
+            onSelectProvince={handleSelectProvince}
+            onHoverProvince={handleHoverProvince}
+            thematicMetric={thematicMetric}
+            is3DExtruded={is3DExtruded}
+            lightingTheme={lightingTheme}
+            showLabels={showLabels}
+            cameraPreset={cameraPreset}
+            onResetCameraPreset={() => setCameraPreset('default')}
+            viewMode={viewMode}
+            detailedProvinceId={detailedProvinceId}
+            selectedDistrictId={selectedDistrictId}
+            hoveredDistrictId={hoveredDistrictId}
+            onSelectDistrict={handleSelectDistrict}
+            onHoverDistrict={handleHoverDistrict}
+            onReturnToNational={handleReturnToNational}
+            panAction={panAction}
+            isDrawerOpen={isDrawerOpen}
+            transportLayers={transportLayers}
+            selectedTransportItem={selectedTransportItem}
+            hoveredTransportItem={hoveredTransportItem}
+            onSelectTransportItem={handleSelectTransportItem}
+            onHoverTransportItem={handleHoverTransportItem}
+            focusTransportCoords={focusTransportCoords}
+            onSelectPatrioticLandmark={handleSelectPatrioticLandmark}
+            selectedPatrioticLandmarkId={selectedPatrioticLandmarkId}
+          />
 
-      {/* Province Comparison Drawer */}
-      {isCompareOpen && (
-        <ComparisonDrawer
-          initialProvinceIdA={compareInitialA}
-          initialProvinceIdB={compareInitialB}
-          onClose={() => setIsCompareOpen(false)}
-          onFocusProvince={(id) => handleSelectProvince(id)}
-        />
+          {/* On-Screen Navigation Controls (Pan D-Pad, Recenter & Zoom) */}
+          <NavigationControls
+            onPan={handlePan}
+            onZoom={handleZoom}
+            onRecenter={handleResetCamera}
+            isDetailedView={isDetailed}
+          />
+
+          {/* Hover Tooltip (supports provincial, district, and transport hover states) */}
+          <Tooltip
+            provinceId={hoveredProvinceId}
+            districtId={hoveredDistrictId}
+            transportItem={hoveredTransportItem}
+            position={tooltipPos}
+            thematicMetric={thematicMetric}
+          />
+
+          {/* Consolidated Bottom Dock Controls */}
+          <ControlDock
+            thematicMetric={thematicMetric}
+            onSelectMetric={(metric) => setThematicMetric(metric)}
+            is3DExtruded={is3DExtruded}
+            onToggle3DExtrusion={() => setIs3DExtruded((prev) => !prev)}
+            lightingTheme={lightingTheme}
+            onSelectLighting={(theme) => setLightingTheme(theme)}
+            showLabels={showLabels}
+            onToggleLabels={() => setShowLabels(!showLabels)}
+            cameraPreset={cameraPreset}
+            onSelectCameraPreset={(preset) => setCameraPreset(preset)}
+            onResetView={handleResetCamera}
+            transportLayers={transportLayers}
+            onToggleTransportLayer={handleToggleTransportLayer}
+            onOpenTransportPanel={() => {
+              setIsTransportPanelOpen(true);
+              setIsTransportCollapsed(false);
+              setIsPatrioticCollapsed(true);
+            }}
+            onOpenGoogleRoads={() => setViewMode('google-roads')}
+          />
+
+          {/* Patriotic "Do Zumbo ao Índico" Info & History Panel */}
+          {isPatrioticPanelOpen && !isDetailed && (
+            <PatrioticInfoPanel
+              isOpen={isPatrioticPanelOpen}
+              onClose={() => setIsPatrioticPanelOpen(false)}
+              onFocusLandmark={handleFocusPatrioticLandmark}
+              selectedLandmarkId={selectedPatrioticLandmarkId}
+              onSelectLandmark={setSelectedPatrioticLandmarkId}
+              isCollapsed={isPatrioticCollapsed}
+              onToggleCollapse={() => setIsPatrioticCollapsed((prev) => !prev)}
+            />
+          )}
+
+          {/* Transport Network Drawer & Layer Selector */}
+          {isTransportPanelOpen && (
+            <TransportPanel
+              layersState={transportLayers}
+              onToggleLayer={handleToggleTransportLayer}
+              onSetAllLayers={handleSetAllTransportLayers}
+              onSetPreset={handleSetTransportPreset}
+              selectedTransportItem={selectedTransportItem}
+              onSelectTransportItem={handleSelectTransportItem}
+              onFocusTransportItem={handleFocusTransportItem}
+              isCollapsed={isTransportCollapsed}
+              onToggleCollapse={() => setIsTransportCollapsed((prev) => !prev)}
+              onClose={() => setIsTransportPanelOpen(false)}
+              onOpenGoogleRoads={() => setViewMode('google-roads')}
+            />
+          )}
+
+          {/* National Province Dossier Detail Drawer (when a province is selected in national mode) */}
+          {selectedProvinceData && !isDetailed && !isTransportPanelOpen && (
+            <ProvinceDetailDrawer
+              province={selectedProvinceData}
+              onClose={() => setSelectedProvinceId(null)}
+              onOpenCompare={(id) => handleOpenCompare(id)}
+              isCollapsed={isDrawerCollapsed}
+              onToggleCollapse={() => setIsDrawerCollapsed((prev) => !prev)}
+              onExploreProvince={(id) => handleSelectProvince(id)}
+            />
+          )}
+
+          {/* Provincial Detailed Explorer Panel (active in detailed 3D mode for ANY province) */}
+          {isDetailed && (
+            <ProvinceDetailedPanel
+              provinceId={detailedProvinceId || '07'}
+              selectedDistrictId={selectedDistrictId}
+              onSelectDistrict={handleSelectDistrict}
+              onReturnToNational={handleReturnToNational}
+              isCollapsed={isDrawerCollapsed}
+              onToggleCollapse={() => setIsDrawerCollapsed((prev) => !prev)}
+            />
+          )}
+
+          {/* Province Comparison Drawer */}
+          {isCompareOpen && (
+            <ComparisonDrawer
+              initialProvinceIdA={compareInitialA}
+              initialProvinceIdB={compareInitialB}
+              onClose={() => setIsCompareOpen(false)}
+              onFocusProvince={(id) => handleSelectProvince(id)}
+            />
+          )}
+        </>
       )}
 
       {/* Sources & Methodology Modal */}

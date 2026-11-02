@@ -11,8 +11,19 @@ import {
   Tag,
   Eye,
   Camera,
+  Navigation,
+  Train,
+  Anchor,
+  Plane,
 } from 'lucide-react';
-import { ThematicMetric, LightingTheme, CameraPreset } from '../types/index.ts';
+import {
+  ThematicMetric,
+  LightingTheme,
+  CameraPreset,
+  TransportLayerId,
+  TransportLayersState,
+} from '../types/index.ts';
+import { TRANSPORT_LAYERS_CONFIG } from '../data/transportData.ts';
 
 interface ControlDockProps {
   thematicMetric: ThematicMetric;
@@ -26,6 +37,10 @@ interface ControlDockProps {
   cameraPreset: CameraPreset;
   onSelectCameraPreset: (preset: CameraPreset) => void;
   onResetView: () => void;
+  transportLayers?: TransportLayersState;
+  onToggleTransportLayer?: (layerId: TransportLayerId) => void;
+  onOpenTransportPanel?: () => void;
+  onOpenGoogleRoads?: () => void;
 }
 
 export const ControlDock: React.FC<ControlDockProps> = ({
@@ -40,9 +55,13 @@ export const ControlDock: React.FC<ControlDockProps> = ({
   cameraPreset,
   onSelectCameraPreset,
   onResetView,
+  transportLayers,
+  onToggleTransportLayer,
+  onOpenTransportPanel,
+  onOpenGoogleRoads,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState<'camadas' | 'camara' | 'ambiente'>('camadas');
+  const [activeTab, setActiveTab] = useState<'camadas' | 'transportes' | 'camara' | 'ambiente'>('camadas');
 
   const metricOptions: { id: ThematicMetric; label: string; desc: string }[] = [
     { id: 'standard', label: 'Cartográfico', desc: 'Cores provinciais oficiais' },
@@ -94,6 +113,17 @@ export const ControlDock: React.FC<ControlDockProps> = ({
                   }`}
                 >
                   <Layers className="w-3.5 h-3.5" /> Camadas Temáticas
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('transportes')}
+                  className={`px-3 py-1 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                    activeTab === 'transportes'
+                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                  }`}
+                >
+                  <Compass className="w-3.5 h-3.5 text-amber-400" /> Rede Transportes
                 </button>
 
                 <button
@@ -170,6 +200,65 @@ export const ControlDock: React.FC<ControlDockProps> = ({
                     <div className="text-[10px] text-slate-400 truncate mt-0.5">{opt.desc}</div>
                   </button>
                 ))}
+              </div>
+            )}
+
+            {/* Tab: Hubs de Transporte (Portos Marítimos, Aeroportos e Aeródromos) */}
+            {activeTab === 'transportes' && (
+              <div className="flex flex-col gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {(['ports', 'airports', 'aerodromes'] as TransportLayerId[]).map((layerId) => {
+                    const conf = TRANSPORT_LAYERS_CONFIG[layerId];
+                    const isEnabled = transportLayers ? transportLayers[layerId] : true;
+                    return (
+                      <button
+                        key={layerId}
+                        onClick={() => onToggleTransportLayer?.(layerId)}
+                        className={`p-2.5 rounded-xl text-left border transition-all cursor-pointer ${
+                          isEnabled
+                            ? 'bg-slate-800 border-amber-500/60 shadow-md'
+                            : 'bg-slate-900/60 border-slate-800 text-slate-500 opacity-60 hover:opacity-80'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span
+                            className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: isEnabled ? conf.color : '#64748b' }}
+                          />
+                          <span
+                            className={`text-[9px] font-mono px-1 py-0.2 rounded font-semibold ${
+                              isEnabled ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-500'
+                            }`}
+                          >
+                            {isEnabled ? 'ACTIVA' : 'OFF'}
+                          </span>
+                        </div>
+                        <div className="text-[11px] font-semibold text-white truncate">{conf.label}</div>
+                        <div className="text-[9px] text-slate-400 truncate">{conf.description}</div>
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="flex flex-wrap items-center justify-between pt-1 border-t border-slate-800 gap-2">
+                  {onOpenGoogleRoads && (
+                    <button
+                      onClick={onOpenGoogleRoads}
+                      className="px-2.5 py-1 rounded-lg bg-sky-600/30 hover:bg-sky-600/50 text-sky-300 border border-sky-500/50 text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Navigation className="w-3 h-3 text-sky-400" />
+                      <span>Mapa Rodoviário Oficial Google (Rotas)</span>
+                    </button>
+                  )}
+                  {onOpenTransportPanel && (
+                    <button
+                      onClick={onOpenTransportPanel}
+                      className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1 transition-colors cursor-pointer"
+                    >
+                      <span>Painel de Hubs (Portos & Aeródromos)</span>
+                      <span>→</span>
+                    </button>
+                  )}
+                </div>
               </div>
             )}
 

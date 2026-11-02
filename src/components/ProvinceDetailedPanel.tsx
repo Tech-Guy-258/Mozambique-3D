@@ -14,6 +14,8 @@ import {
   ChevronLeft,
   Building2,
   TrendingUp,
+  ExternalLink,
+  Globe,
 } from 'lucide-react';
 import { PROVINCES_DATA } from '../data/provincesData.ts';
 import { ALL_DISTRICTS_DATA } from '../data/allDistrictsData.ts';
@@ -148,6 +150,31 @@ Fontes: INE Moçambique, MOZGIS MAEFP e Visit Mozambique (INATUR).`;
             Região {province.region} • Capital: <strong className="text-slate-200">{province.capital}</strong> • {new Intl.NumberFormat('pt-MZ').format(province.areaKm2)} km²
           </p>
         </div>
+
+        {/* Special Official Portal Button for Tete */}
+        {province.id === '07' && (
+          <div className="mt-3">
+            <a
+              href="https://ciit2026.diva.co.mz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-2.5 px-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black rounded-xl text-xs shadow-lg shadow-amber-950/40 flex items-center justify-between gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border border-amber-300/80 group"
+              title="Aceder ao portal oficial da Conferência Internacional de Investimentos de Tete (CIIT 2026)"
+            >
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4 text-slate-950 group-hover:rotate-12 transition-transform flex-shrink-0" />
+                <span className="uppercase tracking-wider font-extrabold text-[12px]">Visite Tete</span>
+                <span className="text-[10px] font-bold text-amber-950 bg-amber-200/90 px-1.5 py-0.5 rounded">
+                  CIIT 2026
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-950">
+                <span className="hidden sm:inline font-mono">ciit2026.diva.co.mz</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-950 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform flex-shrink-0" />
+              </div>
+            </a>
+          </div>
+        )}
 
         {/* Quick Numbers */}
         <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-800/80 text-center">
