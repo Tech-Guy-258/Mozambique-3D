@@ -9,6 +9,37 @@
     <meta property="og:description" content="Explorador geoespacial 3D interactivo com fronteiras reais do MOZGIS e dados estatísticos oficiais do INE Moçambique." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // 1. Ensure directory URLs have a trailing slash on GitHub Pages so relative assets ('./assets/...') resolve correctly
+      (function() {
+        var p = window.location.pathname;
+        if (p.length > 1 && !p.endsWith('/') && !p.split('/').pop().includes('.')) {
+          window.location.replace(p + '/' + window.location.search + window.location.hash);
+        }
+      })();
+
+      // 2. Global visible error trap to diagnose any missing module or runtime crash on GitHub Pages
+      window.addEventListener('error', function(e) {
+        setTimeout(function() {
+          var root = document.getElementById('root');
+          if (root && (!root.childNodes || root.childNodes.length === 0)) {
+            var existing = document.getElementById('ghpages-error-display');
+            if (!existing) {
+              var errDiv = document.createElement('div');
+              errDiv.id = 'ghpages-error-display';
+              errDiv.style.cssText = 'position:fixed;inset:0;background:#0f172a;color:#f8fafc;padding:24px;display:flex;align-items:center;justify-content:center;z-index:999999;font-family:system-ui,sans-serif;';
+              errDiv.innerHTML = '<div style="max-width:520px;width:100%;background:#1e293b;border:1px solid #ef4444;border-radius:16px;padding:24px;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);">' +
+                '<h2 style="font-size:18px;font-weight:bold;color:#f59e0b;margin-bottom:8px;">Mozambique 3D Explorer</h2>' +
+                '<p style="font-size:13px;color:#94a3b8;margin-bottom:14px;">Foi detectado um erro no carregamento da página:</p>' +
+                '<pre style="text-align:left;background:#0f172a;color:#f87171;padding:12px;border-radius:8px;font-size:11px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;">' + (e.message || e.error || 'Erro ao carregar script') + '</pre>' +
+                '<button onclick="location.reload()" style="margin-top:16px;background:#0284c7;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:13px;">Recarregar</button>' +
+                '</div>';
+              document.body.appendChild(errDiv);
+            }
+          }
+        }, 100);
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
