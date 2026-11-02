@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
@@ -178,6 +178,7 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
   selectedPatrioticLandmarkId = null,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
+  const [webglError, setWebglError] = useState<string | null>(null);
 
   // Store mutable refs for render loop and interaction
   const stateRef = useRef({
@@ -1091,10 +1092,17 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     camera.position.set(0, 32, 28);
     camera.lookAt(0, 0, 0);
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      powerPreference: 'high-performance',
-    });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        powerPreference: 'high-performance',
+      });
+    } catch (err: any) {
+      console.error('WebGL Renderer Error:', err);
+      setWebglError(err?.message || 'WebGL não disponível no navegador.');
+      return;
+    }
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -1533,7 +1541,11 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       }
 
       // Update animated patriotic elements (pulse along Zumbo-Indico and Rovuma-Maputo arcs, pulsing rings)
-      patrioticElements.update(delta, time * 0.001);
+      try {
+        patrioticElements.update(delta, time * 0.001);
+      } catch (err) {
+        console.warn('Patriotic animation loop error:', err);
+      }
 
       renderer.render(scene, camera);
     };
@@ -1895,6 +1907,20 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       look: new THREE.Vector3(targetX, 0.6, targetZ),
     };
   }, [focusTransportCoords]);
+
+  if (webglError) {
+    return (
+      <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-950 text-white p-6 z-10">
+        <div className="max-w-md p-6 bg-slate-900 border border-amber-500/50 rounded-2xl text-center space-y-3 shadow-2xl">
+          <h3 className="text-lg font-bold text-amber-400">Suporte WebGL / Aceleração Gráfica Necessária</h3>
+          <p className="text-xs text-slate-300">
+            A visualização 3D requer aceleração gráfica WebGL ativa no navegador. Verifique se a aceleração de hardware está ativada nas configurações do seu navegador.
+          </p>
+          <span className="text-[10px] text-slate-500 font-mono block">Detalhes: {webglError}</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

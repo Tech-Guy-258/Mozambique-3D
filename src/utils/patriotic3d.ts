@@ -539,7 +539,7 @@ export function buildPatrioticElements(
     new THREE.Vector3(-4.0, 2.7, -4.8),
     new THREE.Vector3(5.0, 2.4, -2.2),
     new THREE.Vector3(indicoPos[0], indicoPos[1] + 0.3, indicoPos[2]),
-  ]);
+  ], false, 'catmullrom');
 
   const tubeGeomZI = new THREE.TubeGeometry(curveZumboIndico, 64, 0.08, 12, false);
   const tubeMatZI = new THREE.MeshStandardMaterial({
@@ -584,7 +584,7 @@ export function buildPatrioticElements(
     new THREE.Vector3(rovumaPos[0], rovumaPos[1] + 0.3, rovumaPos[2]),
     new THREE.Vector3(2.5, 2.3, 0.0),
     new THREE.Vector3(maputoPos[0], maputoPos[1] + 0.3, maputoPos[2]),
-  ]);
+  ], false, 'catmullrom');
 
   const tubeGeomRM = new THREE.TubeGeometry(curveRovumaMaputo, 64, 0.07, 12, false);
   const tubeMatRM = new THREE.MeshStandardMaterial({
@@ -616,27 +616,51 @@ export function buildPatrioticElements(
 
   scene.add(group);
 
+  // Pre-sample points along curves to avoid any runtime evaluation errors
+  const samplesZI = curveZumboIndico.getPoints(120);
+  const samplesRM = curveRovumaMaputo.getPoints(120);
+
   let progressZI = 0;
   let progressRM = 0;
 
   const update = (delta: number, elapsed: number) => {
-    // Animate Zumbo-Índico pulse
-    progressZI = (progressZI + delta * 0.16) % 1;
-    const ptZI = curveZumboIndico.getPoint(progressZI);
-    pulseZumboIndico.position.copy(ptZI);
+    try {
+      const safeDelta = typeof delta === 'number' && !isNaN(delta) ? Math.max(0, Math.min(delta, 0.1)) : 0.016;
 
-    // Animate Rovuma-Maputo pulse
-    progressRM = (progressRM + delta * 0.14) % 1;
-    const ptRM = curveRovumaMaputo.getPoint(progressRM);
-    pulseRovumaMaputo.position.copy(ptRM);
+      // Animate Zumbo-Índico pulse safely using sampled points
+      if (samplesZI && samplesZI.length > 1) {
+        progressZI = (progressZI + safeDelta * 0.16) % 1.0;
+        if (progressZI < 0) progressZI += 1.0;
+        const idx = Math.min(samplesZI.length - 1, Math.max(0, Math.floor(progressZI * (samplesZI.length - 1))));
+        const ptZI = samplesZI[idx];
+        if (ptZI) {
+          pulseZumboIndico.position.copy(ptZI);
+        }
+      }
 
-    // Animate beacon rings pulsing
-    const scale = 1 + Math.sin(elapsed * 2.4) * 0.2;
-    const opacity = 0.5 + Math.sin(elapsed * 2.4) * 0.3;
-    pulsingRings.forEach((r) => {
-      r.scale.set(scale, scale, 1);
-      (r.material as THREE.MeshBasicMaterial).opacity = opacity;
-    });
+      // Animate Rovuma-Maputo pulse safely using sampled points
+      if (samplesRM && samplesRM.length > 1) {
+        progressRM = (progressRM + safeDelta * 0.14) % 1.0;
+        if (progressRM < 0) progressRM += 1.0;
+        const idx = Math.min(samplesRM.length - 1, Math.max(0, Math.floor(progressRM * (samplesRM.length - 1))));
+        const ptRM = samplesRM[idx];
+        if (ptRM) {
+          pulseRovumaMaputo.position.copy(ptRM);
+        }
+      }
+
+      // Animate beacon rings pulsing
+      const safeElapsed = typeof elapsed === 'number' && !isNaN(elapsed) ? elapsed : 0;
+      const scale = 1 + Math.sin(safeElapsed * 2.4) * 0.2;
+      const opacity = 0.5 + Math.sin(safeElapsed * 2.4) * 0.3;
+      pulsingRings.forEach((r) => {
+        r.scale.set(scale, scale, 1);
+        (r.material as THREE.MeshBasicMaterial).opacity = opacity;
+      });
+    } catch (err) {
+      // Keep frame rendering without crash
+      console.warn('Patriotic animation frame error handled:', err);
+    }
   };
 
   const dispose = () => {
