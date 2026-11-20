@@ -80,7 +80,7 @@ export const TransportPanel: React.FC<TransportPanelProps> = ({
     return (
       <button
         onClick={onToggleCollapse}
-        className="fixed top-24 left-3 sm:left-6 z-40 bg-slate-900/95 border border-amber-500/50 rounded-2xl shadow-2xl px-3.5 py-2.5 backdrop-blur-md flex items-center gap-2.5 text-xs font-bold text-amber-400 hover:text-white cursor-pointer hover:border-amber-400 transition-all group animate-fadeIn"
+        className="absolute top-3 right-3 z-30 bg-slate-900/95 border border-amber-500/50 rounded-2xl shadow-2xl px-3.5 py-2 backdrop-blur-md flex items-center gap-2 text-xs font-bold text-amber-400 hover:text-white cursor-pointer hover:border-amber-400 transition-all group animate-fadeIn"
         title="Expandir Painel de Transportes"
       >
         <Navigation className="w-4 h-4 text-amber-400 group-hover:rotate-45 transition-transform" />
@@ -91,7 +91,7 @@ export const TransportPanel: React.FC<TransportPanelProps> = ({
   }
 
   return (
-    <div className="fixed top-20 left-3 sm:left-6 z-40 w-96 max-w-[calc(100vw-24px)] bg-slate-900/95 backdrop-blur-md border border-slate-700/80 rounded-2xl shadow-2xl flex flex-col max-h-[calc(100vh-140px)] text-slate-100 overflow-hidden transition-all duration-300">
+    <div className="w-full h-[46%] md:h-full md:w-[380px] lg:w-[410px] shrink-0 bg-slate-900/95 backdrop-blur-md border-t md:border-t-0 md:border-l border-slate-700/80 shadow-2xl flex flex-col text-slate-100 z-20 overflow-hidden transition-all duration-300">
       {/* Top Header */}
       <div className="p-4 border-b border-slate-800 bg-slate-950/70 flex items-center justify-between">
         <div className="flex items-center gap-2">

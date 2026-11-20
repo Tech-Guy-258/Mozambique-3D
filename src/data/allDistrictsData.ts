@@ -5,23 +5,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "id": "1001",
     "code": "1001",
     "provinceId": "10",
-    "name": "Mecufi",
-    "headquarters": "Mecufi",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "name": "Mecúfi",
+    "headquarters": "Vila de Mecúfi",
+    "areaKm2": 1192,
+    "population2017": 61559,
+    "density2017": 51.6,
     "administrativePosts": [
-      "Mecufi",
-      "Sede Distrital"
+      "Mecúfi-Sede",
+      "Murrébuè"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mecufi",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca artesanal marítima e captura de mariscos",
+      "Turismo balnear em crescimento na praia de Murrébuè",
+      "Agricultura costeira de mandioca, caju e milho"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mecufi",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Praia de Murrébuè e águas azul-turquesa a sul de Pemba",
+      "Recifes de coral e gastronomia marinha"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -34,22 +34,26 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1002",
     "provinceId": "10",
     "name": "Chiúre",
-    "headquarters": "Chiúre",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Vila de Chiúre",
+    "areaKm2": 5203,
+    "population2017": 295340,
+    "density2017": 56.8,
     "administrativePosts": [
-      "Chiúre",
-      "Sede Distrital"
+      "Chiúre-Sede",
+      "Chiúre-Velho",
+      "Katapua",
+      "Mazeze",
+      "Namogelia",
+      "Ocua"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Chiúre",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Distrito mais populoso de Cabo Delgado, com forte produção de milho, algodão e mandioca",
+      "Comércio rodoviário estratégico na porta sul da província (EN1 / Rio Lúrio)",
+      "Produção de gergelim e caju"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Chiúre",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Vale do Rio Lúrio e pontes estratégicas em Ocua",
+      "Cultura e tradições Emakhuwa"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -62,22 +66,26 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1003",
     "provinceId": "10",
     "name": "Namuno",
-    "headquarters": "Namuno",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Vila de Namuno",
+    "areaKm2": 6908,
+    "population2017": 233161,
+    "density2017": 33.8,
     "administrativePosts": [
-      "Namuno",
-      "Sede Distrital"
+      "Namuno-Sede",
+      "Hucula",
+      "Luli",
+      "Machoca",
+      "Meloco",
+      "Ncumpe"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Namuno",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Grande produtor de algodão, gergelim, milho e mandioca",
+      "Pesquisa mineral e exploração artesanal de gemas no sul de Cabo Delgado",
+      "Pecuária caprina e comércio rural"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Namuno",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Inselbergs graníticos e paisagens de savana do interior",
+      "Artesanato e danças tradicionais Macua"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -90,22 +98,24 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1004",
     "provinceId": "10",
     "name": "Balama",
-    "headquarters": "Balama",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Vila de Balama",
+    "areaKm2": 5614,
+    "population2017": 142668,
+    "density2017": 25.4,
     "administrativePosts": [
-      "Balama",
-      "Sede Distrital"
+      "Balama-Sede",
+      "Impiri",
+      "Kuékué",
+      "Mavala"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Balama",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Uma das maiores minas de grafite natural do mundo (Mina de Balama)",
+      "Produção agrícola de milho, gergelim, feijão e algodão",
+      "Logística mineira no corredor Montepuez–Pemba"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Balama",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Montes e afloramentos rochosos ricos em minerais",
+      "Cultura comunitária e agricultura tradicional"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -118,14 +128,18 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1005",
     "provinceId": "10",
     "name": "Cidade de Pemba",
-    "headquarters": "Pemba",
-    "areaKm2": 198,
+    "headquarters": "Cidade de Pemba",
+    "areaKm2": 194,
     "population2017": 201846,
-    "density2017": 1019.4,
+    "density2017": 1040.4,
     "administrativePosts": [
-      "Pemba Urbano",
+      "Alto Gingone",
       "Cariacó",
-      "Alto Gingone"
+      "Cimento",
+      "Eduardo Mondlane",
+      "Ingonane",
+      "Natite",
+      "Paquitequete"
     ],
     "economicHighlights": [
       "Capital Provincial de Cabo Delgado",
@@ -147,51 +161,54 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "id": "1006",
     "code": "1006",
     "provinceId": "10",
-    "name": "Pemba",
-    "headquarters": "Pemba",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "name": "Metuge",
+    "headquarters": "Vila de Metuge",
+    "areaKm2": 1094,
+    "population2017": 86000,
+    "density2017": 78.6,
     "administrativePosts": [
-      "Pemba",
-      "Sede Distrital"
+      "Metuge-Sede",
+      "Messanja",
+      "Mieze"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Pemba",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Cintura agro-alimentar de Pemba (hortícolas, milho, mandioca e caju)",
+      "Base logística terrestre e parques industriais em Mieze",
+      "Pecuária de pequena escala e pesca artesanal na Baía de Pemba"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Pemba",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Margens interiores da Baía de Pemba e mangais",
+      "Património histórico e comunidades Kimwani"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Originalmente designado Pemba-Metuge; renomeado oficialmente Distrito de Metuge pela Lei n.º 26/2013."
   },
   "1007": {
     "id": "1007",
     "code": "1007",
     "provinceId": "10",
     "name": "Ancuabe",
-    "headquarters": "Ancuabe",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Vila de Ancuabe",
+    "areaKm2": 4606,
+    "population2017": 155515,
+    "density2017": 33.8,
     "administrativePosts": [
-      "Ancuabe",
-      "Sede Distrital"
+      "Ancuabe-Sede",
+      "Metoro",
+      "Meza"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Ancuabe",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Jazidas e minas de grafite de elevada pureza",
+      "Produção de milho, gergelim, caju e algodão",
+      "Entroncamento rodoviário vital em Metoro (ligação Pemba–Montepuez–Mueda)"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Ancuabe",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Montes de Metoro e paisagens de baobás",
+      "Cultura e escultura tradicional"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -204,22 +221,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1008",
     "provinceId": "10",
     "name": "Quissanga",
-    "headquarters": "Quissanga",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Vila de Quissanga",
+    "areaKm2": 2061,
+    "population2017": 51886,
+    "density2017": 25.2,
     "administrativePosts": [
-      "Quissanga",
-      "Sede Distrital"
+      "Quissanga-Sede",
+      "Bilibiza",
+      "Mahate"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Quissanga",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca artesanal e navegação para as Ilhas das Quirimbas",
+      "Centro agrário de Bilibiza e produção de coco e caju",
+      "Orizicultura costeira"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Quissanga",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Porta continental para o Parque Nacional das Quirimbas (Ilha do Ibo e Matemo)",
+      "Mangais costeiros e praias tropicais"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -237,7 +255,7 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "population2017": 12000,
     "density2017": 250,
     "administrativePosts": [
-      "Ibo",
+      "Ibo-Sede",
       "Quirimba"
     ],
     "economicHighlights": [
@@ -261,22 +279,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1010",
     "provinceId": "10",
     "name": "Meluco",
-    "headquarters": "Meluco",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Vila de Meluco",
+    "areaKm2": 5997,
+    "population2017": 29455,
+    "density2017": 4.9,
     "administrativePosts": [
-      "Meluco",
-      "Sede Distrital"
+      "Meluco-Sede",
+      "Muaguide"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Meluco",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Exploração florestal e produção de madeira nobre",
+      "Agricultura de milho, mandioca e gergelim",
+      "Apicultura e recursos florestais não-madeireiros"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Meluco",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Setor continental do Parque Nacional das Quirimbas",
+      "Florestas de miombo e vida selvagem"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -290,13 +308,14 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "10",
     "name": "Montepuez",
     "headquarters": "Montepuez",
-    "areaKm2": 17870,
-    "population2017": 270000,
-    "density2017": 15.1,
+    "areaKm2": 17721,
+    "population2017": 261530,
+    "density2017": 14.8,
     "administrativePosts": [
-      "Montepuez",
+      "Montepuez-Sede",
       "Mapupulo",
       "Mirate",
+      "Nairoto",
       "Namanhumbir"
     ],
     "economicHighlights": [
@@ -319,22 +338,24 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1012",
     "provinceId": "10",
     "name": "Macomia",
-    "headquarters": "Macomia",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Vila de Macomia",
+    "areaKm2": 4048,
+    "population2017": 117770,
+    "density2017": 29.1,
     "administrativePosts": [
-      "Macomia",
-      "Sede Distrital"
+      "Macomia-Sede",
+      "Chai",
+      "Mucojo",
+      "Quiterajo"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Macomia",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de caju, mandioca, milho e gergelim",
+      "Pesca costeira em Mucojo e Quiterajo",
+      "Eixo rodoviário central norte-sul de Cabo Delgado"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Macomia",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Sítio histórico de Chai (início da Luta Armada de Libertação em 1964)",
+      "Ilhas costeiras norte do Arquipélago das Quirimbas"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -347,22 +368,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1013",
     "provinceId": "10",
     "name": "Muidumbe",
-    "headquarters": "Muidumbe",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Namacande (Muidumbe)",
+    "areaKm2": 1987,
+    "population2017": 79099,
+    "density2017": 39.8,
     "administrativePosts": [
-      "Muidumbe",
-      "Sede Distrital"
+      "Muidumbe-Sede",
+      "Chitunda",
+      "Miteda"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Muidumbe",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura do planalto Maconde (milho, mandioca, feijão e caju)",
+      "Escultura em pau-preto (ébono) mundialmente famosa",
+      "Comércio rural"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Muidumbe",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Arte escultórica Maconde e dança tradicional Mapiko",
+      "Encostas do Planalto de Mueda/Muidumbe e vale do Rio Messalo"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -375,22 +397,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1014",
     "provinceId": "10",
     "name": "Mocímboa da Praia",
-    "headquarters": "Mocímboa da Praia",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Vila de Mocímboa da Praia",
+    "areaKm2": 3554,
+    "population2017": 113882,
+    "density2017": 32,
     "administrativePosts": [
-      "Mocímboa da Praia",
-      "Sede Distrital"
+      "Mocímboa da Praia-Sede",
+      "Diaca",
+      "Mbau"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mocímboa da Praia",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Porto marítimo estratégico de apoio logístico ao norte de Cabo Delgado",
+      "Pesca marítima e comércio costeiro",
+      "Cultivo de coco, caju e mandioca"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mocímboa da Praia",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Baía de Mocímboa da Praia e ilhas coralíferas costeiras",
+      "Património histórico da Luta de Libertação e cultura Kimwani/Suaíli"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -403,22 +426,25 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1015",
     "provinceId": "10",
     "name": "Mueda",
-    "headquarters": "Mueda",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Vila de Mueda",
+    "areaKm2": 14150,
+    "population2017": 129835,
+    "density2017": 9.2,
     "administrativePosts": [
-      "Mueda",
-      "Sede Distrital"
+      "Mueda-Sede",
+      "Chapa",
+      "Imbuho",
+      "Negomano",
+      "N'Gapa"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mueda",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura de altitude no Planalto dos Macondes (milho, mandioca, feijão)",
+      "Ponte da Unidade em Negomano (ligação rodoviária estratégica com a Tanzânia)",
+      "Escultura tradicional Maconde em ébono e madeira"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mueda",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Planalto de Mueda e memória histórica nacional de 16 de Junho de 1960",
+      "Vale do Rio Rovuma e travessia histórica de Negomano"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -433,10 +459,10 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "name": "Palma",
     "headquarters": "Palma",
     "areaKm2": 3493,
-    "population2017": 67000,
-    "density2017": 19.2,
+    "population2017": 65614,
+    "density2017": 18.8,
     "administrativePosts": [
-      "Palma",
+      "Palma-Sede",
       "Olumbe",
       "Pundanhar",
       "Quionga"
@@ -461,22 +487,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1017",
     "provinceId": "10",
     "name": "Nangade",
-    "headquarters": "Nangade",
-    "areaKm2": 4860,
-    "population2017": 137252,
-    "density2017": 28.2,
+    "headquarters": "Vila de Nangade",
+    "areaKm2": 2757,
+    "population2017": 97535,
+    "density2017": 35.4,
     "administrativePosts": [
-      "Nangade",
-      "Sede Distrital"
+      "Nangade-Sede",
+      "Ntamba"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Nangade",
-      "Comércio Local e Recursos Naturais da Província de Cabo Delgado",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura de milho, mandioca, amendoim e feijão",
+      "Pesca artesanal na Lagoa de Nangade e Rio Rovuma",
+      "Comércio transfronteiriço com a Tanzânia"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Nangade",
-      "Cultura Comunitária e Tradições de Cabo Delgado"
+      "Lagoa de Nangade e paisagens do Rio Rovuma",
+      "Cultura e música tradicional Shimakonde"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -489,22 +515,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1101",
     "provinceId": "11",
     "name": "Cuamba",
-    "headquarters": "Cuamba",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Cidade de Cuamba",
+    "areaKm2": 5121,
+    "population2017": 269985,
+    "density2017": 52.7,
     "administrativePosts": [
-      "Cuamba",
-      "Sede Distrital"
+      "Cuamba-Sede",
+      "Etatara",
+      "Lúrio"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Cuamba",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Maior centro comercial, universitário e ferroviário do sul do Niassa",
+      "Entroncamento do Corredor de Nacala e ramal ferroviário para Lichinga",
+      "Produção de milho, tabaco, algodão, feijão e soja"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Cuamba",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Estação ferroviária histórica de Cuamba",
+      "Paisagens agrícolas do vale do Rio Lúrio"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -517,22 +544,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1102",
     "provinceId": "11",
     "name": "Mecanhelas",
-    "headquarters": "Mecanhelas",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Insaca (Mecanhelas)",
+    "areaKm2": 6406,
+    "population2017": 270573,
+    "density2017": 42.2,
     "administrativePosts": [
-      "Mecanhelas",
-      "Sede Distrital"
+      "Insaca",
+      "Chiúta"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mecanhelas",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Distrito mais populoso do Niassa com elevada produção de milho, feijão e tabaco",
+      "Comércio transfronteiriço intenso com o Malawi junto ao Lago Chirua/Chiúta",
+      "Pecuária e pesca lacustre"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mecanhelas",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Lago Chiúta e Lago Amaramba (zonas húmidas partilhadas com o Malawi)",
+      "Pesca tradicional em canoas escavadas"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -545,22 +572,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1103",
     "provinceId": "11",
     "name": "Metarica",
-    "headquarters": "Metarica",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Vila de Metarica",
+    "areaKm2": 3489,
+    "population2017": 45555,
+    "density2017": 13.1,
     "administrativePosts": [
-      "Metarica",
-      "Sede Distrital"
+      "Metarica-Sede",
+      "Nacumua"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Metarica",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura de milho, mapira, feijão e gergelim",
+      "Silvicultura e pesca artesanal fluvial no Rio Lúrio",
+      "Ligação ferroviária e rodoviária no eixo Cuamba–Nampula"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Metarica",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Margens do Rio Lúrio e florestas de miombo",
+      "Tradições culturais Ciyao e Emakhuwa"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -573,22 +600,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1104",
     "provinceId": "11",
     "name": "Mandimba",
-    "headquarters": "Mandimba",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Vila de Mandimba",
+    "areaKm2": 4385,
+    "population2017": 212907,
+    "density2017": 48.6,
     "administrativePosts": [
-      "Mandimba",
-      "Sede Distrital"
+      "Mandimba-Sede",
+      "Mitande"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mandimba",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Principal posto fronteiriço rodoviário do Niassa com o Malawi (Chiponde)",
+      "Grande produção de milho, tabaco, feijão e batata-reno",
+      "Comércio de trânsito regional"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mandimba",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Monte Mandimba e colinas fronteiriças do planalto",
+      "Mercados dinâmicos da fronteira"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -601,22 +628,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1105",
     "provinceId": "11",
     "name": "Nipepe",
-    "headquarters": "Nipepe",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Vila de Nipepe",
+    "areaKm2": 3292,
+    "population2017": 45388,
+    "density2017": 13.8,
     "administrativePosts": [
-      "Nipepe",
-      "Sede Distrital"
+      "Nipepe-Sede",
+      "Muipite"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Nipepe",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de algodão, gergelim, milho e tabaco",
+      "Exploração florestal sustentável",
+      "Agricultura familiar nas bacias dos afluentes do Lúrio"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Nipepe",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Serras graníticas e paisagens naturais do sul do Niassa",
+      "Património cultural Emakhuwa"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -629,22 +656,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1106",
     "provinceId": "11",
     "name": "Maúa",
-    "headquarters": "Maúa",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Vila de Maúa",
+    "areaKm2": 9957,
+    "population2017": 68502,
+    "density2017": 6.9,
     "administrativePosts": [
-      "Maúa",
-      "Sede Distrital"
+      "Maúa-Sede",
+      "Maiaca"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Maúa",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de gergelim, milho, mandioca e tabaco",
+      "Exploração de madeiras nobres e mineração artesanal",
+      "Apicultura comunitária"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Maúa",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Formações rochosas de Maúa e florestas densas de miombo",
+      "Rios cristalinos do interior do Niassa"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -657,22 +684,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1107",
     "provinceId": "11",
     "name": "Marrupa",
-    "headquarters": "Marrupa",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Vila de Marrupa",
+    "areaKm2": 17730,
+    "population2017": 78106,
+    "density2017": 4.4,
     "administrativePosts": [
-      "Marrupa",
-      "Sede Distrital"
+      "Marrupa-Sede",
+      "Marangira",
+      "Nungo"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Marrupa",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Eixo central de ligação rodoviária entre Lichinga e Cabo Delgado",
+      "Produção agrícola de milho, feijão e mandioca",
+      "Silvicultura e turismo cinegético/ecológico na zona sul da Reserva do Niassa"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Marrupa",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Porta de acesso sul à Reserva Especial do Niassa",
+      "Monte Marrupa e vale do Rio Messalo/Lugenda"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -685,22 +713,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1108",
     "provinceId": "11",
     "name": "Majune",
-    "headquarters": "Majune",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Malanga (Majune)",
+    "areaKm2": 9095,
+    "population2017": 40246,
+    "density2017": 4.4,
     "administrativePosts": [
-      "Majune",
-      "Sede Distrital"
+      "Majune-Sede",
+      "Malemia",
+      "Nairrubi"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Majune",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura de milho, feijão, mandioca e gergelim",
+      "Silvicultura, apicultura e maneio de recursos florestais",
+      "Conservação comunitária de fauna"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Majune",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Paisagens intocadas do vale do Rio Lugenda",
+      "Zona de transição ecológica para a Reserva do Niassa"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -712,23 +741,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "id": "1109",
     "code": "1109",
     "provinceId": "11",
-    "name": "Ngauma",
-    "headquarters": "Ngauma",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "name": "N'gauma",
+    "headquarters": "Massangulo",
+    "areaKm2": 2421,
+    "population2017": 96137,
+    "density2017": 39.7,
     "administrativePosts": [
-      "Ngauma",
-      "Sede Distrital"
+      "Massangulo (N'gauma-Sede)",
+      "Itepela"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Ngauma",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura intensiva de planalto (milho, batata-reno, feijão e trigo)",
+      "Silvicultura de pinheiros e eucaliptos",
+      "Comércio ao longo da estrada Lichinga–Mandimba"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Ngauma",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Missão Histórica de Massangulo e clima fresco de montanha",
+      "Planalto verdejante de N'gauma"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -742,21 +771,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "11",
     "name": "Chimbunila",
     "headquarters": "Chimbunila",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "areaKm2": 5422,
+    "population2017": 72660,
+    "density2017": 13.4,
     "administrativePosts": [
-      "Chimbunila",
-      "Sede Distrital"
+      "Chimbunila-Sede",
+      "Lione",
+      "Msinje"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Chimbunila",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Grandes plantações florestais de pinheiro e eucalipto (indústria de madeira)",
+      "Cintura agrícola de milho, batata e feijão em torno de Lichinga",
+      "Avicultura e pecuária de altitude"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Chimbunila",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Planalto de Lichinga e florestas plantadas de Chimbunila",
+      "Nascentes do Rio Lucheringo e clima temperado de altitude"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -768,15 +798,16 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "id": "1111",
     "code": "1111",
     "provinceId": "11",
-    "name": "Lichinga",
-    "headquarters": "Lichinga",
-    "areaKm2": 290,
-    "population2017": 213361,
-    "density2017": 735.7,
+    "name": "Cidade de Lichinga",
+    "headquarters": "Cidade de Lichinga",
+    "areaKm2": 257,
+    "population2017": 243668,
+    "density2017": 948.1,
     "administrativePosts": [
       "Lichinga Central",
       "Lulimile",
-      "Meponda"
+      "Meponda",
+      "Sanjala"
     ],
     "economicHighlights": [
       "Capital Provincial do Niassa",
@@ -800,11 +831,11 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "11",
     "name": "Mecula",
     "headquarters": "Mecula",
-    "areaKm2": 18153,
-    "population2017": 21000,
+    "areaKm2": 18135,
+    "population2017": 21047,
     "density2017": 1.2,
     "administrativePosts": [
-      "Mecula",
+      "Mecula-Sede",
       "Matondovela"
     ],
     "economicHighlights": [
@@ -826,22 +857,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1113",
     "provinceId": "11",
     "name": "Mavago",
-    "headquarters": "Mavago",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Vila de Mavago",
+    "areaKm2": 9559,
+    "population2017": 30061,
+    "density2017": 3.1,
     "administrativePosts": [
-      "Mavago",
-      "Sede Distrital"
+      "Mavago-Sede",
+      "M'Sawize"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mavago",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Conservação de vida selvagem e ecoturismo na Reserva Especial do Niassa",
+      "Agricultura familiar de milho, mapira e mandioca",
+      "Apicultura orgânica e pesca no Rio Rovuma"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mavago",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Reserva Especial do Niassa e serras de M'Sawize",
+      "Fronteira natural do Rio Rovuma com a Tanzânia"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -854,22 +885,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1114",
     "provinceId": "11",
     "name": "Muembe",
-    "headquarters": "Muembe",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Vila de Muembe",
+    "areaKm2": 5526,
+    "population2017": 44025,
+    "density2017": 8,
     "administrativePosts": [
-      "Muembe",
-      "Sede Distrital"
+      "Muembe-Sede",
+      "Chiconono"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Muembe",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Silvicultura de altitude e agricultura de milho, feijão e batata",
+      "Apicultura tradicional",
+      "Comércio rural na rota Lichinga–Mecula"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Muembe",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Paisagens montanhosas do planalto central do Niassa",
+      "Cultura e tradições Ciyao"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -882,22 +913,24 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "1115",
     "provinceId": "11",
     "name": "Sanga",
-    "headquarters": "Sanga",
-    "areaKm2": 8066,
-    "population2017": 116624,
-    "density2017": 14.5,
+    "headquarters": "Unango (Sanga)",
+    "areaKm2": 12185,
+    "population2017": 76034,
+    "density2017": 6.2,
     "administrativePosts": [
-      "Sanga",
-      "Sede Distrital"
+      "Sanga-Sede (Unango)",
+      "Lussimbeze",
+      "Macaloge",
+      "Matchedje"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Sanga",
-      "Comércio Local e Recursos Naturais da Província de Niassa",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura de planalto em Unango (milho, feijão, tabaco e reflorestamento)",
+      "Pecuária e exploração florestal sustentável",
+      "Comércio fronteiriço com a Tanzânia e Malawi"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Sanga",
-      "Cultura Comunitária e Tradições de Niassa"
+      "Sítio histórico de Matchedje (II Congresso da FRELIMO em 1968)",
+      "Planalto de Unango e margens do Rio Rovuma"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -911,12 +944,13 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "11",
     "name": "Lago",
     "headquarters": "Metangula",
-    "areaKm2": 6438,
-    "population2017": 106000,
+    "areaKm2": 6528,
+    "population2017": 108001,
     "density2017": 16.5,
     "administrativePosts": [
       "Metangula",
       "Cobué",
+      "Lunho",
       "Maniamba"
     ],
     "economicHighlights": [
@@ -1214,28 +1248,29 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Chongoene\n",
     "headquarters": "Chongoene",
-    "areaKm2": 700,
-    "population2017": 120000,
-    "density2017": 171.4,
+    "areaKm2": 1575,
+    "population2017": 121495,
+    "density2017": 77.1,
     "administrativePosts": [
-      "Chongoene",
-      "Mazivila",
-      "Madievine"
+      "Chongoene-Sede",
+      "Mazucane",
+      "Nguzene"
     ],
     "economicHighlights": [
-      "Aeroporto Filipe Jacinto Nyusi de Gaza",
-      "Mineração de Areias Pesadas",
-      "Pesca Artesanal"
+      "Pesca costeira, agricultura familiar e produção de coco",
+      "Turismo balnear nas praias de Chongoene",
+      "Comércio rural ao longo do corredor da N1"
     ],
     "tourismHighlights": [
-      "Praias Selvagens de Chongoene",
-      "Falésias Costeiras"
+      "Praia do Chongoene e falésias costeiras",
+      "Lagoas litorais e dunas de Gaza"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2016 por desmembramento do antigo distrito de Xai-Xai."
   },
   "0302": {
     "id": "0302",
@@ -1243,9 +1278,9 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Cidade de Xai-Xai",
     "headquarters": "Xai-Xai",
-    "areaKm2": 135,
-    "population2017": 143128,
-    "density2017": 1060.2,
+    "areaKm2": 295,
+    "population2017": 141963,
+    "density2017": 481.2,
     "administrativePosts": [
       "Xai-Xai Central",
       "Patrice Lumumba",
@@ -1271,29 +1306,30 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0303",
     "provinceId": "03",
     "name": "Limpopo\n",
-    "headquarters": "Lumane",
-    "areaKm2": 980,
-    "population2017": 140000,
-    "density2017": 142.9,
+    "headquarters": "Nhamavila / Chicumbane",
+    "areaKm2": 1168,
+    "population2017": 150394,
+    "density2017": 128.8,
     "administrativePosts": [
-      "Lumane",
+      "Chicumbane",
       "Chissano",
       "Zongoene"
     ],
     "economicHighlights": [
-      "Regadio do Baixo Limpopo",
-      "Produção Intensiva de Arroz e Hortícolas",
-      "Pesca de Água Doce"
+      "Orizicultura e agricultura nas várzeas do Baixo Limpopo",
+      "Pesca artesanal na foz do Rio Limpopo",
+      "Pecuária bovina de corte e leite"
     ],
     "tourismHighlights": [
-      "Foz do Rio Limpopo em Zongoene",
-      "Planícies de Aluvião"
+      "Foz do Rio Limpopo e Praia de Zongoene",
+      "Observação de aves nos pântanos do Baixo Limpopo"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2016 no baixo curso do Rio Limpopo."
   },
   "0304": {
     "id": "0304",
@@ -1301,9 +1337,9 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Bilene",
     "headquarters": "Praia do Bilene",
-    "areaKm2": 2157,
-    "population2017": 151911,
-    "density2017": 70.4,
+    "areaKm2": 2182,
+    "population2017": 140972,
+    "density2017": 64.6,
     "administrativePosts": [
       "Bilene",
       "Messano",
@@ -1331,8 +1367,8 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "name": "Mandlakazi",
     "headquarters": "Mandlakazi",
     "areaKm2": 3748,
-    "population2017": 166488,
-    "density2017": 44.4,
+    "population2017": 137068,
+    "density2017": 36.6,
     "administrativePosts": [
       "Mandlakazi",
       "Chidenguele",
@@ -1360,9 +1396,9 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Chibuto",
     "headquarters": "Chibuto",
-    "areaKm2": 5653,
-    "population2017": 197214,
-    "density2017": 34.9,
+    "areaKm2": 5606,
+    "population2017": 217155,
+    "density2017": 38.7,
     "administrativePosts": [
       "Chibuto",
       "Alto Changane",
@@ -1420,9 +1456,9 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Guijá",
     "headquarters": "Caniçado",
-    "areaKm2": 4207,
-    "population2017": 75728,
-    "density2017": 18,
+    "areaKm2": 3589,
+    "population2017": 89996,
+    "density2017": 25.1,
     "administrativePosts": [
       "Caniçado",
       "Chivongoene",
@@ -1449,9 +1485,9 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Chigubo",
     "headquarters": "Dindiza",
-    "areaKm2": 14864,
-    "population2017": 20700,
-    "density2017": 1.4,
+    "areaKm2": 13952,
+    "population2017": 22080,
+    "density2017": 1.6,
     "administrativePosts": [
       "Dindiza",
       "Zinhane"
@@ -1476,9 +1512,9 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Mabalane",
     "headquarters": "Mabalane",
-    "areaKm2": 9107,
-    "population2017": 32040,
-    "density2017": 3.5,
+    "areaKm2": 9580,
+    "population2017": 38644,
+    "density2017": 4,
     "administrativePosts": [
       "Mabalane",
       "Combomune",
@@ -1505,9 +1541,9 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Massingir",
     "headquarters": "Massingir",
-    "areaKm2": 5893,
-    "population2017": 35000,
-    "density2017": 5.9,
+    "areaKm2": 5858,
+    "population2017": 36750,
+    "density2017": 6.3,
     "administrativePosts": [
       "Massingir",
       "Mavodze",
@@ -1534,9 +1570,9 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Mapai",
     "headquarters": "Mapai",
-    "areaKm2": 6475,
-    "population2017": 23000,
-    "density2017": 3.6,
+    "areaKm2": 14200,
+    "population2017": 28441,
+    "density2017": 2,
     "administrativePosts": [
       "Mapai",
       "Machaila"
@@ -1562,9 +1598,9 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Chicualacuala",
     "headquarters": "Chicualacuala",
-    "areaKm2": 18155,
-    "population2017": 38917,
-    "density2017": 2.1,
+    "areaKm2": 11393,
+    "population2017": 27084,
+    "density2017": 2.4,
     "administrativePosts": [
       "Chicualacuala",
       "Eduardo Mondlane",
@@ -1591,8 +1627,8 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "03",
     "name": "Massangena",
     "headquarters": "Massangena",
-    "areaKm2": 7481,
-    "population2017": 15637,
+    "areaKm2": 10351,
+    "population2017": 21562,
     "density2017": 2.1,
     "administrativePosts": [
       "Massangena",
@@ -1986,22 +2022,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0501",
     "provinceId": "05",
     "name": "Machanga",
-    "headquarters": "Machanga",
-    "areaKm2": 5232,
-    "population2017": 170908,
-    "density2017": 32.7,
+    "headquarters": "Vila de Machanga",
+    "areaKm2": 5810,
+    "population2017": 54430,
+    "density2017": 9.4,
     "administrativePosts": [
-      "Machanga",
-      "Sede Distrital"
+      "Machanga-Sede",
+      "Divinhe",
+      "Chiloane"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Machanga",
-      "Comércio Local e Recursos Naturais da Província de Sofala",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca artesanal marítima e captura de camarão na baía de Sofala",
+      "Agricultura de subsistência, caju e produção de sal",
+      "Transporte marítimo tradicional em embarcações à vela (dhows)"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Machanga",
-      "Cultura Comunitária e Tradições de Sofala"
+      "Ilha histórica de Chiloane e ruínas coloniais",
+      "Mangais da foz do Rio Save e praias virgens"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2014,22 +2051,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0502",
     "provinceId": "05",
     "name": "Búzi",
-    "headquarters": "Búzi",
-    "areaKm2": 5232,
-    "population2017": 170908,
-    "density2017": 32.7,
+    "headquarters": "Vila do Búzi",
+    "areaKm2": 7409,
+    "population2017": 177348,
+    "density2017": 23.9,
     "administrativePosts": [
-      "Búzi",
-      "Sede Distrital"
+      "Búzi-Sede",
+      "Estaquinha",
+      "Nova-Sofala"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Búzi",
-      "Comércio Local e Recursos Naturais da Província de Sofala",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agro-indústria açucareira da Companhia do Búzi",
+      "Orizicultura, produção de milho e pesca fluvial/costeira",
+      "Navegação no estuário do Rio Búzi"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Búzi",
-      "Cultura Comunitária e Tradições de Sofala"
+      "Ruínas históricas da Fortaleza de São Caetano em Nova-Sofala (séc. XVI)",
+      "Planícies aluviais do Búzi e cultura Cindau"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2042,22 +2080,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0503",
     "provinceId": "05",
     "name": "Chibabava",
-    "headquarters": "Chibabava",
-    "areaKm2": 5232,
-    "population2017": 170908,
-    "density2017": 32.7,
+    "headquarters": "Vila de Chibabava",
+    "areaKm2": 8012,
+    "population2017": 125740,
+    "density2017": 15.7,
     "administrativePosts": [
-      "Chibabava",
-      "Sede Distrital"
+      "Chibabava-Sede",
+      "Goonda",
+      "Muxúnguè"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Chibabava",
-      "Comércio Local e Recursos Naturais da Província de Sofala",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de algodão, gergelim, milho e mandioca",
+      "Comércio rodoviário estratégico em Muxúnguè (eixo da EN1)",
+      "Exploração florestal sustentável e pecuária"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Chibabava",
-      "Cultura Comunitária e Tradições de Sofala"
+      "Reserva de Caça e áreas florestais do centro-sul de Sofala",
+      "Sítios históricos e fontes naturais de Muxúnguè"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2075,15 +2114,16 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "population2017": 533825,
     "density2017": 843.3,
     "administrativePosts": [
-      "Beira Central",
-      "Munhava",
-      "Manga Manga",
-      "Inhamízua"
+      "Posto Administrativo Nº 1 (Central)",
+      "Posto Administrativo Nº 2 (Munhava)",
+      "Posto Administrativo Nº 3 (Inhamízua)",
+      "Posto Administrativo Nº 4 (Manga-Loforte)",
+      "Posto Administrativo Nº 5 (Nhangau)"
     ],
     "economicHighlights": [
       "Porto da Beira (2º maior do país, ligação ao Zimbabué, Zâmbia e Malawi)",
       "Corredor de Desenvolvimento da Beira (Caminho de Ferro e EN6)",
-      "Indústria"
+      "Indústria Transformadora, Construção Naval e Pesca Industrial"
     ],
     "tourismHighlights": [
       "Catedral da Beira",
@@ -2102,22 +2142,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0505",
     "provinceId": "05",
     "name": "Dondo",
-    "headquarters": "Dondo",
-    "areaKm2": 5232,
-    "population2017": 170908,
-    "density2017": 32.7,
+    "headquarters": "Cidade do Dondo",
+    "areaKm2": 2443,
+    "population2017": 178820,
+    "density2017": 73.2,
     "administrativePosts": [
-      "Dondo",
-      "Sede Distrital"
+      "Dondo-Sede",
+      "Mafambisse",
+      "Savane"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Dondo",
-      "Comércio Local e Recursos Naturais da Província de Sofala",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Complexo Açucareiro de Mafambisse (etanol e açúcar)",
+      "Entroncamento ferroviário estratégico (Linhas de Machipanda e Sena)",
+      "Indústria de cimento, cerâmica e logística do Corredor da Beira"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Dondo",
-      "Cultura Comunitária e Tradições de Sofala"
+      "Praias e mangais de Savane",
+      "Património ferroviário histórico do Corredor da Beira"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2130,22 +2171,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0506",
     "provinceId": "05",
     "name": "Nhamatanda",
-    "headquarters": "Nhamatanda",
-    "areaKm2": 5232,
-    "population2017": 170908,
-    "density2017": 32.7,
+    "headquarters": "Vila de Nhamatanda",
+    "areaKm2": 5085,
+    "population2017": 272816,
+    "density2017": 53.7,
     "administrativePosts": [
-      "Nhamatanda",
-      "Sede Distrital"
+      "Nhamatanda-Sede",
+      "Tica"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Nhamatanda",
-      "Comércio Local e Recursos Naturais da Província de Sofala",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura intensiva de arroz, milho e hortícolas na bacia do Púnguè",
+      "Corredor rodoviário Beira–Chimoio (EN6) e comércio de Tica",
+      "Avicultura e agro-processamento"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Nhamatanda",
-      "Cultura Comunitária e Tradições de Sofala"
+      "Porta de acesso sul ao Parque Nacional da Gorongosa",
+      "Paisagens agrícolas do vale do Rio Púnguè"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2158,22 +2199,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0507",
     "provinceId": "05",
     "name": "Muanza",
-    "headquarters": "Muanza",
-    "areaKm2": 7500,
-    "population2017": 34000,
-    "density2017": 4.5,
+    "headquarters": "Vila de Muanza",
+    "areaKm2": 5731,
+    "population2017": 24347,
+    "density2017": 4.2,
     "administrativePosts": [
-      "Muanza",
+      "Muanza-Sede",
       "Galinha"
     ],
     "economicHighlights": [
-      "Ecoturismo e Conservação da Biodiversidade",
-      "Indústria Madeireira e Silvicultura",
-      "Pedreiras de Calcário"
+      "Exploração de calcário e rochas ornamentais",
+      "Silvicultura, produção de carvão vegetal certificado e apicultura",
+      "Extracção de madeira e caça sustentável"
     ],
     "tourismHighlights": [
-      "Parque Nacional da Gorongosa (Setor Leste)",
-      "Gargantas e Falésias de Calcário do Planalto de Cheringoma"
+      "Zona tampão costeira do Parque Nacional da Gorongosa",
+      "Florestas de miombo e savanas do Rift de Urema"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2186,13 +2227,14 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0509",
     "provinceId": "05",
     "name": "Marromeu",
-    "headquarters": "Marromeu",
-    "areaKm2": 5871,
-    "population2017": 156000,
-    "density2017": 26.6,
+    "headquarters": "Vila de Marromeu",
+    "areaKm2": 4657,
+    "population2017": 144512,
+    "density2017": 31,
     "administrativePosts": [
-      "Marromeu",
-      "Chupanga"
+      "Marromeu-Sede",
+      "Chupanga",
+      "Malingapansi"
     ],
     "economicHighlights": [
       "Açucareira de Marromeu (Companhia de Sena)",
@@ -2214,22 +2256,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0510",
     "provinceId": "05",
     "name": "Cheringoma",
-    "headquarters": "Cheringoma",
-    "areaKm2": 5232,
-    "population2017": 170908,
-    "density2017": 32.7,
+    "headquarters": "Vila de Inhaminga",
+    "areaKm2": 8739,
+    "population2017": 56800,
+    "density2017": 6.5,
     "administrativePosts": [
-      "Cheringoma",
-      "Sede Distrital"
+      "Inhaminga",
+      "Inhamitanga"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Cheringoma",
-      "Comércio Local e Recursos Naturais da Província de Sofala",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Indústria madeireira e exploração florestal do Planalto de Cheringoma",
+      "Linha férrea de Sena (transporte de carvão de Moatize à Beira)",
+      "Agricultura de mandioca, feijão e apicultura"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Cheringoma",
-      "Cultura Comunitária e Tradições de Sofala"
+      "Reserva Especial de Búfalos de Marromeu (setor Cheringoma)",
+      "Grutas calcárias e florestas tropicais de Inhamitanga"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2242,22 +2284,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0511",
     "provinceId": "05",
     "name": "Caia",
-    "headquarters": "Caia",
-    "areaKm2": 5232,
-    "population2017": 170908,
-    "density2017": 32.7,
+    "headquarters": "Vila de Caia",
+    "areaKm2": 3477,
+    "population2017": 136345,
+    "density2017": 39.2,
     "administrativePosts": [
-      "Caia",
-      "Sede Distrital"
+      "Caia-Sede",
+      "Murraça",
+      "Sena"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Caia",
-      "Comércio Local e Recursos Naturais da Província de Sofala",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Nó rodoviário e ferroviário estratégico da Ponte Armando Guebuza sobre o Zambeze",
+      "Agricultura de milho, mapira e gergelim nas margens do Zambeze",
+      "Ponte Ferroviária Dona Ana em Vila de Sena"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Caia",
-      "Cultura Comunitária e Tradições de Sofala"
+      "Ponte Dona Ana sobre o Rio Zambeze (uma das maiores pontes ferroviárias de África)",
+      "Vila histórica de Sena (antigo entreposto mercantil do século XVI)"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2270,22 +2313,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0512",
     "provinceId": "05",
     "name": "Marínguè",
-    "headquarters": "Marínguè",
-    "areaKm2": 5232,
-    "population2017": 170908,
-    "density2017": 32.7,
+    "headquarters": "Vila de Marínguè",
+    "areaKm2": 3975,
+    "population2017": 86820,
+    "density2017": 21.8,
     "administrativePosts": [
-      "Marínguè",
-      "Sede Distrital"
+      "Marínguè-Sede",
+      "Canxixe",
+      "Súbwè"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Marínguè",
-      "Comércio Local e Recursos Naturais da Província de Sofala",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de gergelim, algodão, milho e pecuária caprina",
+      "Comércio rural e agricultura familiar",
+      "Maneio comunitário de recursos florestais"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Marínguè",
-      "Cultura Comunitária e Tradições de Sofala"
+      "Paisagens de savana e florestas de miombo do centro de Sofala",
+      "Tradições musicais e culturais Cisena"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2298,22 +2342,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0513",
     "provinceId": "05",
     "name": "Chemba",
-    "headquarters": "Chemba",
-    "areaKm2": 5232,
-    "population2017": 170908,
-    "density2017": 32.7,
+    "headquarters": "Vila de Chemba",
+    "areaKm2": 4388,
+    "population2017": 75210,
+    "density2017": 17.1,
     "administrativePosts": [
-      "Chemba",
-      "Sede Distrital"
+      "Chemba-Sede",
+      "Chiramba",
+      "Mulima"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Chemba",
-      "Comércio Local e Recursos Naturais da Província de Sofala",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura de algodão, gergelim e culturas de ciclo curto no vale do Zambeze",
+      "Pesca fluvial no Rio Zambeze e criação de gado caprino",
+      "Extracção de materiais de construção local"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Chemba",
-      "Cultura Comunitária e Tradições de Sofala"
+      "Margens do Rio Zambeze em Chiramba",
+      "Monumentos históricos da época da Companhia de Moçambique"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2326,22 +2371,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0601",
     "provinceId": "06",
     "name": "Machaze",
-    "headquarters": "Machaze",
-    "areaKm2": 5138,
-    "population2017": 159270,
-    "density2017": 31,
+    "headquarters": "Chitobe (Machaze)",
+    "areaKm2": 11911,
+    "population2017": 132711,
+    "density2017": 11.1,
     "administrativePosts": [
-      "Machaze",
-      "Sede Distrital"
+      "Machaze-Sede",
+      "Save"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Machaze",
-      "Comércio Local e Recursos Naturais da Província de Manica",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pecuária bovina e caprina extensiva",
+      "Cultura do caju, mapira, mexoeira e gergelim",
+      "Exploração florestal na bacia do Rio Save"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Machaze",
-      "Cultura Comunitária e Tradições de Manica"
+      "Vale do Rio Save e matas de savana seca",
+      "Cultura e património tradicional Ndau"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2353,23 +2398,24 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "id": "0602",
     "code": "0602",
     "provinceId": "06",
-    "name": "Mossurizi",
-    "headquarters": "Mossurizi",
-    "areaKm2": 5138,
-    "population2017": 159270,
-    "density2017": 31,
+    "name": "Mossurize",
+    "headquarters": "Espungabera",
+    "areaKm2": 5785,
+    "population2017": 213762,
+    "density2017": 37,
     "administrativePosts": [
-      "Mossurizi",
-      "Sede Distrital"
+      "Espungabera",
+      "Chiurairue",
+      "Dacata"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mossurizi",
-      "Comércio Local e Recursos Naturais da Província de Manica",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Cafeicultura e fruticultura nas terras altas de Espungabera",
+      "Produção de milho, tabaco e madeira nativa",
+      "Comércio transfronteiriço com o Zimbabué"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mossurizi",
-      "Cultura Comunitária e Tradições de Manica"
+      "Serra de Espungabera e floresta de Chipanje Chetu",
+      "Tradições e danças culturais Ndau"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2383,14 +2429,14 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "06",
     "name": "Sussundenga",
     "headquarters": "Sussundenga",
-    "areaKm2": 7060,
-    "population2017": 168000,
-    "density2017": 23.8,
+    "areaKm2": 7017,
+    "population2017": 176714,
+    "density2017": 25.2,
     "administrativePosts": [
-      "Sussundenga",
-      "Rotanda",
+      "Sussundenga-Sede",
       "Dombe",
-      "Muhoa"
+      "Muhoa",
+      "Rotanda"
     ],
     "economicHighlights": [
       "Parque Nacional de Chimanimani",
@@ -2413,50 +2459,54 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0604",
     "provinceId": "06",
     "name": "Macate",
-    "headquarters": "Macate",
-    "areaKm2": 5138,
-    "population2017": 159270,
-    "density2017": 31,
+    "headquarters": "Vila de Macate",
+    "areaKm2": 1550,
+    "population2017": 88584,
+    "density2017": 57.2,
     "administrativePosts": [
-      "Macate",
-      "Sede Distrital"
+      "Macate-Sede",
+      "Zembe"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Macate",
-      "Comércio Local e Recursos Naturais da Província de Manica",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura comercial de milho, soja, hortícolas e fruticultura",
+      "Avicultura e criação de gado leiteiro",
+      "Silvicultura e processamento agro-alimentar junto a Chimoio"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Macate",
-      "Cultura Comunitária e Tradições de Manica"
+      "Monte Zembe e nascentes naturais",
+      "Paisagens agrícolas do planalto central de Manica"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2013 por desmembramento do distrito de Gondola."
   },
   "0605": {
     "id": "0605",
     "code": "0605",
     "provinceId": "06",
     "name": "Gondola",
-    "headquarters": "Gondola",
-    "areaKm2": 5138,
-    "population2017": 159270,
-    "density2017": 31,
+    "headquarters": "Cidade de Gondola",
+    "areaKm2": 2767,
+    "population2017": 201753,
+    "density2017": 72.9,
     "administrativePosts": [
-      "Gondola",
-      "Sede Distrital"
+      "Gondola-Sede",
+      "Amatongas",
+      "Cafumpe",
+      "Inchope",
+      "Matsinho"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Gondola",
-      "Comércio Local e Recursos Naturais da Província de Manica",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agro-indústria de milho, gergelim, madeira e líchias",
+      "Entroncamento rodoviário estratégico de Inchope (EN1 / EN6)",
+      "Silvicultura industrial e logística do Corredor da Beira"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Gondola",
-      "Cultura Comunitária e Tradições de Manica"
+      "Floresta de Amatongas e fauna de pequeno porte",
+      "Reserva da Barragem de Chicamba (zona oriental)"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2470,18 +2520,19 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "06",
     "name": "Cidade de Chimoio",
     "headquarters": "Chimoio",
-    "areaKm2": 174,
-    "population2017": 372821,
-    "density2017": 2142.6,
+    "areaKm2": 241,
+    "population2017": 381053,
+    "density2017": 1581.1,
     "administrativePosts": [
-      "Chimoio Central",
-      "Vanduzi",
-      "Matsinho"
+      "Posto Administrativo Urbano 1",
+      "Posto Administrativo Urbano 2",
+      "Posto Administrativo Urbano 3",
+      "Posto Administrativo Urbano 4"
     ],
     "economicHighlights": [
       "Capital Provincial de Manica",
       "Centro Logístico e Distribuidor do Corredor da Beira",
-      "Agro-indústrias"
+      "Agro-indústrias, Têxteis, Comércio e Serviços Regionais"
     ],
     "tourismHighlights": [
       "Monumento Natural da Cabeça do Velho (Maciço Rochoso Antropomórfico)",
@@ -2498,50 +2549,53 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0607",
     "provinceId": "06",
     "name": "Vanduzi",
-    "headquarters": "Vanduzi",
-    "areaKm2": 5138,
-    "population2017": 159270,
-    "density2017": 31,
+    "headquarters": "Vila de Vanduzi",
+    "areaKm2": 2825,
+    "population2017": 121217,
+    "density2017": 42.9,
     "administrativePosts": [
-      "Vanduzi",
-      "Sede Distrital"
+      "Vanduzi-Sede",
+      "Matsinho"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Vanduzi",
-      "Comércio Local e Recursos Naturais da Província de Manica",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Grande pólo de horticultura e fruticultura de exportação (líchias, piri-piri, milho-bebé)",
+      "Agro-processamento e embalamento agrícola no Corredor da Beira",
+      "Pecuária de corte e leite"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Vanduzi",
-      "Cultura Comunitária e Tradições de Manica"
+      "Albufeira da Barragem de Chicamba Real e pesca desportiva",
+      "Serra da Cabeça do Velho e miradouros naturais"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2013 por desmembramento do distrito de Manica."
   },
   "0608": {
     "id": "0608",
     "code": "0608",
     "provinceId": "06",
     "name": "Manica",
-    "headquarters": "Manica",
-    "areaKm2": 5138,
-    "population2017": 159270,
-    "density2017": 31,
+    "headquarters": "Cidade de Manica",
+    "areaKm2": 2942,
+    "population2017": 225783,
+    "density2017": 76.7,
     "administrativePosts": [
-      "Manica",
-      "Sede Distrital"
+      "Cidade de Manica",
+      "Machipanda",
+      "Mavonde",
+      "Messica"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Manica",
-      "Comércio Local e Recursos Naturais da Província de Manica",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Posto fronteiriço de Machipanda (principal ligação rodo-ferroviária com o Zimbabué)",
+      "Mineração aurífera e produção de florestas industriais (Messica)",
+      "Fruticultura de clima temperado e produção de café e flores"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Manica",
-      "Cultura Comunitária e Tradições de Manica"
+      "Pinturas rupestres de Chinhamapere (Património Histórico Nacional)",
+      "Cordilheira de Vumba e fronteira panorâmica de Machipanda"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2554,22 +2608,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0609",
     "provinceId": "06",
     "name": "Macossa",
-    "headquarters": "Macossa",
-    "areaKm2": 5138,
-    "population2017": 159270,
-    "density2017": 31,
+    "headquarters": "Vila de Macossa",
+    "areaKm2": 9773,
+    "population2017": 48402,
+    "density2017": 5,
     "administrativePosts": [
-      "Macossa",
-      "Sede Distrital"
+      "Macossa-Sede",
+      "Nguawala",
+      "Nhamangua"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Macossa",
-      "Comércio Local e Recursos Naturais da Província de Manica",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Silvicultura de madeiras nobres (umbila, jambire, chanfuta)",
+      "Agricultura de milho, mapira e feijão",
+      "Apicultura comunitária e maneio florestal"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Macossa",
-      "Cultura Comunitária e Tradições de Manica"
+      "Corredor ecológico entre Gorongosa e o norte de Manica",
+      "Paisagens serranas e rios sazonais"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2582,22 +2637,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0610",
     "provinceId": "06",
     "name": "Báruè",
-    "headquarters": "Báruè",
-    "areaKm2": 5138,
-    "population2017": 159270,
-    "density2017": 31,
+    "headquarters": "Cidade de Catandica",
+    "areaKm2": 5561,
+    "population2017": 194751,
+    "density2017": 35,
     "administrativePosts": [
-      "Báruè",
-      "Sede Distrital"
+      "Catandica",
+      "Choa",
+      "Nhampassa"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Báruè",
-      "Comércio Local e Recursos Naturais da Província de Manica",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de tabaco, milho, gergelim e hortícolas de altitude",
+      "Comércio fronteiriço e agro-pecuária no corredor da EN7 (Chimoio–Tete)",
+      "Cultura de macadâmia e frutas na Serra Choa"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Báruè",
-      "Cultura Comunitária e Tradições de Manica"
+      "Serra Choa (quase 2.000 m de altitude) e cascatas naturais",
+      "Monumentos históricos da resistência de Báruè (Revolta de 1917)"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2610,22 +2666,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0611",
     "provinceId": "06",
     "name": "Tambara",
-    "headquarters": "Tambara",
-    "areaKm2": 5138,
-    "population2017": 159270,
-    "density2017": 31,
+    "headquarters": "Nhacolo",
+    "areaKm2": 4075,
+    "population2017": 56131,
+    "density2017": 13.8,
     "administrativePosts": [
-      "Tambara",
-      "Sede Distrital"
+      "Nhacolo",
+      "Buzua",
+      "Nhacafula"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Tambara",
-      "Comércio Local e Recursos Naturais da Província de Manica",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Agricultura ribeirinha de mapira, gergelim e milho no Rio Zambeze",
+      "Pecuária caprina e ovina adaptada ao clima semi-árido",
+      "Pesca artesanal no Rio Zambeze"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Tambara",
-      "Cultura Comunitária e Tradições de Manica"
+      "Gargantas e margens do Rio Zambeze a jusante de Tete",
+      "Reserva histórica e cultura Nhúnguè/Sena"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2638,22 +2695,25 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0612",
     "provinceId": "06",
     "name": "Guro",
-    "headquarters": "Guro",
-    "areaKm2": 5138,
-    "population2017": 159270,
-    "density2017": 31,
+    "headquarters": "Vila de Guro",
+    "areaKm2": 7215,
+    "population2017": 101921,
+    "density2017": 14.1,
     "administrativePosts": [
-      "Guro",
-      "Sede Distrital"
+      "Guro-Sede",
+      "Dacata",
+      "Mandié",
+      "Mungári",
+      "Nhamassonge"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Guro",
-      "Comércio Local e Recursos Naturais da Província de Manica",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de milho, mapira, gergelim e algodão",
+      "Pecuária bovina e caprina extensiva",
+      "Trânsito rodoviário estratégico na EN7 ligando Manica a Tete"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Guro",
-      "Cultura Comunitária e Tradições de Manica"
+      "Inselbergs graníticos de Guro e paisagens de savana",
+      "Tradições ancestrais e artesanato local"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -2960,7 +3020,7 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "id": "0712",
     "code": "0712",
     "provinceId": "07",
-    "name": "Zumbu",
+    "name": "Zumbo",
     "headquarters": "Vila de Zumbo",
     "areaKm2": 12040,
     "population2017": 89630,
@@ -3078,22 +3138,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0801",
     "provinceId": "08",
     "name": "Chinde",
-    "headquarters": "Chinde",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila do Chinde",
+    "areaKm2": 3121,
+    "population2017": 121272,
+    "density2017": 38.9,
     "administrativePosts": [
-      "Chinde",
-      "Sede Distrital"
+      "Chinde-Sede",
+      "Micaúne"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Chinde",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca artesanal marítima e captura de camarão no Delta do Zambeze",
+      "Orizicultura nas planícies costeiras e copra de coco",
+      "Navegação costeira e fluvial no braço principal do Zambeze"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Chinde",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Mangais e canais do Delta do Rio Zambeze (Sítio Ramsar)",
+      "Praias costeiras isoladas e farol histórico do Chinde"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3106,50 +3166,51 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0802",
     "provinceId": "08",
     "name": "Luabo",
-    "headquarters": "Luabo",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Luabo",
+    "areaKm2": 2705,
+    "population2017": 60100,
+    "density2017": 22.2,
     "administrativePosts": [
-      "Luabo",
-      "Sede Distrital"
+      "Luabo-Sede",
+      "Chimbazo"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Luabo",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Histórica produção açucareira da Companhia de Sena (Sena Sugar Estates)",
+      "Agricultura de arroz, mandioca e cana-de-açúcar",
+      "Pesca fluvial no baixo curso do Rio Zambeze"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Luabo",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Paisagens ribeirinhas do Delta do Zambeze",
+      "Património industrial histórico do açúcar de Luabo"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2013 (Lei n.º 26/2013) a partir do distrito de Chinde."
   },
   "0803": {
     "id": "0803",
     "code": "0803",
     "provinceId": "08",
     "name": "Inhassunge",
-    "headquarters": "Inhassunge",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Mucupia",
+    "areaKm2": 745,
+    "population2017": 95836,
+    "density2017": 128.6,
     "administrativePosts": [
-      "Inhassunge",
-      "Sede Distrital"
+      "Mucupia (Inhassunge-Sede)",
+      "Gonhane"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Inhassunge",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca marítima e estuarina no Canal dos Bons Sinais",
+      "Produção de copra (coco), arroz e salinas tradicionais",
+      "Transporte fluvial de ligação direta com Quelimane"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Inhassunge",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Ilha dos Amores e praias da península de Inhassunge",
+      "Passeios de barco pelo Rio dos Bons Sinais"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3192,22 +3253,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0805",
     "provinceId": "08",
     "name": "Mopeia",
-    "headquarters": "Mopeia",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Mopeia",
+    "areaKm2": 7669,
+    "population2017": 133978,
+    "density2017": 17.5,
     "administrativePosts": [
-      "Mopeia",
-      "Sede Distrital"
+      "Mopeia-Sede",
+      "Campo"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mopeia",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Orizicultura em grandes várzeas, produção de milho e feijão",
+      "Exploração florestal e pesca fluvial no Rio Zambeze e Cuácua",
+      "Pecuária e comércio ao longo da estrada do Vale do Zambeze"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mopeia",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Zonas húmidas e pântanos do baixo Zambeze",
+      "Observação de aves aquáticas e ecossistema deltaico"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3220,22 +3281,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0806",
     "provinceId": "08",
     "name": "Namacurra",
-    "headquarters": "Namacurra",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Namacurra",
+    "areaKm2": 2027,
+    "population2017": 237961,
+    "density2017": 117.4,
     "administrativePosts": [
-      "Namacurra",
-      "Sede Distrital"
+      "Namacurra-Sede",
+      "Macuse"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Namacurra",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de coco/copra, arroz, mandioca e banana",
+      "Pesca costeira em Macuse e projeto do Porto de Macuse",
+      "Carpintaria naval artesanal e comércio ao longo da EN1"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Namacurra",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Praia de Macuse e grandes palmares costeiros da Zambézia",
+      "Estuário do Rio Licungo/Macuse"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3248,22 +3309,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0807",
     "provinceId": "08",
     "name": "Nicoadala",
-    "headquarters": "Nicoadala",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Nicoadala",
+    "areaKm2": 2765,
+    "population2017": 232853,
+    "density2017": 84.2,
     "administrativePosts": [
-      "Nicoadala",
-      "Sede Distrital"
+      "Nicoadala-Sede",
+      "Munhonha"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Nicoadala",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Grande produção de arroz, mandioca, feijão-boer e hortícolas",
+      "Entroncamento rodoviário vital entre a EN1 e a estrada para Quelimane",
+      "Avicultura e indústria de descasque de arroz"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Nicoadala",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Palmares extensos e paisagens agrícolas periurbanas de Quelimane",
+      "Cultura e gastronomia tradicional Echuwabo"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3276,22 +3337,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0808",
     "provinceId": "08",
     "name": "Maganja da Costa",
-    "headquarters": "Maganja da Costa",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Maganja da Costa",
+    "areaKm2": 2873,
+    "population2017": 308204,
+    "density2017": 107.3,
     "administrativePosts": [
-      "Maganja da Costa",
-      "Sede Distrital"
+      "Maganja da Costa-Sede",
+      "Nante"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Maganja da Costa",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Orizicultura nos regadios de Nante e cultivo intensivo de coqueiros",
+      "Pesca costeira e produção de sal marinho",
+      "Exploração de madeira e castanha de caju"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Maganja da Costa",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Praias de Raraga e águas tropicais do Índico",
+      "Estuário do Rio Licungo"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3305,49 +3366,51 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "08",
     "name": "Mocubela",
     "headquarters": "Mocubela",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "areaKm2": 3440,
+    "population2017": 124734,
+    "density2017": 36.3,
     "administrativePosts": [
-      "Mocubela",
-      "Sede Distrital"
+      "Mocubela-Sede",
+      "Bajone"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mocubela",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca artesanal e captura de marisco na zona costeira de Bajone",
+      "Produção de mandioca, feijão nhemba, coco e caju",
+      "Silvicultura comunitária e comércio rural"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mocubela",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Praias virgens de Bajone e mangais costeiros",
+      "Arquitectura comunitária e pesca tradicional em arrasto"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2013 (Lei n.º 26/2013) a partir do distrito de Maganja da Costa."
   },
   "0810": {
     "id": "0810",
     "code": "0810",
     "provinceId": "08",
     "name": "Mocuba",
-    "headquarters": "Mocuba",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Cidade de Mocuba",
+    "areaKm2": 8867,
+    "population2017": 334335,
+    "density2017": 37.7,
     "administrativePosts": [
-      "Mocuba",
-      "Sede Distrital"
+      "Mocuba-Sede",
+      "Mugeba",
+      "Namajavira"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mocuba",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Principal placa giratória comercial, logística e agrícola do interior da Zambézia",
+      "Central Solar Fotovoltaica de Mocuba e pólo agro-industrial",
+      "Produção de milho, gergelim, soja, algodão e madeira"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mocuba",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Rio Licungo e ponte histórica ferroviária/rodoviária de Mocuba",
+      "Planalto agrícola e feiras comerciais regionais"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3361,49 +3424,51 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "08",
     "name": "Derre",
     "headquarters": "Derre",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "areaKm2": 4754,
+    "population2017": 113138,
+    "density2017": 23.8,
     "administrativePosts": [
-      "Derre",
-      "Sede Distrital"
+      "Derre-Sede",
+      "Guerissa"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Derre",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Exploração de florestas nativas e produção agrícola de milho e feijão",
+      "Cultivo de gergelim, tabaco e mandioca",
+      "Pecuária de pequena escala e apicultura"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Derre",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Reserva Florestal do Derre (florestas densas de miombo)",
+      "Montanhas e nascentes naturais do centro-oeste da Zambézia"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2013 (Lei n.º 26/2013) a partir do distrito de Morrumbala."
   },
   "0812": {
     "id": "0812",
     "code": "0812",
     "provinceId": "08",
     "name": "Morrumbala",
-    "headquarters": "Morrumbala",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Morrumbala",
+    "areaKm2": 8249,
+    "population2017": 362453,
+    "density2017": 43.9,
     "administrativePosts": [
-      "Morrumbala",
-      "Sede Distrital"
+      "Morrumbala-Sede",
+      "Chire",
+      "Megaza"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Morrumbala",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Grande celeiro agrícola de milho, mandioca, feijão-boer e gergelim",
+      "Comércio fronteiriço e fluvial na bacia do Rio Chire",
+      "Pecuária e produção de algodão"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Morrumbala",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Monte Morrumbala (1.172 m) e águas termais naturais",
+      "Confluência do Rio Chire com o Rio Zambeze"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3416,22 +3481,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0813",
     "provinceId": "08",
     "name": "Pebane",
-    "headquarters": "Pebane",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Pebane",
+    "areaKm2": 10182,
+    "population2017": 202772,
+    "density2017": 19.9,
     "administrativePosts": [
-      "Pebane",
-      "Sede Distrital"
+      "Pebane-Sede",
+      "Mulela",
+      "Nabúri"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Pebane",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca marítima industrial e artesanal (camarão e lagosta)",
+      "Exploração de areias pesadas (ilmenite e zircão) e castanha de caju",
+      "Comércio marítimo e agricultura de mandioca e arroz"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Pebane",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Praias de Pebane e Ilhas Primeiras e Segundas (Área Marinha Protegida)",
+      "Costa de corais e tartarugas marinhas"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3445,49 +3511,52 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "08",
     "name": "Mulevala",
     "headquarters": "Mulevala",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "areaKm2": 2700,
+    "population2017": 109066,
+    "density2017": 40.4,
     "administrativePosts": [
-      "Mulevala",
-      "Sede Distrital"
+      "Mulevala-Sede",
+      "Chiraco"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mulevala",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Mineração artesanal e industrial de pegmatites e tântalo/turmalina",
+      "Produção agrícola de mandioca, milho, feijão e caju",
+      "Pecuária familiar e madeira"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mulevala",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Formações rochosas graníticas da Alta Zambézia",
+      "Cultura e tradições rurais Elomwe"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2013 (Lei n.º 26/2013) a partir do distrito de Ile."
   },
   "0815": {
     "id": "0815",
     "code": "0815",
     "provinceId": "08",
     "name": "Lugela",
-    "headquarters": "Lugela",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Lugela",
+    "areaKm2": 6178,
+    "population2017": 158636,
+    "density2017": 25.7,
     "administrativePosts": [
-      "Lugela",
-      "Sede Distrital"
+      "Lugela-Sede",
+      "Muabanama",
+      "Munhamade",
+      "Tacuane"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Lugela",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Plantações de chá e silvicultura em Tacuane",
+      "Produção de milho, feijão, mandioca e especiarias",
+      "Exploração florestal sustentável"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Lugela",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Montanhas verdes de Tacuane e vales do Rio Lugela",
+      "Plantações históricas de chá da Alta Zambézia"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3500,22 +3569,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0816",
     "provinceId": "08",
     "name": "Milange",
-    "headquarters": "Milange",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Milange",
+    "areaKm2": 5928,
+    "population2017": 593477,
+    "density2017": 100.1,
     "administrativePosts": [
-      "Milange",
-      "Sede Distrital"
+      "Milange-Sede",
+      "Majaua",
+      "Mongue"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Milange",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Um dos distritos mais populosos e produtivos de milho, feijão e mandioca",
+      "Forte comércio internacional na fronteira com o Malawi (Mulanje)",
+      "Produção de chá, banana e batata-reno nas terras altas"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Milange",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Serra Tumbine e paisagens frontais ao Maciço de Mulanje",
+      "Cascatas de montanha e mercados transfronteiriços"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3528,22 +3598,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0817",
     "provinceId": "08",
     "name": "Gilé",
-    "headquarters": "Gilé",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila do Gilé",
+    "areaKm2": 8972,
+    "population2017": 195928,
+    "density2017": 21.8,
     "administrativePosts": [
-      "Gilé",
-      "Sede Distrital"
+      "Gilé-Sede",
+      "Alto Ligonha"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Gilé",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Jazidas minerais de tantalite, pedras semipreciosas (turmalinas/berilos) em Alto Ligonha",
+      "Agricultura de caju, mandioca, milho e mel orgânico",
+      "Conservação florestal e ecoturismo comunitário"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Gilé",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Reserva Nacional do Gilé (santuário de elefantes e palancas na Alta Zambézia)",
+      "Inselbergs graníticos e matas intocadas"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3556,22 +3626,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0818",
     "provinceId": "08",
     "name": "Alto Molócuè",
-    "headquarters": "Alto Molócuè",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Alto Molócuè",
+    "areaKm2": 6338,
+    "population2017": 340450,
+    "density2017": 53.7,
     "administrativePosts": [
-      "Alto Molócuè",
-      "Sede Distrital"
+      "Alto Molócuè-Sede",
+      "Nauela"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Alto Molócuè",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pólo agrícola de feijão-boer, gergelim, milho e tabaco",
+      "Comércio regional no corredor da EN1 (ligação Zambézia–Nampula)",
+      "Extracção artesanal de minérios pegmatíticos em Nauela"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Alto Molócuè",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Monte Inago e maciços graníticos de Alto Molócuè",
+      "Rios e quedas de água da zona norte da Zambézia"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3584,22 +3654,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0819",
     "provinceId": "08",
     "name": "Ile",
-    "headquarters": "Ile",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Errego (Ile)",
+    "areaKm2": 2934,
+    "population2017": 278226,
+    "density2017": 94.8,
     "administrativePosts": [
-      "Ile",
-      "Sede Distrital"
+      "Ile-Sede (Errego)",
+      "Socone"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Ile",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Plantações de chá de Socone e fruticultura tropical",
+      "Produção de mandioca, milho, feijão e batata-doce",
+      "Apicultura e exploração madeireira"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Ile",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Montanhas de Socone e paisagens de chá",
+      "Centros históricos e culturais Elomwe de Errego"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3612,22 +3682,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0820",
     "provinceId": "08",
     "name": "Namarroi",
-    "headquarters": "Namarroi",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "headquarters": "Vila de Namarroi",
+    "areaKm2": 3063,
+    "population2017": 142095,
+    "density2017": 46.4,
     "administrativePosts": [
-      "Namarroi",
-      "Sede Distrital"
+      "Namarroi-Sede",
+      "Regone"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Namarroi",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de milho, feijão, batata-reno e mandioca",
+      "Silvicultura e reflorestamento nas terras altas",
+      "Agricultura familiar e criação de aves"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Namarroi",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Contrafortes montanhosos vizinhos ao Monte Namúli",
+      "Quedas de água e matas de altitude"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3641,39 +3711,40 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "08",
     "name": "Molumbo",
     "headquarters": "Molumbo",
-    "areaKm2": 4773,
-    "population2017": 232277,
-    "density2017": 48.7,
+    "areaKm2": 2872,
+    "population2017": 331424,
+    "density2017": 115.4,
     "administrativePosts": [
-      "Molumbo",
-      "Sede Distrital"
+      "Molumbo-Sede",
+      "Corromana"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Molumbo",
-      "Comércio Local e Recursos Naturais da Província de Zambézia",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Grande produção de milho, feijão, mandioca e tabaco",
+      "Comércio fronteiriço com o Malawi junto ao Lago Chirua",
+      "Pecuária e agricultura comercial emergente"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Molumbo",
-      "Cultura Comunitária e Tradições de Zambézia"
+      "Paisagens planálticas do extremo noroeste da Zambézia",
+      "Proximidade às zonas húmidas transfronteiriças"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2013 (Lei n.º 26/2013) a partir do distrito de Milange."
   },
   "0822": {
     "id": "0822",
     "code": "0822",
     "provinceId": "08",
-    "name": "Guruè",
-    "headquarters": "Guruè",
-    "areaKm2": 5606,
-    "population2017": 420000,
-    "density2017": 74.9,
+    "name": "Gurué",
+    "headquarters": "Cidade de Gurué",
+    "areaKm2": 5688,
+    "population2017": 393362,
+    "density2017": 69.2,
     "administrativePosts": [
-      "Guruè",
+      "Gurué-Sede",
       "Lioma",
       "Mepuagiua"
     ],
@@ -3697,22 +3768,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0901",
     "provinceId": "09",
     "name": "Moma",
-    "headquarters": "Moma",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Macone (Moma)",
+    "areaKm2": 3219,
+    "population2017": 204095,
+    "density2017": 63.4,
     "administrativePosts": [
-      "Moma",
-      "Sede Distrital"
+      "Macone (Moma-Sede)",
+      "Chalaua"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Moma",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Extracção de areias pesadas de Moma (ilmenite, zircão e rútilo pela Kenmare)",
+      "Pesca marítima artesanal e produção de castanha de caju",
+      "Agricultura costeira de mandioca e arroz"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Moma",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Praias de Moma e ilhotas costeiras das Primeiras e Segundas",
+      "Tradições costeiras Macua-Koti"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3726,49 +3797,52 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "09",
     "name": "Larde",
     "headquarters": "Larde",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "areaKm2": 2458,
+    "population2017": 103333,
+    "density2017": 42,
     "administrativePosts": [
-      "Larde",
-      "Sede Distrital"
+      "Larde-Sede",
+      "Mucuali"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Larde",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca artesanal marítima e secagem de pescado",
+      "Produção de mandioca, castanha de caju, amendoim e coco",
+      "Pequeno comércio costeiro"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Larde",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Lagoas costeiras e praias preservadas de Larde",
+      "Paisagens de dunas e palmares"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2013 (Lei n.º 26/2013) a partir do distrito de Moma."
   },
   "0903": {
     "id": "0903",
     "code": "0903",
     "provinceId": "09",
     "name": "Angoche",
-    "headquarters": "Angoche",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Cidade de Angoche",
+    "areaKm2": 3056,
+    "population2017": 247795,
+    "density2017": 81.1,
     "administrativePosts": [
-      "Angoche",
-      "Sede Distrital"
+      "Angoche-Sede",
+      "Aube",
+      "Boila-Namitória",
+      "Namaponda"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Angoche",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca industrial de camarão, navegação e processamento de caju",
+      "Produção agrícola de arroz, mandioca e amendoim",
+      "Comércio histórico na costa suaíli-moçambicana"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Angoche",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Antigo Sultanato de Angoche e património histórico islâmico-suaíli",
+      "Ilhas de Angoche e cultura linguística Ekoti"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3781,22 +3855,25 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0904",
     "provinceId": "09",
     "name": "Mogovolas",
-    "headquarters": "Mogovolas",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Nametil",
+    "areaKm2": 4533,
+    "population2017": 370875,
+    "density2017": 81.8,
     "administrativePosts": [
-      "Mogovolas",
-      "Sede Distrital"
+      "Nametil",
+      "Calipo",
+      "Iulúti",
+      "Muatua",
+      "Nanhupo Rio"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mogovolas",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Um dos maiores produtores nacionais de castanha de caju e mandioca",
+      "Produção de milho, gergelim, feijão-boer e algodão",
+      "Agro-processamento e comércio regional no interior sul de Nampula"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mogovolas",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Montes rochosos e paisagens rurais de Nametil",
+      "Cultura e dança tradicional Tufo e Mapiko Macua"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3809,22 +3886,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0905",
     "provinceId": "09",
     "name": "Murrupula",
-    "headquarters": "Murrupula",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Murrupula",
+    "areaKm2": 3141,
+    "population2017": 194019,
+    "density2017": 61.8,
     "administrativePosts": [
-      "Murrupula",
-      "Sede Distrital"
+      "Murrupula-Sede",
+      "Chinga",
+      "Nehessine"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Murrupula",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de caju, mandioca, milho e tabaco",
+      "Eixo rodoviário de ligação entre Nampula e Zambézia (EN1)",
+      "Mineração artesanal de gemas e exploração florestal"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Murrupula",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Serra de Chinga e inselbergs graníticos",
+      "Fontes naturais e paisagens panorâmicas"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3838,49 +3916,51 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "09",
     "name": "Liúpo",
     "headquarters": "Liúpo",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "areaKm2": 1251,
+    "population2017": 93745,
+    "density2017": 74.9,
     "administrativePosts": [
-      "Liúpo",
-      "Sede Distrital"
+      "Liúpo-Sede",
+      "Quinga"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Liúpo",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca marítima artesanal em Quinga",
+      "Cultura da castanha de caju, mandioca e amendoim",
+      "Produção de sal e comércio local"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Liúpo",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Baías costeiras de Quinga e recifes de coral",
+      "Arquitectura costeira tradicional"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
       "geography": "MOZGIS / MAEFP - Divisão Administrativa MapServer Layer 2",
       "referenceYears": "2017 (Censo) e 2021 (Cartografia Oficial MOZGIS)"
-    }
+    },
+    "notes": "Distrito criado em 2013 (Lei n.º 26/2013) a partir do distrito de Mogincual."
   },
   "0907": {
     "id": "0907",
     "code": "0907",
     "provinceId": "09",
     "name": "Mogincual",
-    "headquarters": "Mogincual",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Namige (Mogincual)",
+    "areaKm2": 3271,
+    "population2017": 103110,
+    "density2017": 31.5,
     "administrativePosts": [
-      "Mogincual",
-      "Sede Distrital"
+      "Namige",
+      "Chunga",
+      "Quixaxe"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mogincual",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de castanha de caju, mandioca e gergelim",
+      "Pesca artesanal e produção de sal marinho",
+      "Agro-pecuária familiar"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mogincual",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Costa virgem de Quixaxe e Baía de Mogincual",
+      "Ruínas e faróis históricos da costa norte"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3893,22 +3973,24 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0908",
     "provinceId": "09",
     "name": "Meconta",
-    "headquarters": "Meconta",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Meconta",
+    "areaKm2": 3945,
+    "population2017": 205990,
+    "density2017": 52.2,
     "administrativePosts": [
-      "Meconta",
-      "Sede Distrital"
+      "Meconta-Sede",
+      "Corrane",
+      "Mecua",
+      "Namialo"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Meconta",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Grande pólo industrial e algodoeiro em Namialo (fiação e descaroçamento)",
+      "Corredor Ferroviário e Rodoviário de Nacala",
+      "Produção de milho, caju, mandioca e sisal"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Meconta",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Centro histórico ferroviário de Namialo",
+      "Inselbergs e formações graníticas de Meconta"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3920,16 +4002,18 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "id": "0909",
     "code": "0909",
     "provinceId": "09",
-    "name": "Nampula",
-    "headquarters": "Nampula",
-    "areaKm2": 403,
+    "name": "Cidade de Nampula",
+    "headquarters": "Cidade de Nampula",
+    "areaKm2": 428,
     "population2017": 743125,
-    "density2017": 1844,
+    "density2017": 1736.3,
     "administrativePosts": [
       "Urbano Central",
       "Muhala",
+      "Muatala",
       "Namikopo",
-      "Muatala"
+      "Napipine",
+      "Natikiri"
     ],
     "economicHighlights": [
       "Capital Provincial de Nampula e \"Capital do Norte\"",
@@ -3952,22 +4036,24 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0910",
     "provinceId": "09",
     "name": "Rapale",
-    "headquarters": "Rapale",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Rapale",
+    "areaKm2": 3220,
+    "population2017": 174689,
+    "density2017": 54.3,
     "administrativePosts": [
-      "Rapale",
-      "Sede Distrital"
+      "Rapale-Sede",
+      "Anchilo",
+      "Mutivasse",
+      "Namaita"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Rapale",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Cintura agrícola de abastecimento à Cidade de Nampula (hortícolas, milho, caju)",
+      "Avicultura e agro-indústria ao longo do Corredor de Nacala",
+      "Produção de mandioca e feijão-boer"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Rapale",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Montes graníticos característicos em redor de Nampula",
+      "Património ferroviário e cultural Macua"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -3980,22 +4066,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0911",
     "provinceId": "09",
     "name": "Ribáuè",
-    "headquarters": "Ribáuè",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Ribáuè",
+    "areaKm2": 6281,
+    "population2017": 254713,
+    "density2017": 40.6,
     "administrativePosts": [
-      "Ribáuè",
-      "Sede Distrital"
+      "Ribáuè-Sede",
+      "Cunle",
+      "Iapala"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Ribáuè",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção agrícola de milho, feijão, algodão, tabaco e hortícolas",
+      "Paragem estratégica da Linha Férrea de Nacala (Iapala)",
+      "Fruticultura e produção de sementes"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Ribáuè",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Inselbergs monumentais de Ribáuè (Mepalué e Serra de Ribáuè)",
+      "Reserva Florestal e ecoturismo de escalada em monólitos"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4008,22 +4095,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0912",
     "provinceId": "09",
     "name": "Malema",
-    "headquarters": "Malema",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Malema",
+    "areaKm2": 6075,
+    "population2017": 224524,
+    "density2017": 37,
     "administrativePosts": [
-      "Malema",
-      "Sede Distrital"
+      "Malema-Sede",
+      "Chuhulo",
+      "Mutuáli"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Malema",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Célebre pelo regadio e produção intensiva de tabaco, cebola, tomate, milho e soja",
+      "Estação ferroviária de Mutuáli no Corredor de Nacala",
+      "Agro-processamento de cereais e leguminosas"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Malema",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Serra de Cucuteia e vales férteis do Rio Malema",
+      "Pontes ferroviárias históricas do norte"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4037,11 +4125,11 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "provinceId": "09",
     "name": "Ilha de Moçambique",
     "headquarters": "Ilha de Moçambique",
-    "areaKm2": 245,
-    "population2017": 65712,
-    "density2017": 268.2,
+    "areaKm2": 226,
+    "population2017": 67817,
+    "density2017": 300.1,
     "administrativePosts": [
-      "Ilha de Moçambique",
+      "Ilha de Moçambique (Cidade)",
       "Lumbo"
     ],
     "economicHighlights": [
@@ -4065,22 +4153,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0914",
     "provinceId": "09",
     "name": "Mossuril",
-    "headquarters": "Mossuril",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Mossuril",
+    "areaKm2": 3176,
+    "population2017": 183415,
+    "density2017": 57.8,
     "administrativePosts": [
-      "Mossuril",
-      "Sede Distrital"
+      "Mossuril-Sede",
+      "Lunga",
+      "Matibane"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mossuril",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Turismo costeiro, pesca artesanal e produção de caju",
+      "Cultivo de mandioca, amendoim e coco",
+      "Pequena indústria hoteleira e náutica"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mossuril",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Praia das Chocas-Mar e Cabaceira Grande (arquitectura histórica secular)",
+      "Baía de Mossuril frente à Ilha de Moçambique"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4093,22 +4182,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0915",
     "provinceId": "09",
     "name": "Monapo",
-    "headquarters": "Monapo",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Monapo",
+    "areaKm2": 3598,
+    "population2017": 413596,
+    "density2017": 115,
     "administrativePosts": [
-      "Monapo",
-      "Sede Distrital"
+      "Monapo-Sede",
+      "Itoculo",
+      "Netia"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Monapo",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Importante parque agro-industrial (sabões, óleos vegetais, sisal e descaroçamento de algodão)",
+      "Produção de castanha de caju, mandioca e milho",
+      "Ligação ferroviária e rodoviária direta ao Porto de Nacala"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Monapo",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Antigas fazendas coloniais de sisal e património industrial",
+      "Afloramentos rochosos de Netia"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4121,22 +4211,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0916",
     "provinceId": "09",
     "name": "Muecate",
-    "headquarters": "Muecate",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Muecate",
+    "areaKm2": 2378,
+    "population2017": 141032,
+    "density2017": 59.3,
     "administrativePosts": [
-      "Muecate",
-      "Sede Distrital"
+      "Muecate-Sede",
+      "Imala",
+      "Muculuone"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Muecate",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de algodão, gergelim, caju e milho",
+      "Pecuária caprina e avicultura familiar",
+      "Comércio rural"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Muecate",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Formações rochosas de Imala",
+      "Tradições culturais e cerâmica artesanal Macua"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4148,23 +4239,25 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "id": "0917",
     "code": "0917",
     "provinceId": "09",
-    "name": "Mecuburi",
-    "headquarters": "Mecuburi",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "name": "Mecubúri",
+    "headquarters": "Vila de Mecubúri",
+    "areaKm2": 7289,
+    "population2017": 315009,
+    "density2017": 43.2,
     "administrativePosts": [
-      "Mecuburi",
-      "Sede Distrital"
+      "Mecubúri-Sede",
+      "Milhana",
+      "Muíte",
+      "Namina"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Mecuburi",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Grande produção de algodão, gergelim, mandioca e milho",
+      "Extracção florestal sustentável e apicultura",
+      "Comércio de excedentes agrícolas para Nampula e Cabo Delgado"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Mecuburi",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Reserva Florestal de Mecubúri (maior reserva florestal da província)",
+      "Bacia do Rio Lúrio a norte"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4177,22 +4270,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0918",
     "provinceId": "09",
     "name": "Lalaua",
-    "headquarters": "Lalaua",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Lalaua",
+    "areaKm2": 4378,
+    "population2017": 112766,
+    "density2017": 25.8,
     "administrativePosts": [
-      "Lalaua",
-      "Sede Distrital"
+      "Lalaua-Sede",
+      "Meti"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Lalaua",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de gergelim, feijão-boer, mandioca e algodão",
+      "Pesca fluvial no Rio Lúrio e criação de animais de pequeno porte",
+      "Extracção artesanal de minerais"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Lalaua",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Quedas e vales do Rio Lúrio na fronteira norte",
+      "Paisagens naturais intocadas"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4204,14 +4297,16 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "id": "0919",
     "code": "0919",
     "provinceId": "09",
-    "name": "Nacala",
-    "headquarters": "Nacala-Porto",
+    "name": "Nacala-Porto",
+    "headquarters": "Cidade de Nacala",
     "areaKm2": 340,
-    "population2017": 280000,
-    "density2017": 823.5,
+    "population2017": 301980,
+    "density2017": 888.2,
     "administrativePosts": [
-      "Nacala-Porto",
-      "Mahelene"
+      "Maiaia",
+      "Muanona",
+      "Mutiva",
+      "Ontupaia"
     ],
     "economicHighlights": [
       "Porto de Águas Profundas mais Importante da Costa Oriental de África",
@@ -4234,22 +4329,22 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0920",
     "provinceId": "09",
     "name": "Nacala-a-Velha",
-    "headquarters": "Nacala-a-Velha",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Nacala-a-Velha",
+    "areaKm2": 1903,
+    "population2017": 127836,
+    "density2017": 67.2,
     "administrativePosts": [
-      "Nacala-a-Velha",
-      "Sede Distrital"
+      "Nacala-a-Velha-Sede",
+      "Covo"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Nacala-a-Velha",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Terminal de Carvão de Nacala-a-Velha (Corredor Logístico de Nacala)",
+      "Zona Económica Especial (ZEE) de Nacala e agricultura de caju",
+      "Pesca artesanal na Baía de Bengo/Fernão Veloso"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Nacala-a-Velha",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Baía de Fernão Veloso e praias de águas profundas e calmas",
+      "Farol de Nacala e recifes de coral"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4262,22 +4357,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0921",
     "provinceId": "09",
     "name": "Nacarôa",
-    "headquarters": "Nacarôa",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Nacarôa",
+    "areaKm2": 1492,
+    "population2017": 152753,
+    "density2017": 102.4,
     "administrativePosts": [
-      "Nacarôa",
-      "Sede Distrital"
+      "Nacarôa-Sede",
+      "Inteta",
+      "Saua-Saua"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Nacarôa",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Produção de algodão, milho, mandioca e gergelim",
+      "Cultivo de caju e comércio agrícola local",
+      "Pecuária familiar"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Nacarôa",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Paisagens de savana e colinas do nordeste de Nampula",
+      "Manifestações culturais tradicionais Macua"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4290,22 +4386,24 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0922",
     "provinceId": "09",
     "name": "Memba",
-    "headquarters": "Memba",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Memba",
+    "areaKm2": 4597,
+    "population2017": 223513,
+    "density2017": 48.6,
     "administrativePosts": [
-      "Memba",
-      "Sede Distrital"
+      "Memba-Sede",
+      "Chipene",
+      "Lúrio",
+      "Mazua"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Memba",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Pesca marítima costeira na Baía de Memba e foz do Rio Lúrio",
+      "Produção de castanha de caju, mandioca, amendoim e algodão",
+      "Exploração de mármore e recursos minerais"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Memba",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Baía de Memba e praias de Simuco e Lúrio",
+      "Património cultural da costa norte de Nampula"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4318,22 +4416,23 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "code": "0923",
     "provinceId": "09",
     "name": "Eráti",
-    "headquarters": "Eráti",
-    "areaKm2": 3548,
-    "population2017": 265342,
-    "density2017": 74.8,
+    "headquarters": "Vila de Namapa",
+    "areaKm2": 5773,
+    "population2017": 407141,
+    "density2017": 70.5,
     "administrativePosts": [
-      "Eráti",
-      "Sede Distrital"
+      "Namapa-Eráti",
+      "Alua",
+      "Namiroa"
     ],
     "economicHighlights": [
-      "Agricultura e Produção de Cereais em Eráti",
-      "Comércio Local e Recursos Naturais da Província de Nampula",
-      "Pecuária Tradicional e Pesca Artesanal"
+      "Um dos maiores distritos em população de Nampula, com forte produção de caju, algodão e milho",
+      "Entroncamento comercial de Namapa na EN1 (ligação a Cabo Delgado)",
+      "Agro-processamento e comércio regional no vale do Lúrio"
     ],
     "tourismHighlights": [
-      "Paisagens Naturais e Biodiversidade de Eráti",
-      "Cultura Comunitária e Tradições de Nampula"
+      "Ponte sobre o Rio Lúrio e serras de Alua",
+      "Mercados tradicionais e cultura Macua"
     ],
     "sources": {
       "demographics": "INE Moçambique - Censo Geral da População e Habitação (RGPH)",
@@ -4346,13 +4445,13 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
     "name": "Gorongosa",
     "provinceId": "05",
     "provinceName": "Sofala",
-    "headquarters": "Gorongosa",
-    "areaKm2": 6722,
-    "population2017": 182226,
-    "density": 27.1,
+    "headquarters": "Vila da Gorongosa",
+    "areaKm2": 7659,
+    "population2017": 163700,
+    "density": 21.4,
     "administrativePosts": [
-      "Gorongosa",
-      "Nhamapadza",
+      "Gorongosa-Sede",
+      "Nhamadzi",
       "Vunduzi"
     ],
     "economicHighlights": [
@@ -4366,6 +4465,7 @@ export const ALL_DISTRICTS_DATA: Record<string, DistrictData> = {
       "Maciço da Gorongosa e Ponto Mais Alto da Província (Monte Gogógo, 1.863 m)",
       "Safaris de Vida Selvagem, Observação de Leões, Elefantes e Aves Endémicas",
       "Centro de Ciência e Exploração E.O. Wilson"
-    ]
+    ],
+    "density2017": 21.4
   }
 };

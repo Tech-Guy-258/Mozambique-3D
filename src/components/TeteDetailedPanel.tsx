@@ -4,6 +4,7 @@ import { ProvinceDetailedPanel } from './ProvinceDetailedPanel.tsx';
 interface TeteDetailedPanelProps {
   selectedDistrictId: string | null;
   onSelectDistrict: (districtId: string | null) => void;
+  onHoverDistrict?: (districtId: string | null) => void;
   onReturnToNational: () => void;
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;

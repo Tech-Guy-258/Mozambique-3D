@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   ArrowUp,
   ArrowDown,
@@ -8,7 +8,10 @@ import {
   Minus,
   Maximize2,
   Move,
-  Compass,
+  RotateCw,
+  RefreshCw,
+  Columns2,
+  Box,
 } from 'lucide-react';
 
 interface NavigationControlsProps {
@@ -16,31 +19,62 @@ interface NavigationControlsProps {
   onZoom: (direction: 'in' | 'out') => void;
   onRecenter: () => void;
   isDetailedView?: boolean;
+  verticalView?: boolean;
+  onToggleVerticalView?: () => void;
+  rotateQuarterTurn?: boolean;
+  onToggleQuarterTurn?: () => void;
+  autoRotate?: boolean;
+  onToggleAutoRotate?: () => void;
+  isolationTitle?: string | null;
+  isolationSubtitle?: string | null;
+  onIsolationBack?: () => void;
 }
+
+export const StageIsolationBadge: React.FC<{
+  title: string;
+  subtitle?: string | null;
+  onBack?: () => void;
+}> = ({ title, subtitle, onBack }) => (
+  <div className="absolute top-3 left-3 z-20 pointer-events-auto flex items-center gap-2 bg-slate-950/90 backdrop-blur-xl border border-white/10 rounded-2xl px-3 py-1.5 shadow-xl max-w-[calc(100%-175px)] sm:max-w-[340px]">
+    {onBack && (
+      <button
+        onClick={onBack}
+        className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors cursor-pointer shrink-0"
+        title="Voltar ao nível anterior"
+        aria-label="Voltar ao nível anterior"
+      >
+        <ArrowLeft className="w-3.5 h-3.5" />
+      </button>
+    )}
+    <div className="min-w-0">
+      <span className="text-[10px] font-medium text-amber-400 uppercase tracking-wider block leading-none truncate">
+        {subtitle || 'Vista Isolada'}
+      </span>
+      <span className="text-sm font-bold text-white block truncate mt-0.5 leading-tight">
+        {title}
+      </span>
+    </div>
+  </div>
+);
 
 export const NavigationControls: React.FC<NavigationControlsProps> = ({
   onPan,
   onZoom,
   onRecenter,
   isDetailedView = false,
+  verticalView = true,
+  onToggleVerticalView,
+  rotateQuarterTurn = false,
+  onToggleQuarterTurn,
+  autoRotate = false,
+  onToggleAutoRotate,
 }) => {
-  const repeatTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const repeatIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [isPanOpen, setIsPanOpen] = useState(false);
+  const repeatTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const repeatIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const panPopoverRef = useRef<HTMLDivElement>(null);
 
-  const startContinuousPan = (direction: 'up' | 'down' | 'left' | 'right') => {
-    stopContinuousPan();
-    // Fire immediately
-    onPan(direction);
-
-    // Initial delay then repeat rapidly
-    repeatTimerRef.current = setTimeout(() => {
-      repeatIntervalRef.current = setInterval(() => {
-        onPan(direction);
-      }, 70);
-    }, 240);
-  };
-
-  const stopContinuousPan = () => {
+  const stopContinuous = () => {
     if (repeatTimerRef.current) {
       clearTimeout(repeatTimerRef.current);
       repeatTimerRef.current = null;
@@ -51,10 +85,19 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
     }
   };
 
-  const startContinuousZoom = (direction: 'in' | 'out') => {
-    stopContinuousPan();
-    onZoom(direction);
+  const startContinuousPan = (direction: 'up' | 'down' | 'left' | 'right') => {
+    stopContinuous();
+    onPan(direction);
+    repeatTimerRef.current = setTimeout(() => {
+      repeatIntervalRef.current = setInterval(() => {
+        onPan(direction);
+      }, 70);
+    }, 240);
+  };
 
+  const startContinuousZoom = (direction: 'in' | 'out') => {
+    stopContinuous();
+    onZoom(direction);
     repeatTimerRef.current = setTimeout(() => {
       repeatIntervalRef.current = setInterval(() => {
         onZoom(direction);
@@ -62,7 +105,16 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
     }, 240);
   };
 
-  // Keyboard navigation listener (Arrow keys and +/-)
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (panPopoverRef.current && !panPopoverRef.current.contains(e.target as Node)) {
+        setIsPanOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const activeTag = (document.activeElement?.tagName || '').toLowerCase();
@@ -97,123 +149,173 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      stopContinuousPan();
+      stopContinuous();
     };
   }, [onPan, onZoom, onRecenter]);
 
   return (
     <div
-      className="fixed top-24 left-3 sm:left-5 z-30 pointer-events-auto flex flex-col gap-2 select-none"
+      className="pointer-events-auto flex flex-wrap items-center gap-1.5 select-none"
       role="toolbar"
-      aria-label="Controles de movimentação e zoom do mapa"
+      aria-label="Controlos interativos do palco 3D"
     >
-      {/* Pan D-Pad */}
-      <div className="bg-slate-900/90 border border-slate-700/80 rounded-2xl shadow-2xl p-2 backdrop-blur-md flex flex-col items-center">
-        <div className="flex items-center justify-between w-full px-1 mb-1.5 border-b border-slate-800 pb-1">
-          <span className="text-[10px] uppercase tracking-wider text-slate-300 font-bold flex items-center gap-1">
-            <Move className="w-3 h-3 text-sky-400" />
-            <span>Mover</span>
-          </span>
-          <span className="text-[9px] text-slate-400 font-mono hidden sm:inline" title="Também podes usar as setas do teclado">
-            [Setas]
-          </span>
-        </div>
-
-        {/* Up Button */}
-        <button
-          onMouseDown={() => startContinuousPan('up')}
-          onMouseUp={stopContinuousPan}
-          onMouseLeave={stopContinuousPan}
-          onTouchStart={() => startContinuousPan('up')}
-          onTouchEnd={stopContinuousPan}
-          className="p-2 sm:p-2.5 bg-slate-800 hover:bg-slate-700 active:bg-sky-600 text-slate-200 hover:text-white rounded-xl transition-all shadow-md border border-slate-700 hover:border-sky-500/50 mb-1 cursor-pointer"
-          title="Mover mapa para Cima (Norte) [Seta Cima]"
-          aria-label="Mover mapa para cima"
-        >
-          <ArrowUp className="w-4 h-4 text-sky-300" />
-        </button>
-
-        {/* Left, Recenter, Right row */}
-        <div className="flex items-center gap-1">
+        {/* Zoom, Recenter & Pan Popover */}
+        <div ref={panPopoverRef} className="relative flex items-center gap-1 bg-slate-950/85 backdrop-blur-xl border border-white/10 rounded-2xl p-1 shadow-2xl">
           <button
-            onMouseDown={() => startContinuousPan('left')}
-            onMouseUp={stopContinuousPan}
-            onMouseLeave={stopContinuousPan}
-            onTouchStart={() => startContinuousPan('left')}
-            onTouchEnd={stopContinuousPan}
-            className="p-2 sm:p-2.5 bg-slate-800 hover:bg-slate-700 active:bg-sky-600 text-slate-200 hover:text-white rounded-xl transition-all shadow-md border border-slate-700 hover:border-sky-500/50 cursor-pointer"
-            title="Mover mapa para a Esquerda (Oeste) [Seta Esquerda]"
-            aria-label="Mover mapa para a esquerda"
+            onMouseDown={() => startContinuousZoom('in')}
+            onMouseUp={stopContinuous}
+            onMouseLeave={stopContinuous}
+            onTouchStart={() => startContinuousZoom('in')}
+            onTouchEnd={stopContinuous}
+            className="h-8 w-8 rounded-xl hover:bg-white/10 active:bg-sky-600/40 text-slate-200 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+            title="Aproximar Zoom (+)"
+            aria-label="Aproximar zoom"
           >
-            <ArrowLeft className="w-4 h-4 text-sky-300" />
+            <Plus className="w-4 h-4" />
+          </button>
+
+          <button
+            onMouseDown={() => startContinuousZoom('out')}
+            onMouseUp={stopContinuous}
+            onMouseLeave={stopContinuous}
+            onTouchStart={() => startContinuousZoom('out')}
+            onTouchEnd={stopContinuous}
+            className="h-8 w-8 rounded-xl hover:bg-white/10 active:bg-sky-600/40 text-slate-200 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+            title="Afastar Zoom (-)"
+            aria-label="Afastar zoom"
+          >
+            <Minus className="w-4 h-4" />
           </button>
 
           <button
             onClick={onRecenter}
-            className="p-2 sm:p-2.5 bg-sky-950/80 hover:bg-sky-800/80 active:bg-sky-600 text-sky-400 hover:text-white rounded-xl transition-all shadow-md border border-sky-700/60 cursor-pointer"
-            title="Enquadrar e Centralizar Selecção [Home]"
-            aria-label="Enquadrar e centralizar mapa"
+            className="h-8 px-2.5 rounded-xl hover:bg-white/10 text-sky-300 hover:text-white text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap"
+            title="Enquadrar e Centralizar [Home]"
+            aria-label="Enquadrar mapa"
           >
-            <Maximize2 className="w-4 h-4 text-sky-300" />
+            <Maximize2 className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Enquadrar</span>
           </button>
 
           <button
-            onMouseDown={() => startContinuousPan('right')}
-            onMouseUp={stopContinuousPan}
-            onMouseLeave={stopContinuousPan}
-            onTouchStart={() => startContinuousPan('right')}
-            onTouchEnd={stopContinuousPan}
-            className="p-2 sm:p-2.5 bg-slate-800 hover:bg-slate-700 active:bg-sky-600 text-slate-200 hover:text-white rounded-xl transition-all shadow-md border border-slate-700 hover:border-sky-500/50 cursor-pointer"
-            title="Mover mapa para a Direita (Este) [Seta Direita]"
-            aria-label="Mover mapa para a direita"
+            onClick={() => setIsPanOpen((prev) => !prev)}
+            className={`h-8 w-8 rounded-xl flex items-center justify-center transition-colors cursor-pointer ${
+              isPanOpen ? 'bg-sky-500/20 text-sky-300' : 'hover:bg-white/10 text-slate-300 hover:text-white'
+            }`}
+            title="Mover Câmara (ou use as setas do teclado)"
+            aria-label="Abrir controlo de movimento"
           >
-            <ArrowRight className="w-4 h-4 text-sky-300" />
+            <Move className="w-3.5 h-3.5" />
           </button>
+
+          {isPanOpen && (
+            <div className="absolute bottom-full left-0 mb-2 bg-slate-950/95 border border-white/10 rounded-2xl p-2 shadow-2xl backdrop-blur-xl flex flex-col items-center gap-1">
+              <button
+                onMouseDown={() => startContinuousPan('up')}
+                onMouseUp={stopContinuous}
+                onMouseLeave={stopContinuous}
+                onTouchStart={() => startContinuousPan('up')}
+                onTouchEnd={stopContinuous}
+                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-slate-200 flex items-center justify-center cursor-pointer"
+                aria-label="Mover para cima"
+              >
+                <ArrowUp className="w-4 h-4" />
+              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  onMouseDown={() => startContinuousPan('left')}
+                  onMouseUp={stopContinuous}
+                  onMouseLeave={stopContinuous}
+                  onTouchStart={() => startContinuousPan('left')}
+                  onTouchEnd={stopContinuous}
+                  className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-slate-200 flex items-center justify-center cursor-pointer"
+                  aria-label="Mover para esquerda"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={onRecenter}
+                  className="w-8 h-8 rounded-lg bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 flex items-center justify-center cursor-pointer"
+                  aria-label="Centralizar"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onMouseDown={() => startContinuousPan('right')}
+                  onMouseUp={stopContinuous}
+                  onMouseLeave={stopContinuous}
+                  onTouchStart={() => startContinuousPan('right')}
+                  onTouchEnd={stopContinuous}
+                  className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-slate-200 flex items-center justify-center cursor-pointer"
+                  aria-label="Mover para direita"
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+              <button
+                onMouseDown={() => startContinuousPan('down')}
+                onMouseUp={stopContinuous}
+                onMouseLeave={stopContinuous}
+                onTouchStart={() => startContinuousPan('down')}
+                onTouchEnd={stopContinuous}
+                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-slate-200 flex items-center justify-center cursor-pointer"
+                aria-label="Mover para baixo"
+              >
+                <ArrowDown className="w-4 h-4" />
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Down Button */}
-        <button
-          onMouseDown={() => startContinuousPan('down')}
-          onMouseUp={stopContinuousPan}
-          onMouseLeave={stopContinuousPan}
-          onTouchStart={() => startContinuousPan('down')}
-          onTouchEnd={stopContinuousPan}
-          className="p-2 sm:p-2.5 bg-slate-800 hover:bg-slate-700 active:bg-sky-600 text-slate-200 hover:text-white rounded-xl transition-all shadow-md border border-slate-700 hover:border-sky-500/50 mt-1 cursor-pointer"
-          title="Mover mapa para Baixo (Sul) [Seta Baixo]"
-          aria-label="Mover mapa para baixo"
-        >
-          <ArrowDown className="w-4 h-4 text-sky-300" />
-        </button>
-      </div>
+        {/* Interactive Presentation Controls (visible in Province & District isolation) */}
+        {isDetailedView && (
+          <div className="flex items-center gap-1 bg-slate-950/85 backdrop-blur-xl border border-white/10 rounded-2xl p-1 shadow-2xl">
+            {onToggleVerticalView && (
+              <button
+                onClick={onToggleVerticalView}
+                className={`h-8 px-2.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap ${
+                  verticalView
+                    ? 'bg-sky-500/20 text-sky-300 border border-sky-400/30'
+                    : 'text-slate-300 hover:text-white hover:bg-white/10 border border-transparent'
+                }`}
+                title="Alternar entre apresentação Vertical (topo-frontal) e Perspetiva 3D"
+              >
+                {verticalView ? <Columns2 className="w-3.5 h-3.5" /> : <Box className="w-3.5 h-3.5" />}
+                <span>{verticalView ? 'Vertical' : '3D'}</span>
+              </button>
+            )}
 
-      {/* Zoom In / Out Controls */}
-      <div className="bg-slate-900/90 border border-slate-700/80 rounded-2xl shadow-xl p-1.5 backdrop-blur-md flex flex-col gap-1 items-center">
-        <button
-          onMouseDown={() => startContinuousZoom('in')}
-          onMouseUp={stopContinuousPan}
-          onMouseLeave={stopContinuousPan}
-          onTouchStart={() => startContinuousZoom('in')}
-          onTouchEnd={stopContinuousPan}
-          className="p-2 sm:p-2.5 bg-slate-800 hover:bg-slate-700 active:bg-sky-600 text-slate-200 hover:text-white rounded-xl transition-all shadow-sm border border-slate-700/70 hover:border-sky-500/50 cursor-pointer"
-          title="Aproximar Zoom (+)"
-          aria-label="Aproximar zoom"
-        >
-          <Plus className="w-4 h-4 text-emerald-400" />
-        </button>
+            {onToggleQuarterTurn && (
+              <button
+                onClick={onToggleQuarterTurn}
+                className={`h-8 px-2.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap ${
+                  rotateQuarterTurn
+                    ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30'
+                    : 'text-slate-300 hover:text-white hover:bg-white/10 border border-transparent'
+                }`}
+                title="Rodar apresentação 90°"
+              >
+                <RotateCw className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Rodar 90°</span>
+              </button>
+            )}
 
-        <button
-          onMouseDown={() => startContinuousZoom('out')}
-          onMouseUp={stopContinuousPan}
-          onMouseLeave={stopContinuousPan}
-          onTouchStart={() => startContinuousZoom('out')}
-          onTouchEnd={stopContinuousPan}
-          className="p-2 sm:p-2.5 bg-slate-800 hover:bg-slate-700 active:bg-sky-600 text-slate-200 hover:text-white rounded-xl transition-all shadow-sm border border-slate-700/70 hover:border-sky-500/50 cursor-pointer"
-          title="Afastar Zoom (-)"
-          aria-label="Afastar zoom"
-        >
-          <Minus className="w-4 h-4 text-emerald-400" />
-        </button>
+            {onToggleAutoRotate && (
+              <button
+                onClick={onToggleAutoRotate}
+                className={`h-8 px-2.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap ${
+                  autoRotate
+                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30'
+                    : 'text-slate-300 hover:text-white hover:bg-white/10 border border-transparent'
+                }`}
+                title="Ativar ou pausar rotação orbital 360°"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${autoRotate ? 'animate-spin' : ''}`} />
+                <span className="hidden md:inline">Girar 360°</span>
+              </button>
+            )}
+          </div>
+        )}
       </div>
-    </div>
   );
 };

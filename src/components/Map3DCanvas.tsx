@@ -67,6 +67,10 @@ interface Map3DCanvasProps {
   // Patriotic Landmarks props
   onSelectPatrioticLandmark?: (landmarkId: string) => void;
   selectedPatrioticLandmarkId?: string | null;
+  // Interactive Vertical Presentation & Auto-Rotate props
+  verticalView?: boolean;
+  autoRotate?: boolean;
+  rotateQuarterTurn?: boolean;
 }
 
 interface ProvinceMeshGroup {
@@ -108,23 +112,50 @@ const DISTRICT_COLORS: Record<string, string> = {
   '0709': '#16a34a', // Tsangano
   '0710': '#65a30d', // Chiúta
   '0711': '#0d9488', // Marávia
-  '0712': '#4f46e5', // Zumbu
+  '0712': '#4f46e5', // Zumbo
   '0713': '#059669', // Angónia
   '0714': '#8b5cf6', // Macanga
   '0715': '#7c3aed', // Chifunde
 };
 
-const VIBRANT_DISTRICT_PALETTE = [
-  '#f97316', '#3b82f6', '#10b981', '#8b5cf6', '#ec4899',
-  '#eab308', '#06b6d4', '#ef4444', '#14b8a6', '#6366f1',
-  '#f43f5e', '#84cc16', '#a855f7', '#0284c7', '#d97706',
-  '#059669', '#7c3aed', '#db2777', '#ca8a04', '#0891b2',
-  '#dc2626', '#0d9488', '#4f46e5', '#e11d48'
-];
+const CAPITAL_DISTRICT_COLORS: Record<string, string> = {
+  '0101': '#0284c7', // Cidade de Maputo
+  '0204': '#f59e0b', // Cidade da Matola
+  '0302': '#f59e0b', // Cidade de Xai-Xai
+  '0404': '#f59e0b', // Cidade de Inhambane
+  '0504': '#ef4444', // Cidade da Beira
+  '0606': '#ef4444', // Cidade de Chimoio
+  '0705': '#ef4444', // Cidade de Tete
+  '0804': '#f59e0b', // Cidade de Quelimane
+  '0909': '#f59e0b', // Cidade de Nampula
+  '1005': '#f59e0b', // Cidade de Pemba
+  '1111': '#f59e0b', // Cidade de Lichinga
+};
+
+// Paletas harmonizadas com a identidade cromática de cada província (PROVINCES_DATA)
+const PROVINCE_DISTRICT_PALETTES: Record<string, string[]> = {
+  '01': ['#0284c7', '#0ea5e9', '#38bdf8'],
+  '02': ['#2563eb', '#1d4ed8', '#3b82f6', '#0284c7', '#0ea5e9', '#4f46e5', '#6366f1', '#1e40af'],
+  '03': ['#0d9488', '#0f766e', '#14b8a6', '#2dd4bf', '#0891b2', '#059669', '#10b981', '#06b6d4'],
+  '04': ['#059669', '#047857', '#10b981', '#34d399', '#16a34a', '#0d9488', '#14b8a6', '#22c55e'],
+  '05': ['#d97706', '#b45309', '#f59e0b', '#ea580c', '#c2410c', '#f97316', '#ca8a04', '#0284c7'],
+  '06': ['#ca8a04', '#a16207', '#eab308', '#d97706', '#f59e0b', '#65a30d', '#16a34a', '#ea580c'],
+  '07': ['#ea580c', '#d97706', '#f97316', '#0284c7', '#16a34a', '#0d9488', '#4f46e5', '#7c3aed'],
+  '08': ['#16a34a', '#15803d', '#22c55e', '#059669', '#10b981', '#65a30d', '#84cc16', '#0d9488'],
+  '09': ['#9333ea', '#7e22ce', '#a855f7', '#6366f1', '#4f46e5', '#8b5cf6', '#c026d3', '#0891b2'],
+  '10': ['#0891b2', '#0e7490', '#06b6d4', '#22d3ee', '#0284c7', '#0d9488', '#14b8a6', '#3b82f6'],
+  '11': ['#4f46e5', '#4338ca', '#6366f1', '#818cf8', '#2563eb', '#7c3aed', '#0284c7', '#0891b2'],
+};
 
 function getDistrictColor(code: string, index: number): string {
   if (DISTRICT_COLORS[code]) return DISTRICT_COLORS[code];
-  return VIBRANT_DISTRICT_PALETTE[index % VIBRANT_DISTRICT_PALETTE.length];
+  if (CAPITAL_DISTRICT_COLORS[code]) return CAPITAL_DISTRICT_COLORS[code];
+  const provCode = code.slice(0, 2);
+  const palette = PROVINCE_DISTRICT_PALETTES[provCode];
+  if (palette && palette.length > 0) {
+    return palette[index % palette.length];
+  }
+  return '#3b82f6';
 }
 
 interface TransportMeshEntry {
@@ -176,6 +207,9 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
   focusTransportCoords = null,
   onSelectPatrioticLandmark,
   selectedPatrioticLandmarkId = null,
+  verticalView = true,
+  autoRotate = false,
+  rotateQuarterTurn = false,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const [webglError, setWebglError] = useState<string | null>(null);
@@ -208,6 +242,9 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     focusTransportCoords,
     onSelectPatrioticLandmark,
     selectedPatrioticLandmarkId,
+    verticalView,
+    autoRotate,
+    rotateQuarterTurn,
   });
 
   // Keep stateRef in sync with props without rebuilding scene
@@ -238,6 +275,9 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     stateRef.current.focusTransportCoords = focusTransportCoords;
     stateRef.current.onSelectPatrioticLandmark = onSelectPatrioticLandmark;
     stateRef.current.selectedPatrioticLandmarkId = selectedPatrioticLandmarkId;
+    stateRef.current.verticalView = verticalView;
+    stateRef.current.autoRotate = autoRotate;
+    stateRef.current.rotateQuarterTurn = rotateQuarterTurn;
   }, [
     selectedProvinceId,
     hoveredProvinceId,
@@ -265,6 +305,9 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     focusTransportCoords,
     onSelectPatrioticLandmark,
     selectedPatrioticLandmarkId,
+    verticalView,
+    autoRotate,
+    rotateQuarterTurn,
   ]);
 
   const sceneContextRef = useRef<{
@@ -561,8 +604,8 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
 
     featuresToRender.forEach((feature, index) => {
       const code = String(feature.properties.CodDist || feature.properties.code || feature.id || '');
-      const distName = feature.properties.Distrito || feature.properties.name || 'Distrito';
       const distData = ALL_DISTRICTS_DATA[code];
+      const distName = distData?.name || feature.properties.Distrito || feature.properties.name || 'Distrito';
 
       const shapes = convertGeometryToShapes(feature.geometry);
       if (shapes.length === 0) return;
@@ -987,30 +1030,43 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     updateInteractiveMeshList();
   };
 
-  // Sync interactiveMeshes with current viewMode and transport layers
+  // Sync interactiveMeshes with current viewMode, isolation state, and transport layers
   const updateInteractiveMeshList = () => {
     const ctx = sceneContextRef.current;
     if (!ctx) return;
 
     ctx.interactiveMeshes.length = 0;
 
-    // Transport network elements are always interactive
-    ctx.transportInteractiveMeshes.forEach((m) => ctx.interactiveMeshes.push(m));
-
-    // Patriotic landmark markers (Zumbo, Oceano Índico, Rovuma, Maputo)
-    if (ctx.patrioticElements?.interactiveMeshes) {
-      ctx.patrioticElements.interactiveMeshes.forEach((m) => ctx.interactiveMeshes.push(m));
-    }
-
     const isDetailed =
       stateRef.current.viewMode === 'province-detailed' ||
       stateRef.current.viewMode === 'tete-detailed';
+    const currentDistrict = stateRef.current.selectedDistrictId;
 
     if (isDetailed) {
-      ctx.districtGroups.forEach((dg) => {
-        dg.meshes.forEach((m) => ctx.interactiveMeshes.push(m));
+      // In detailed isolation mode, only visible district(s) and visible province transport nodes are interactive
+      ctx.districtGroups.forEach((dg, code) => {
+        if (!currentDistrict || currentDistrict === code) {
+          dg.meshes.forEach((m) => ctx.interactiveMeshes.push(m));
+        }
       });
+
+      if (!currentDistrict) {
+        const targetProvId =
+          stateRef.current.detailedProvinceId ||
+          (stateRef.current.viewMode === 'tete-detailed' ? '07' : stateRef.current.selectedProvinceId || '07');
+        ctx.transportItems.forEach((entry) => {
+          if (entry.type === 'node' && (entry.data as TransportNode).provinceId === targetProvId) {
+            ctx.interactiveMeshes.push(entry.primaryMesh);
+          }
+        });
+      }
     } else {
+      ctx.transportInteractiveMeshes.forEach((m) => ctx.interactiveMeshes.push(m));
+
+      if (ctx.patrioticElements?.interactiveMeshes) {
+        ctx.patrioticElements.interactiveMeshes.forEach((m) => ctx.interactiveMeshes.push(m));
+      }
+
       ctx.provinceGroups.forEach((pg) => {
         pg.meshes.forEach((m) => ctx.interactiveMeshes.push(m));
       });
@@ -1279,7 +1335,11 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
           } else if (hitMesh.userData.type === 'district') {
             stateRef.current.onHoverTransportItem?.(null);
             const code = hitMesh.userData.districtCode;
-            stateRef.current.onHoverDistrict?.(code, { x: clientX, y: clientY });
+            if (stateRef.current.selectedDistrictId === code) {
+              stateRef.current.onHoverDistrict?.(null);
+            } else {
+              stateRef.current.onHoverDistrict?.(code, { x: clientX, y: clientY });
+            }
           } else {
             stateRef.current.onHoverTransportItem?.(null);
             const code = hitMesh.userData.provinceCode;
@@ -1357,6 +1417,15 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     };
 
     const domElement = renderer.domElement;
+    const onContextLost = (ev: Event) => {
+      ev.preventDefault();
+      setWebglError('Contexto WebGL perdido temporariamente. A restaurar...');
+    };
+    const onContextRestored = () => {
+      setWebglError(null);
+    };
+    domElement.addEventListener('webglcontextlost', onContextLost, false);
+    domElement.addEventListener('webglcontextrestored', onContextRestored, false);
     domElement.addEventListener('mousedown', onPointerDown);
     domElement.addEventListener('mousemove', onPointerMove);
     domElement.addEventListener('mouseup', onPointerUp);
@@ -1399,11 +1468,16 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       if (!container) return;
       const newW = container.clientWidth;
       const newH = container.clientHeight;
+      if (newW <= 0 || newH <= 0) return;
       camera.aspect = newW / newH;
       camera.updateProjectionMatrix();
       renderer.setSize(newW, newH);
     };
     window.addEventListener('resize', handleResize);
+    const resizeObserver = new ResizeObserver(() => {
+      handleResize();
+    });
+    resizeObserver.observe(container);
 
     // Animation loop
     let animationFrameId: number;
@@ -1431,6 +1505,8 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         }
       }
 
+      controls.autoRotate = Boolean(stateRef.current.autoRotate) && !sceneContextRef.current?.cameraTransitionTarget;
+      controls.autoRotateSpeed = 1.6;
       controls.update();
 
       // Transport network animation & highlight
@@ -1466,8 +1542,8 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
           const isSelected = currentSelected === code;
           const isHovered = currentHovered === code;
 
-          pg.targetLift = isSelected ? 0.45 : isHovered ? 0.25 : 0;
-          pg.currentLift = THREE.MathUtils.damp(pg.currentLift, pg.targetLift, 8.0, delta);
+          pg.targetLift = isSelected ? 0.5 : isHovered ? 0.3 : 0;
+          pg.currentLift = THREE.MathUtils.damp(pg.currentLift, pg.targetLift, 9.0, delta);
           pg.group.position.y = pg.currentLift;
 
           pg.meshes.forEach((mesh) => {
@@ -1506,17 +1582,18 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
           const isSelected = currentSelectedDist === code;
           const isHovered = currentHoveredDist === code;
 
-          dg.targetLift = isSelected ? 0.45 : isHovered ? 0.25 : 0;
-          dg.currentLift = THREE.MathUtils.damp(dg.currentLift, dg.targetLift, 8.0, delta);
+          // Subtle float lift for isolated district or hovered district in province mode
+          dg.targetLift = isSelected ? 0.28 : isHovered ? 0.42 : 0;
+          dg.currentLift = THREE.MathUtils.damp(dg.currentLift, dg.targetLift, 9.0, delta);
           dg.group.position.y = dg.currentLift;
 
           dg.meshes.forEach((mesh) => {
             const mat = mesh.material as THREE.MeshPhysicalMaterial;
             if (isSelected) {
-              mat.emissive.set('#ea580c');
-              mat.emissiveIntensity = 0.55;
+              mat.emissive.set('#f59e0b');
+              mat.emissiveIntensity = 0.22;
             } else if (isHovered) {
-              mat.emissive.set('#ffffff');
+              mat.emissive.set('#38bdf8');
               mat.emissiveIntensity = 0.35;
             } else {
               mat.emissive.set('#000000');
@@ -1527,24 +1604,26 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
           dg.edgeLines.forEach((line) => {
             const lineMat = line.material as THREE.LineBasicMaterial;
             if (isSelected) {
-              lineMat.color.set('#fdba74');
+              lineMat.color.set('#fcd34d');
               lineMat.opacity = 1.0;
             } else if (isHovered) {
-              lineMat.color.set('#ffffff');
+              lineMat.color.set('#7dd3fc');
               lineMat.opacity = 1.0;
             } else {
               lineMat.color.set('#ffffff');
-              lineMat.opacity = 0.75;
+              lineMat.opacity = 0.8;
             }
           });
         });
       }
 
-      // Update animated patriotic elements (pulse along Zumbo-Indico and Rovuma-Maputo arcs, pulsing rings)
-      try {
-        patrioticElements.update(delta, time * 0.001);
-      } catch (err) {
-        console.warn('Patriotic animation loop error:', err);
+      // Update animated patriotic elements only when visible in national mode
+      if (!isDetailed) {
+        try {
+          patrioticElements.update(delta, time * 0.001);
+        } catch (err) {
+          console.warn('Patriotic animation loop error:', err);
+        }
       }
 
       renderer.render(scene, camera);
@@ -1555,7 +1634,10 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
       window.removeEventListener('keydown', handleKeyDown);
+      domElement.removeEventListener('webglcontextlost', onContextLost);
+      domElement.removeEventListener('webglcontextrestored', onContextRestored);
       domElement.removeEventListener('mousedown', onPointerDown);
       domElement.removeEventListener('mousemove', onPointerMove);
       domElement.removeEventListener('mouseup', onPointerUp);
@@ -1572,61 +1654,74 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     };
   }, [geoJson]);
 
-  // Helper to compute camera target and position keeping the feature 100% visible and unobstructed by info drawers
+  // Helper to compute camera target and position keeping the feature 100% centered and visible in the unobstructed 3D stage
   const computeUnobstructedTarget = (
     bounds: { minX: number; maxX: number; minZ: number; maxZ: number },
-    centroid: [number, number, number],
-    panelWidthPx = 480,
-    isDetailed = false
+    _centroid: [number, number, number],
+    _panelWidthPx = 440,
+    isDistrictIsolated = false
   ) => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    const container = mountRef.current;
+    const ctx = sceneContextRef.current;
+    const w = container?.clientWidth || window.innerWidth;
+    const h = container?.clientHeight || window.innerHeight;
+
+    // Ensure camera aspect matches the stage container immediately (before ResizeObserver tick if needed)
+    if (ctx && w > 0 && h > 0) {
+      const targetAspect = w / h;
+      if (Math.abs(ctx.camera.aspect - targetAspect) > 0.005) {
+        ctx.camera.aspect = targetAspect;
+        ctx.camera.updateProjectionMatrix();
+        ctx.renderer.setSize(w, h);
+      }
+    }
 
     const centerX = (bounds.minX + bounds.maxX) / 2;
     const centerZ = (bounds.minZ + bounds.maxZ) / 2;
-    const spanX = Math.max(bounds.maxX - bounds.minX, 0.4);
-    const spanZ = Math.max(bounds.maxZ - bounds.minZ, 0.4);
+    const rawSpanX = Math.max(bounds.maxX - bounds.minX, 0.35);
+    const rawSpanZ = Math.max(bounds.maxZ - bounds.minZ, 0.35);
 
-    const isDrawerOpen = stateRef.current.isDrawerOpen;
-    let offsetFraction = 0;
-    let effectiveW = w;
-    let effectiveH = Math.max(h - 140, 200);
+    const isVertical = stateRef.current.verticalView !== false;
+    const isQuarterTurn = Boolean(stateRef.current.rotateQuarterTurn);
 
-    if (isDrawerOpen && w >= 640) {
-      const actualPanelW = Math.min(panelWidthPx, w * 0.48);
-      effectiveW = w - actualPanelW;
-      // Object centers in unobstructed left-center area [0, effectiveW].
-      // Distance from screen center to unobstructed center is actualPanelW / 2.
-      // Offset fraction towards the left:
-      offsetFraction = (actualPanelW / 2) / w;
-    } else if (isDrawerOpen && w < 640) {
-      effectiveH = Math.max(h * 0.48, 180);
-    }
+    const spanScreenX = isQuarterTurn ? rawSpanZ : rawSpanX;
+    const spanScreenY = isQuarterTurn ? rawSpanX : rawSpanZ;
 
-    const fovRad = (45 * Math.PI) / 180;
+    // Leave clean internal breathing room inside the stage so floating corner controls & 3D labels never overlap the shape
+    const effectiveW = Math.max(w * 0.80, 160);
+    const effectiveH = Math.max(h - 115, 160);
+
+    const fovRad = (40 * Math.PI) / 180;
     const tanHalfFov = Math.tan(fovRad / 2);
-    const pitchRad = (52 * Math.PI) / 180;
+    const pitchRad = ((isVertical ? 14 : 46) * Math.PI) / 180;
 
-    // Generous margin so the entire boundary and 3D elevation fit comfortably
-    const margin = 1.35;
+    const margin = isDistrictIsolated ? 1.44 : 1.28;
 
-    const reqDistX = (spanX * margin) / (2 * tanHalfFov * (effectiveW / h));
-    const depthProj = spanZ * Math.sin(pitchRad) + 1.2 * Math.cos(pitchRad);
-    const reqDistZ = (depthProj * margin) / (2 * tanHalfFov * (effectiveH / h));
+    const reqDistX = (spanScreenX * margin) / (2 * tanHalfFov * (effectiveW / Math.max(h, 1)));
+    const depthProj = spanScreenY * (isVertical ? 0.98 : Math.sin(pitchRad)) + 0.95 * Math.cos(pitchRad);
+    const reqDistZ = (depthProj * margin) / (2 * tanHalfFov * (effectiveH / Math.max(h, 1)));
 
-    const minD = isDetailed ? 4.2 : 11.5;
+    const minD = isDistrictIsolated ? 3.5 : 8.5;
     const dist = Math.max(reqDistX, reqDistZ, minD);
 
-    const frustumWidth = 2 * dist * tanHalfFov * (w / h);
-    const xOffsetWorld = offsetFraction * frustumWidth;
+    if (isQuarterTurn) {
+      return {
+        pos: new THREE.Vector3(
+          centerX + dist * Math.sin(pitchRad),
+          0.35 + dist * Math.cos(pitchRad),
+          centerZ
+        ),
+        look: new THREE.Vector3(centerX, 0.35, centerZ),
+      };
+    }
 
     return {
       pos: new THREE.Vector3(
-        centerX + xOffsetWorld,
-        0.4 + dist * Math.cos(pitchRad),
+        centerX,
+        0.35 + dist * Math.cos(pitchRad),
         centerZ + dist * Math.sin(pitchRad)
       ),
-      look: new THREE.Vector3(centerX + xOffsetWorld, 0.4, centerZ),
+      look: new THREE.Vector3(centerX, 0.35, centerZ),
     };
   };
 
@@ -1674,7 +1769,42 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
         camera.position.addScaledVector(dir.normalize(), Math.max(1.5, dist * 0.18));
       }
     } else if (panAction.type === 'recenter') {
-      stateRef.current.onResetCameraPreset?.();
+      const isDetailed =
+        stateRef.current.viewMode === 'province-detailed' ||
+        stateRef.current.viewMode === 'tete-detailed';
+      if (isDetailed) {
+        const selDist = stateRef.current.selectedDistrictId;
+        if (selDist) {
+          const dg = ctx.districtGroups.get(selDist);
+          if (dg && dg.bounds) {
+            ctx.cameraTransitionTarget = computeUnobstructedTarget(dg.bounds, dg.centroid, 440, true);
+            return;
+          }
+        }
+        let pMinX = Infinity, pMaxX = -Infinity, pMinZ = Infinity, pMaxZ = -Infinity;
+        ctx.districtGroups.forEach((dg) => {
+          pMinX = Math.min(pMinX, dg.bounds.minX);
+          pMaxX = Math.max(pMaxX, dg.bounds.maxX);
+          pMinZ = Math.min(pMinZ, dg.bounds.minZ);
+          pMaxZ = Math.max(pMaxZ, dg.bounds.maxZ);
+        });
+        if (isFinite(pMinX)) {
+          ctx.cameraTransitionTarget = computeUnobstructedTarget(
+            { minX: pMinX, maxX: pMaxX, minZ: pMinZ, maxZ: pMaxZ },
+            [(pMinX + pMaxX) / 2, 0.4, (pMinZ + pMaxZ) / 2],
+            440,
+            false
+          );
+          return;
+        }
+      } else {
+        ctx.cameraTransitionTarget = {
+          pos: new THREE.Vector3(0, 32, 28),
+          look: new THREE.Vector3(0, 0, 0),
+        };
+        stateRef.current.onResetCameraPreset?.();
+        return;
+      }
     }
 
     if (moveVec.lengthSq() > 0) {
@@ -1684,84 +1814,61 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     controls.update();
   }, [panAction]);
 
-  // Handle ViewMode switches (National vs Provincial Detailed)
-  // Ensures the province and all its districts are 100% visible and NOT obstructed by the right panel
+  // Rebuild 3D district geometries only when entering detailed mode or switching provinces
+  useEffect(() => {
+    const ctx = sceneContextRef.current;
+    if (!ctx) return;
+    const isDetailed = viewMode === 'province-detailed' || viewMode === 'tete-detailed';
+    if (isDetailed) {
+      updateDistrictMeshes();
+    }
+  }, [viewMode, detailedProvinceId]);
+
+  // Handle ViewMode switches & True Isolation (National vs Isolated Province vs Isolated District)
   useEffect(() => {
     const ctx = sceneContextRef.current;
     if (!ctx) return;
 
-    const { provinceGroups, teteDistrictsRootGroup, districtGroups } = ctx;
+    const { provinceGroups, teteDistrictsRootGroup, districtGroups, patrioticElements, transportItems } = ctx;
     const isDetailed = viewMode === 'province-detailed' || viewMode === 'tete-detailed';
     const targetProvId =
       detailedProvinceId ||
       (viewMode === 'tete-detailed' ? '07' : selectedProvinceId || '07');
 
     if (isDetailed) {
-      // Rebuild 3D district geometries for the target province
-      updateDistrictMeshes();
       teteDistrictsRootGroup.visible = true;
 
-      // Hide the selected province's national mesh so only its 3D districts are shown
-      provinceGroups.forEach((pg, code) => {
-        if (code === targetProvId) {
-          pg.group.visible = false;
+      // TRUE ISOLATION: Hide all provinces and national patriotic arcs
+      provinceGroups.forEach((pg) => {
+        pg.group.visible = false;
+      });
+      patrioticElements.group.visible = false;
+
+      // Hide unrelated transport hubs; hide all hubs when isolating a single district
+      transportItems.forEach((entry) => {
+        if (selectedDistrictId) {
+          entry.group.visible = false;
         } else {
-          // Other provinces provide geographic context around the focused province
-          pg.group.visible = true;
-          pg.meshes.forEach((mesh) => {
-            const mat = mesh.material as THREE.MeshPhysicalMaterial;
-            mat.transparent = true;
-            mat.opacity = 0.28;
-            mat.roughness = 0.7;
-          });
-          pg.edgeLines.forEach((line) => {
-            (line.material as THREE.LineBasicMaterial).opacity = 0.25;
-          });
-          if (pg.labelSprite) {
-            pg.labelSprite.visible = false;
-          }
+          entry.group.visible =
+            entry.type === 'node' && (entry.data as TransportNode).provinceId === targetProvId;
         }
       });
 
-      districtGroups.forEach((dg) => {
+      // Isolate either all districts of the province OR only the selected district
+      districtGroups.forEach((dg, code) => {
+        const isVisible = !selectedDistrictId || selectedDistrictId === code;
+        dg.group.visible = isVisible;
         if (dg.labelSprite) {
-          dg.labelSprite.visible = showLabels;
+          dg.labelSprite.visible = showLabels && isVisible;
         }
       });
-
-      // Calculate the comprehensive bounding box and centroid of this province's districts
-      let pMinX = Infinity;
-      let pMaxX = -Infinity;
-      let pMinZ = Infinity;
-      let pMaxZ = -Infinity;
-
-      districtGroups.forEach((dg) => {
-        pMinX = Math.min(pMinX, dg.bounds.minX);
-        pMaxX = Math.max(pMaxX, dg.bounds.maxX);
-        pMinZ = Math.min(pMinZ, dg.bounds.minZ);
-        pMaxZ = Math.max(pMaxZ, dg.bounds.maxZ);
-      });
-
-      if (!isFinite(pMinX)) {
-        const pg = provinceGroups.get(targetProvId);
-        if (pg) {
-          pMinX = pg.bounds.minX;
-          pMaxX = pg.bounds.maxX;
-          pMinZ = pg.bounds.minZ;
-          pMaxZ = pg.bounds.maxZ;
-        }
-      }
-
-      const provBounds = { minX: pMinX, maxX: pMaxX, minZ: pMinZ, maxZ: pMaxZ };
-      const provCentroid: [number, number, number] = [
-        (pMinX + pMaxX) / 2,
-        0.4,
-        (pMinZ + pMaxZ) / 2,
-      ];
-
-      ctx.cameraTransitionTarget = computeUnobstructedTarget(provBounds, provCentroid, 500, false);
     } else {
       teteDistrictsRootGroup.visible = false;
+      patrioticElements.group.visible = true;
+
+      transportItems.forEach((entry) => {
+        entry.group.visible = true;
+      });
 
       provinceGroups.forEach((pg) => {
         pg.group.visible = true;
@@ -1781,10 +1888,9 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     }
 
     updateInteractiveMeshList();
-  }, [viewMode, detailedProvinceId, showLabels]);
+  }, [viewMode, detailedProvinceId, selectedDistrictId, showLabels]);
 
-  // Focus on district when selected in detailed mode
-  // Shifts camera target to keep the district 100% visible to the left of the right panel
+  // Camera framing when isolating a Province or a single District (vertical presentation beside side panel)
   useEffect(() => {
     const ctx = sceneContextRef.current;
     const isDetailed = viewMode === 'province-detailed' || viewMode === 'tete-detailed';
@@ -1793,12 +1899,11 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     if (selectedDistrictId) {
       const dg = ctx.districtGroups.get(selectedDistrictId);
       if (dg && dg.bounds) {
-        ctx.cameraTransitionTarget = computeUnobstructedTarget(dg.bounds, dg.centroid, 500, true);
+        ctx.cameraTransitionTarget = computeUnobstructedTarget(dg.bounds, dg.centroid, 440, true);
         return;
       }
     }
 
-    // When no district selected in detailed mode, re-frame entire province
     const targetProvId =
       detailedProvinceId ||
       (viewMode === 'tete-detailed' ? '07' : selectedProvinceId || '07');
@@ -1832,8 +1937,8 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
       (pMinZ + pMaxZ) / 2,
     ];
 
-    ctx.cameraTransitionTarget = computeUnobstructedTarget(provBounds, provCentroid, 500, false);
-  }, [selectedDistrictId, viewMode, detailedProvinceId, isDrawerOpen]);
+    ctx.cameraTransitionTarget = computeUnobstructedTarget(provBounds, provCentroid, 440, false);
+  }, [selectedDistrictId, viewMode, detailedProvinceId, isDrawerOpen, verticalView, rotateQuarterTurn]);
 
   // Geometry rebuild on thematic metric / extrusion changes (national mode)
   useEffect(() => {
@@ -1845,16 +1950,16 @@ export const Map3DCanvas: React.FC<Map3DCanvasProps> = ({
     updateLightingAndAtmosphere();
   }, [lightingTheme]);
 
-  // Camera presets navigation (in national mode)
-  // Shifts camera target when a province is selected so it is NEVER covered by the right drawer!
+  // Camera presets navigation (strictly in national mode)
   useEffect(() => {
     const ctx = sceneContextRef.current;
-    if (!ctx || viewMode === 'tete-detailed') return;
+    const isDetailed = viewMode === 'province-detailed' || viewMode === 'tete-detailed';
+    if (!ctx || isDetailed) return;
 
     if (selectedProvinceId) {
       const pg = ctx.provinceGroups.get(selectedProvinceId);
       if (pg && pg.bounds) {
-        ctx.cameraTransitionTarget = computeUnobstructedTarget(pg.bounds, pg.centroid, 480, false);
+        ctx.cameraTransitionTarget = computeUnobstructedTarget(pg.bounds, pg.centroid, 440, false);
         return;
       }
     }

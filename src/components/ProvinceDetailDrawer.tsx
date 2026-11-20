@@ -64,7 +64,7 @@ Fonte: INE Moçambique & MAEFP MOZGIS`;
     return (
       <button
         onClick={onToggleCollapse}
-        className="fixed top-24 right-3 sm:right-5 z-40 bg-slate-900/95 border border-slate-700/80 rounded-2xl shadow-2xl px-3.5 py-2.5 backdrop-blur-md flex items-center gap-2.5 text-xs font-bold text-sky-400 hover:text-white cursor-pointer hover:border-sky-500/60 transition-all group"
+        className="absolute top-3 right-3 z-30 bg-slate-900/95 border border-slate-700/80 rounded-2xl shadow-2xl px-3.5 py-2 backdrop-blur-md flex items-center gap-2 text-xs font-bold text-sky-400 hover:text-white cursor-pointer hover:border-sky-500/60 transition-all group"
         title="Expandir Dossier da Província"
       >
         <ChevronLeft className="w-4 h-4 text-sky-400 group-hover:-translate-x-0.5 transition-transform" />
@@ -78,7 +78,7 @@ Fonte: INE Moçambique & MAEFP MOZGIS`;
   }
 
   return (
-    <div className="fixed inset-y-0 right-0 z-40 w-full sm:w-[480px] max-w-full bg-slate-900/95 backdrop-blur-md border-l border-slate-700/80 shadow-2xl flex flex-col text-slate-100 transition-transform duration-300">
+    <div className="w-full h-[46%] md:h-full md:w-[380px] lg:w-[430px] shrink-0 bg-slate-900/95 backdrop-blur-md border-t md:border-t-0 md:border-l border-slate-700/80 shadow-2xl flex flex-col text-slate-100 z-20 overflow-hidden transition-all duration-300">
       {/* Header */}
       <div className="p-4 sm:p-5 border-b border-slate-800 flex items-start justify-between bg-slate-950/60">
         <div>

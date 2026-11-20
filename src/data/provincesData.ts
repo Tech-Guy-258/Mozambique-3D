@@ -477,6 +477,7 @@ export const PROVINCES_DATA: Record<string, ProvinceData> = {
       'Mueda',
       'Muidumbe',
       'Namuno',
+      'Nangade',
       'Palma',
       'Pemba (Cidade Capital Provincial)',
       'Quissanga',

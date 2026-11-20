@@ -54,7 +54,7 @@ export const PatrioticInfoPanel: React.FC<PatrioticInfoPanelProps> = ({
     return (
       <button
         onClick={onToggleCollapse}
-        className="fixed top-24 left-3 sm:left-6 z-40 bg-gradient-to-r from-emerald-950/95 via-slate-900/95 to-red-950/95 border border-amber-400/60 rounded-2xl shadow-2xl px-3.5 py-2.5 backdrop-blur-md flex items-center gap-2.5 text-xs font-bold text-amber-300 hover:text-white cursor-pointer hover:border-amber-300 transition-all group animate-fadeIn"
+        className="absolute top-3 right-3 z-30 bg-gradient-to-r from-emerald-950/95 via-slate-900/95 to-red-950/95 border border-amber-400/60 rounded-2xl shadow-2xl px-3.5 py-2 backdrop-blur-md flex items-center gap-2 text-xs font-bold text-amber-300 hover:text-white cursor-pointer hover:border-amber-300 transition-all group animate-fadeIn"
         title="Expandir Painel Histórico: Do Zumbo ao Índico"
       >
         <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-emerald-500 via-amber-400 to-red-600 flex items-center justify-center text-[10px] shadow">
@@ -67,7 +67,7 @@ export const PatrioticInfoPanel: React.FC<PatrioticInfoPanelProps> = ({
   }
 
   return (
-    <div className="fixed top-20 left-3 sm:left-6 z-40 w-[420px] max-w-[calc(100vw-24px)] bg-slate-900/95 backdrop-blur-md border border-amber-500/50 rounded-2xl shadow-2xl flex flex-col max-h-[calc(100vh-140px)] text-slate-100 overflow-hidden transition-all duration-300">
+    <div className="w-full h-[46%] md:h-full md:w-[380px] lg:w-[420px] shrink-0 bg-slate-900/95 backdrop-blur-md border-t md:border-t-0 md:border-l border-amber-500/40 shadow-2xl flex flex-col text-slate-100 z-20 overflow-hidden transition-all duration-300">
       {/* Patriotic Flag Banner Header */}
       <div className="relative p-4 border-b border-slate-800 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
         {/* Mozambique Flag Color Accents Top Line */}
